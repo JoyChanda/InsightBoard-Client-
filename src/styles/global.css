@@ -1,0 +1,17 @@
+@reference "../index.css";
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    @apply bg-white text-gray-800 transition-colors duration-300;
+}
+
+.dark body {
+    @apply bg-gray-900 text-gray-100;
+}
+
+.container {
+    @apply max-w-7xl mx-auto px-4;
+}
