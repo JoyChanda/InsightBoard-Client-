@@ -12,7 +12,7 @@ export default function RegisterPage() {
   const [role, setRole] = useState("user");
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState({});
-  const { register } = useAuth();
+  const { register, googleLogin, githubLogin } = useAuth();
   const navigate = useNavigate();
 
   // Client-side validation
@@ -96,21 +96,25 @@ export default function RegisterPage() {
 
   const handleGoogleSignup = async () => {
     try {
-      // TODO: Implement Google signup with Firebase
-      toast.info("Google signup will be available soon");
-      console.log("Google signup clicked");
+      setIsLoading(true);
+      await googleLogin();
+      navigate("/");
     } catch (error) {
-      toast.error("Google signup failed");
+      console.error("Google signup failed:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleGithubSignup = async () => {
     try {
-      // TODO: Implement GitHub signup with Firebase
-      toast.info("GitHub signup will be available soon");
-      console.log("GitHub signup clicked");
+      setIsLoading(true);
+      await githubLogin();
+      navigate("/");
     } catch (error) {
-      toast.error("GitHub signup failed");
+      console.error("GitHub signup failed:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 

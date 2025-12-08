@@ -9,7 +9,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState({});
-  const { login } = useAuth();
+  const { login, googleLogin, githubLogin } = useAuth();
   const navigate = useNavigate();
 
   // Client-side validation
@@ -61,21 +61,25 @@ export default function LoginPage() {
 
   const handleGoogleLogin = async () => {
     try {
-      // TODO: Implement Google login with Firebase
-      toast.info("Google login will be available soon");
-      console.log("Google login clicked");
+      setIsLoading(true);
+      await googleLogin();
+      navigate("/");
     } catch (error) {
-      toast.error("Google login failed");
+      console.error("Google login failed:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleGithubLogin = async () => {
     try {
-      // TODO: Implement GitHub login with Firebase
-      toast.info("GitHub login will be available soon");
-      console.log("GitHub login clicked");
+      setIsLoading(true);
+      await githubLogin();
+      navigate("/");
     } catch (error) {
-      toast.error("GitHub login failed");
+      console.error("GitHub login failed:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 

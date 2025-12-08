@@ -1,6 +1,14 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import API from '../api';
+import { onAuthStateChanged } from 'firebase/auth';
 import { toast } from 'react-toastify';
+import { 
+  auth,
+  registerWithEmail, 
+  loginWithEmail, 
+  loginWithGoogle, 
+  loginWithGithub,
+  logoutUser 
+} from '../services/firebaseAuth';
 
 export const AuthContext = createContext();
 
@@ -8,76 +16,90 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Fetch current user on mount
-  const fetchMe = async () => {
-    try {
-      setLoading(true);
-      const res = await API.get('/auth/me');
-      setUser(res.data.user);
-    } catch (err) {
-      setUser(null);
-      // Don't show error toast on mount - user might not be logged in
-    } finally {
-      setLoading(false);
-    }
-  };
-
+  // Listen to Firebase auth state changes
   useEffect(() => {
-    fetchMe();
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      if (firebaseUser) {
+        setUser({
+          uid: firebaseUser.uid,
+          email: firebaseUser.email,
+          displayName: firebaseUser.displayName,
+          photoURL: firebaseUser.photoURL,
+        });
+      } else {
+        setUser(null);
+      }
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
   }, []);
 
-  // Login function
-  const login = async (email, password) => {
-    try {
-      const res = await API.post('/auth/login', { email, password });
-      setUser(res.data.user);
-      
-      // Store token if provided
-      if (res.data.token) {
-        localStorage.setItem('token', res.data.token);
-      }
-      
-      toast.success('Logged in successfully!');
-      return res.data;
-    } catch (err) {
-      const message = err.response?.data?.message || 'Login failed';
-      toast.error(message);
-      throw err;
-    }
-  };
-
-  // Register function
+  // Register with Email/Password
   const register = async (payload) => {
     try {
-      const res = await API.post('/auth/register', payload);
-      setUser(res.data.user);
-      
-      // Store token if provided
-      if (res.data.token) {
-        localStorage.setItem('token', res.data.token);
-      }
-      
-      toast.success('Registration successful!');
-      return res.data;
+      const result = await registerWithEmail(payload);
+      setUser(result.user);
+      toast.success('Account created successfully!');
+      return result;
     } catch (err) {
-      const message = err.response?.data?.message || 'Registration failed';
+      const message = getFirebaseErrorMessage(err);
       toast.error(message);
       throw err;
     }
   };
 
-  // Logout function
+  // Login with Email/Password
+  const login = async (email, password) => {
+    try {
+      const result = await loginWithEmail(email, password);
+      setUser(result.user);
+      toast.success('Logged in successfully!');
+      return result;
+    } catch (err) {
+      const message = getFirebaseErrorMessage(err);
+      toast.error(message);
+      throw err;
+    }
+  };
+
+  // Google OAuth
+  const googleLogin = async () => {
+    try {
+      const result = await loginWithGoogle();
+      setUser(result.user);
+      toast.success('Logged in with Google!');
+      return result;
+    } catch (err) {
+      const message = getFirebaseErrorMessage(err);
+      toast.error(message);
+      throw err;
+    }
+  };
+
+  // GitHub OAuth
+  const githubLogin = async () => {
+    try {
+      const result = await loginWithGithub();
+      setUser(result.user);
+      toast.success('Logged in with GitHub!');
+      return result;
+    } catch (err) {
+      const message = getFirebaseErrorMessage(err);
+      toast.error(message);
+      throw err;
+    }
+  };
+
+  // Logout
   const logout = async () => {
     try {
-      await API.post('/auth/logout');
+      await logoutUser();
       setUser(null);
-      localStorage.removeItem('token');
       toast.success('Logged out successfully!');
     } catch (err) {
-      // Even if API call fails, clear local state
-      setUser(null);
-      localStorage.removeItem('token');
-      toast.info('Logged out');
+      toast.error('Logout failed');
+      throw err;
     }
   };
 
@@ -86,6 +108,8 @@ export const AuthProvider = ({ children }) => {
     setUser,
     login,
     register,
+    googleLogin,
+    githubLogin,
     logout,
     loading,
   };
@@ -95,6 +119,30 @@ export const AuthProvider = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
+};
+
+// Helper function to get user-friendly error messages
+const getFirebaseErrorMessage = (error) => {
+  switch (error.code) {
+    case 'auth/email-already-in-use':
+      return 'This email is already registered';
+    case 'auth/invalid-email':
+      return 'Invalid email address';
+    case 'auth/weak-password':
+      return 'Password should be at least 6 characters';
+    case 'auth/user-not-found':
+      return 'No account found with this email';
+    case 'auth/wrong-password':
+      return 'Incorrect password';
+    case 'auth/popup-closed-by-user':
+      return 'Sign-in popup was closed';
+    case 'auth/cancelled-popup-request':
+      return 'Only one popup request is allowed at a time';
+    case 'auth/popup-blocked':
+      return 'Popup was blocked by browser. Please allow popups for this site';
+    default:
+      return error.message || 'Authentication failed';
+  }
 };
 
 // Custom hook to use auth context

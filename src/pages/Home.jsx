@@ -2,24 +2,31 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Hero from "../components/Hero";
 import ProductCard from "../components/ProductCard";
-import API from "../api";
+import { mockProducts } from "../data/mockProducts";
+// import API from "../api"; // Uncomment when backend is ready
 
 export default function Home() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
+    // Simulate API call with mock data
     const fetchProducts = async () => {
       try {
         setLoading(true);
-        const res = await API.get("/products/home");
-        setProducts(res.data);
-        setError(null);
+        
+        // TODO: Replace with real API call when backend is ready
+        // const res = await API.get("/products/home");
+        // setProducts(res.data);
+        
+        // Using mock data for now
+        setTimeout(() => {
+          setProducts(mockProducts);
+          setLoading(false);
+        }, 500);
+        
       } catch (err) {
         console.error("Error fetching home products:", err);
-        setError("Failed to load products");
-      } finally {
         setLoading(false);
       }
     };
@@ -52,15 +59,8 @@ export default function Home() {
               </div>
             )}
 
-            {/* Error State */}
-            {error && (
-              <div className="alert alert-error max-w-md mx-auto">
-                <span>{error}</span>
-              </div>
-            )}
-
             {/* Products Grid */}
-            {!loading && !error && (
+            {!loading && (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {products.map((product, index) => (
                   <motion.div
@@ -77,7 +77,7 @@ export default function Home() {
             )}
 
             {/* Empty State */}
-            {!loading && !error && products.length === 0 && (
+            {!loading && products.length === 0 && (
               <div className="text-center py-20">
                 <p className="text-xl opacity-70">No products available at the moment</p>
               </div>
