@@ -1,50 +1,107 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState, useEffect } from 'react';
+import API from '../api';
+import { toast } from 'react-toastify';
 
-const AuthContext = createContext();
+export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // Fetch current user on mount
+  const fetchMe = async () => {
+    try {
+      setLoading(true);
+      const res = await API.get('/auth/me');
+      setUser(res.data.user);
+    } catch (err) {
+      setUser(null);
+      // Don't show error toast on mount - user might not be logged in
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    // Simulate checking for an auth token or session
-    const checkAuth = async () => {
-        setLoading(true);
-      // Mock delay
-      setTimeout(() => {
-          // For now, we start with no user logged in.
-          // To test "logged in" state, we can manually uncomment the line below or use a login function.
-          // setUser({ displayName: "Test User", photoURL: "https://i.pravatar.cc/150", email: "test@example.com" });
-          setLoading(false);
-      }, 500);
-    };
-    checkAuth();
+    fetchMe();
   }, []);
 
-    // Mock Login function
-  const login = async () => {
-      // Simulate API call
-      setUser({ displayName: "John Doe", photoURL: "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp", email: "john@example.com" });
+  // Login function
+  const login = async (email, password) => {
+    try {
+      const res = await API.post('/auth/login', { email, password });
+      setUser(res.data.user);
+      
+      // Store token if provided
+      if (res.data.token) {
+        localStorage.setItem('token', res.data.token);
+      }
+      
+      toast.success('Logged in successfully!');
+      return res.data;
+    } catch (err) {
+      const message = err.response?.data?.message || 'Login failed';
+      toast.error(message);
+      throw err;
+    }
   };
 
-  const logout = () => {
-    setUser(null);
+  // Register function
+  const register = async (payload) => {
+    try {
+      const res = await API.post('/auth/register', payload);
+      setUser(res.data.user);
+      
+      // Store token if provided
+      if (res.data.token) {
+        localStorage.setItem('token', res.data.token);
+      }
+      
+      toast.success('Registration successful!');
+      return res.data;
+    } catch (err) {
+      const message = err.response?.data?.message || 'Registration failed';
+      toast.error(message);
+      throw err;
+    }
   };
 
-  const authInfo = {
+  // Logout function
+  const logout = async () => {
+    try {
+      await API.post('/auth/logout');
+      setUser(null);
+      localStorage.removeItem('token');
+      toast.success('Logged out successfully!');
+    } catch (err) {
+      // Even if API call fails, clear local state
+      setUser(null);
+      localStorage.removeItem('token');
+      toast.info('Logged out');
+    }
+  };
+
+  const value = {
     user,
-    loading,
+    setUser,
     login,
-    logout
+    register,
+    logout,
+    loading,
   };
 
   return (
-    <AuthContext.Provider value={authInfo}>
+    <AuthContext.Provider value={value}>
       {children}
     </AuthContext.Provider>
   );
 };
 
+// Custom hook to use auth context
 export const useAuth = () => {
-    return useContext(AuthContext);
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
 };
