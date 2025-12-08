@@ -4,6 +4,7 @@ import { ThemeProvider } from "./context/ThemeContext";
 import { AuthProvider } from "./context/AuthContext";
 import MainLayout from "./layouts/MainLayout";
 import Home from "./pages/Home";
+import About from "./pages/About";
 import LoginPage from "./pages/Login";
 import RegisterPage from "./pages/Register";
 import "react-toastify/dist/ReactToastify.css";
@@ -18,6 +19,7 @@ function App() {
           <Routes>
             <Route path="/" element={<MainLayout />}>
               <Route index element={<Home />} />
+              <Route path="about" element={<About />} />
               <Route path="login" element={<LoginPage />} />
               <Route path="register" element={<RegisterPage />} />
               {/* Add other routes as they become available */}
