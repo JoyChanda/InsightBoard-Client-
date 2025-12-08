@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="bg-base-200 text-base-content py-12">
+    <footer className="bg-neutral text-neutral-content py-12">
       <div className="container">
 
         {/* Top Section */}

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { FaGoogle, FaGithub } from "react-icons/fa";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -26,6 +27,16 @@ export default function LoginPage() {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleGoogleLogin = () => {
+    // TODO: Implement Google login with Firebase
+    console.log("Google login clicked");
+  };
+
+  const handleGithubLogin = () => {
+    // TODO: Implement GitHub login with Firebase
+    console.log("GitHub login clicked");
   };
 
   return (
@@ -77,6 +88,27 @@ export default function LoginPage() {
               )}
             </button>
           </form>
+          
+          <div className="divider">OR</div>
+          
+          {/* Social Login Buttons */}
+          <div className="space-y-3">
+            <button
+              onClick={handleGoogleLogin}
+              className="btn btn-outline w-full flex items-center justify-center gap-2"
+            >
+              <FaGoogle className="text-xl" />
+              Continue with Google
+            </button>
+            
+            <button
+              onClick={handleGithubLogin}
+              className="btn btn-outline w-full flex items-center justify-center gap-2"
+            >
+              <FaGithub className="text-xl" />
+              Continue with GitHub
+            </button>
+          </div>
           
           <div className="divider"></div>
           

@@ -22,7 +22,7 @@ const Navbar = () => {
 
 
   return (
-    <nav className={`w-full py-4 shadow-sm transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-100 text-gray-900'}`}>
+    <nav className="w-full py-4 shadow-md transition-colors duration-300 bg-base-100 border-b border-base-300">
       <div className="container mx-auto px-4 flex items-center justify-between">
         
         {/* Logo / Brand */}

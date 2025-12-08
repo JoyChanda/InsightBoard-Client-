@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { FaGoogle, FaGithub } from "react-icons/fa";
 
 export default function RegisterPage() {
   const [name, setName] = useState("");
@@ -33,6 +34,16 @@ export default function RegisterPage() {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleGoogleSignup = () => {
+    // TODO: Implement Google signup with Firebase
+    console.log("Google signup clicked");
+  };
+
+  const handleGithubSignup = () => {
+    // TODO: Implement GitHub signup with Firebase
+    console.log("GitHub signup clicked");
   };
 
   return (
@@ -112,6 +123,27 @@ export default function RegisterPage() {
               )}
             </button>
           </form>
+          
+          <div className="divider">OR</div>
+          
+          {/* Social Signup Buttons */}
+          <div className="space-y-3">
+            <button
+              onClick={handleGoogleSignup}
+              className="btn btn-outline w-full flex items-center justify-center gap-2"
+            >
+              <FaGoogle className="text-xl" />
+              Sign up with Google
+            </button>
+            
+            <button
+              onClick={handleGithubSignup}
+              className="btn btn-outline w-full flex items-center justify-center gap-2"
+            >
+              <FaGithub className="text-xl" />
+              Sign up with GitHub
+            </button>
+          </div>
           
           <div className="divider"></div>
           
