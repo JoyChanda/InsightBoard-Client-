@@ -17,3 +17,19 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* Custom button styles for rounded appearance and hover effects */
+.btn {
+  border-radius: 0.75rem !important;
+  /* More rounded */
+  transition: all 0.3s ease !important;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn:active {
+  transform: translateY(0);
+}

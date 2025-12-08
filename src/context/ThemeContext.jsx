@@ -7,7 +7,11 @@ export const ThemeProvider = ({ children }) => {
 
   useEffect(() => {
     localStorage.setItem("theme", theme);
-
+    
+    // Set data-theme attribute for DaisyUI
+    document.documentElement.setAttribute("data-theme", theme);
+    
+    // Also set dark class for custom dark mode styles
     if (theme === "dark") {
       document.documentElement.classList.add("dark");
     } else {

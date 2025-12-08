@@ -5,23 +5,21 @@ import UserAvatar from "./UserAvatar";
 
 const Navbar = () => {
   const { theme, toggleTheme } = useTheme();
-  const { user, login } = useAuth();
+  const { user } = useAuth();
 
   const navLinks = (
     <>
-      <li><NavLink to="/">Home</NavLink></li>
-      {user ? (
+      <li><NavLink to="/" className="font-bold">Home</NavLink></li>
+      <li><NavLink to="/about" className="font-bold">About Us</NavLink></li>
+      {user && (
         <>
-          <li><NavLink to="/campaigns">Campaigns</NavLink></li>
-          <li><NavLink to="/dashboard">Dashboard</NavLink></li>
+          <li><NavLink to="/campaigns" className="font-bold">Campaigns</NavLink></li>
+          <li><NavLink to="/dashboard" className="font-bold">Dashboard</NavLink></li>
         </>
-      ) : (
-         <>
-          <li><NavLink to="/about">About Us</NavLink></li>
-         </>
       )}
     </>
   );
+
 
   return (
     <nav className={`w-full py-4 shadow-sm transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-100 text-gray-900'}`}>
@@ -40,8 +38,9 @@ const Navbar = () => {
                 {navLinks}
             </ul>
             </div>
-            <Link to="/" className="text-xl font-bold uppercase tracking-wider">
-            InsightBoard
+            <Link to="/" className="text-xl font-bold uppercase tracking-wider flex items-center gap-2">
+              <span className="text-2xl">🚢</span>
+              InsightBoard
             </Link>
         </div>
 
@@ -68,7 +67,7 @@ const Navbar = () => {
             <UserAvatar />
           ) : (
             <div className="flex items-center gap-2">
-                <button onClick={login} className="btn btn-sm btn-outline">Login</button>
+                <Link to="/login" className="btn btn-sm btn-outline">Login</Link>
                 <Link to="/register" className="btn btn-sm btn-primary">Register</Link>
             </div>
           )}

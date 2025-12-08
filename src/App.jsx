@@ -4,6 +4,8 @@ import { ThemeProvider } from "./context/ThemeContext";
 import { AuthProvider } from "./context/AuthContext";
 import MainLayout from "./layouts/MainLayout";
 import Home from "./pages/Home";
+import LoginPage from "./pages/Login";
+import RegisterPage from "./pages/Register";
 import "react-toastify/dist/ReactToastify.css";
 import "./styles/global.css";
 import "./App.css";
@@ -16,6 +18,8 @@ function App() {
           <Routes>
             <Route path="/" element={<MainLayout />}>
               <Route index element={<Home />} />
+              <Route path="login" element={<LoginPage />} />
+              <Route path="register" element={<RegisterPage />} />
               {/* Add other routes as they become available */}
               <Route path="*" element={<div className="p-10 text-center">404 - Not Found</div>} />
             </Route>
