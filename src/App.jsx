@@ -7,6 +7,8 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import LoginPage from "./pages/Login";
 import RegisterPage from "./pages/Register";
+import AllProducts from "./pages/AllProducts";
+import ProductDetails from "./pages/ProductDetails";
 import "react-toastify/dist/ReactToastify.css";
 import "./styles/global.css";
 import "./App.css";
@@ -22,6 +24,8 @@ function App() {
               <Route path="about" element={<About />} />
               <Route path="login" element={<LoginPage />} />
               <Route path="register" element={<RegisterPage />} />
+              <Route path="products" element={<AllProducts />} />
+              <Route path="products/:id" element={<ProductDetails />} />
               {/* Add other routes as they become available */}
               <Route path="*" element={<div className="p-10 text-center">404 - Not Found</div>} />
             </Route>
