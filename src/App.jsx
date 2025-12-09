@@ -15,6 +15,7 @@ import DashboardLayout from "./pages/Dashboard/Layout";
 import DashboardHome from "./pages/Dashboard/DashboardHome";
 import ManageUsers from "./pages/Dashboard/Admin/ManageUsers";
 import AddProduct from "./pages/Dashboard/Manager/AddProduct";
+import MyOrders from "./pages/Dashboard/Buyer/MyOrders";
 import "react-toastify/dist/ReactToastify.css";
 import "./styles/global.css";
 import "./App.css";
@@ -48,6 +49,9 @@ function App() {
                 
                 {/* Manager routes */}
                 <Route path="add-product" element={<AddProduct />} />
+                
+                {/* Buyer routes */}
+                <Route path="my-orders" element={<MyOrders />} />
                 
                 {/* Add more dashboard pages here as you create them */}
                 {/* <Route path="products" element={<ManageProducts />} /> */}
