@@ -13,6 +13,7 @@ import Unauthorized from "./pages/Unauthorized";
 import PrivateRoute from "./components/PrivateRoute";
 import DashboardLayout from "./pages/Dashboard/Layout";
 import DashboardHome from "./pages/Dashboard/DashboardHome";
+import ManageUsers from "./pages/Dashboard/Admin/ManageUsers";
 import "react-toastify/dist/ReactToastify.css";
 import "./styles/global.css";
 import "./App.css";
@@ -38,8 +39,13 @@ function App() {
             <Route element={<PrivateRoute />}>
               <Route path="/dashboard" element={<DashboardLayout />}>
                 <Route index element={<DashboardHome />} />
+                
+                {/* Admin-only routes */}
+                <Route element={<PrivateRoute requiredRole="admin" />}>
+                  <Route path="users" element={<ManageUsers />} />
+                </Route>
+                
                 {/* Add more dashboard pages here as you create them */}
-                {/* <Route path="users" element={<ManageUsers />} /> */}
                 {/* <Route path="products" element={<ManageProducts />} /> */}
                 {/* <Route path="orders" element={<ManageOrders />} /> */}
               </Route>
