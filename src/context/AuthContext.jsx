@@ -134,6 +134,8 @@ const getFirebaseErrorMessage = (error) => {
       return 'No account found with this email';
     case 'auth/wrong-password':
       return 'Incorrect password';
+    case 'auth/invalid-credential':
+      return 'Invalid email or password. Please check your credentials and try again.';
     case 'auth/popup-closed-by-user':
       return 'Sign-in popup was closed';
     case 'auth/cancelled-popup-request':
