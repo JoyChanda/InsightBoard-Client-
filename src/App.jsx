@@ -11,6 +11,8 @@ import AllProducts from "./pages/AllProducts";
 import ProductDetails from "./pages/ProductDetails";
 import Unauthorized from "./pages/Unauthorized";
 import PrivateRoute from "./components/PrivateRoute";
+import DashboardLayout from "./pages/Dashboard/Layout";
+import DashboardHome from "./pages/Dashboard/DashboardHome";
 import "react-toastify/dist/ReactToastify.css";
 import "./styles/global.css";
 import "./App.css";
@@ -29,19 +31,18 @@ function App() {
               <Route path="products" element={<AllProducts />} />
               <Route path="products/:id" element={<ProductDetails />} />
               <Route path="unauthorized" element={<Unauthorized />} />
-              
-              {/* Protected Routes Example (uncomment when you create these pages) */}
-              {/* <Route element={<PrivateRoute />}>
-                <Route path="dashboard" element={<Dashboard />} />
-                <Route path="campaigns" element={<Campaigns />} />
-              </Route> */}
-              
-              {/* Admin-Only Routes Example */}
-              {/* <Route element={<PrivateRoute requiredRole="admin" />}>
-                <Route path="admin" element={<AdminPanel />} />
-              </Route> */}
-              
               <Route path="*" element={<div className="p-10 text-center">404 - Not Found</div>} />
+            </Route>
+            
+            {/* Protected Dashboard Routes */}
+            <Route element={<PrivateRoute />}>
+              <Route path="/dashboard" element={<DashboardLayout />}>
+                <Route index element={<DashboardHome />} />
+                {/* Add more dashboard pages here as you create them */}
+                {/* <Route path="users" element={<ManageUsers />} /> */}
+                {/* <Route path="products" element={<ManageProducts />} /> */}
+                {/* <Route path="orders" element={<ManageOrders />} /> */}
+              </Route>
             </Route>
           </Routes>
           <ToastContainer
