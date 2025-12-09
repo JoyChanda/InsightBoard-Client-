@@ -17,6 +17,7 @@ import ManageUsers from "./pages/Dashboard/Admin/ManageUsers";
 import AddProduct from "./pages/Dashboard/Manager/AddProduct";
 import MyOrders from "./pages/Dashboard/Buyer/MyOrders";
 import TrackOrder from "./pages/Dashboard/Buyer/TrackOrder";
+import NotFound from "./pages/NotFound";
 import "react-toastify/dist/ReactToastify.css";
 import "./styles/global.css";
 import "./App.css";
@@ -35,7 +36,6 @@ function App() {
               <Route path="products" element={<AllProducts />} />
               <Route path="products/:id" element={<ProductDetails />} />
               <Route path="unauthorized" element={<Unauthorized />} />
-              <Route path="*" element={<div className="p-10 text-center">404 - Not Found</div>} />
             </Route>
             
             {/* Protected Dashboard Routes */}
@@ -60,6 +60,9 @@ function App() {
                 {/* <Route path="orders" element={<ManageOrders />} /> */}
               </Route>
             </Route>
+            
+            {/* 404 Page - No Layout */}
+            <Route path="*" element={<NotFound />} />
           </Routes>
           <ToastContainer
             position="top-right"
