@@ -25,6 +25,9 @@ export const AuthProvider = ({ children }) => {
           email: firebaseUser.email,
           displayName: firebaseUser.displayName,
           photoURL: firebaseUser.photoURL,
+          // Role can be fetched from your backend or Firestore
+          // For now, defaulting to 'user'. Update this with actual role from backend/Firestore
+          role: firebaseUser.role || 'user', 
         });
       } else {
         setUser(null);
@@ -39,7 +42,8 @@ export const AuthProvider = ({ children }) => {
   const register = async (payload) => {
     try {
       const result = await registerWithEmail(payload);
-      setUser(result.user);
+      // Add role to user object (from registration form or default to 'user')
+      setUser({ ...result.user, role: payload.role || 'user' });
       toast.success('Account created successfully!');
       return result;
     } catch (err) {
@@ -53,7 +57,8 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     try {
       const result = await loginWithEmail(email, password);
-      setUser(result.user);
+      // Add default role. In production, fetch role from backend based on user ID
+      setUser({ ...result.user, role: result.user.role || 'user' });
       toast.success('Logged in successfully!');
       return result;
     } catch (err) {
@@ -67,7 +72,8 @@ export const AuthProvider = ({ children }) => {
   const googleLogin = async () => {
     try {
       const result = await loginWithGoogle();
-      setUser(result.user);
+      // Add default role. In production, fetch role from backend based on user ID
+      setUser({ ...result.user, role: result.user.role || 'user' });
       toast.success('Logged in with Google!');
       return result;
     } catch (err) {
@@ -81,7 +87,8 @@ export const AuthProvider = ({ children }) => {
   const githubLogin = async () => {
     try {
       const result = await loginWithGithub();
-      setUser(result.user);
+      // Add default role. In production, fetch role from backend based on user ID
+      setUser({ ...result.user, role: result.user.role || 'user' });
       toast.success('Logged in with GitHub!');
       return result;
     } catch (err) {

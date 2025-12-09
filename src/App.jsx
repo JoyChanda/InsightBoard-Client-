@@ -9,6 +9,8 @@ import LoginPage from "./pages/Login";
 import RegisterPage from "./pages/Register";
 import AllProducts from "./pages/AllProducts";
 import ProductDetails from "./pages/ProductDetails";
+import Unauthorized from "./pages/Unauthorized";
+import PrivateRoute from "./components/PrivateRoute";
 import "react-toastify/dist/ReactToastify.css";
 import "./styles/global.css";
 import "./App.css";
@@ -26,7 +28,19 @@ function App() {
               <Route path="register" element={<RegisterPage />} />
               <Route path="products" element={<AllProducts />} />
               <Route path="products/:id" element={<ProductDetails />} />
-              {/* Add other routes as they become available */}
+              <Route path="unauthorized" element={<Unauthorized />} />
+              
+              {/* Protected Routes Example (uncomment when you create these pages) */}
+              {/* <Route element={<PrivateRoute />}>
+                <Route path="dashboard" element={<Dashboard />} />
+                <Route path="campaigns" element={<Campaigns />} />
+              </Route> */}
+              
+              {/* Admin-Only Routes Example */}
+              {/* <Route element={<PrivateRoute requiredRole="admin" />}>
+                <Route path="admin" element={<AdminPanel />} />
+              </Route> */}
+              
               <Route path="*" element={<div className="p-10 text-center">404 - Not Found</div>} />
             </Route>
           </Routes>

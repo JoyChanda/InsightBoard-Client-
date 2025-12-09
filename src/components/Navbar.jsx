@@ -11,10 +11,15 @@ const Navbar = () => {
     <>
       <li><NavLink to="/" className="font-bold">Home</NavLink></li>
       <li><NavLink to="/about" className="font-bold">About Us</NavLink></li>
+      <li><NavLink to="/products" className="font-bold">Products</NavLink></li>
       {user && (
         <>
           <li><NavLink to="/campaigns" className="font-bold">Campaigns</NavLink></li>
           <li><NavLink to="/dashboard" className="font-bold">Dashboard</NavLink></li>
+          {/* Admin-only link */}
+          {user.role === "admin" && (
+            <li><NavLink to="/admin" className="font-bold text-yellow-500">Admin Panel</NavLink></li>
+          )}
         </>
       )}
     </>
