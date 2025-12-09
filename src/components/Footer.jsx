@@ -8,22 +8,22 @@ const Footer = () => {
       <div className="container">
 
         {/* Top Section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 text-center md:text-left">
 
-          {/* Logo + Description */}
-          <div>
+          {/* Logo + Description - Centered on mobile */}
+          <div className="flex flex-col items-center md:items-start">
             <h1 className="text-2xl font-bold mb-3 flex items-center gap-2">
               <span className="text-3xl">🚢</span>
               InsightBoard
             </h1>
-            <p className="text-sm opacity-80">
+            <p className="text-sm opacity-80 max-w-xs mx-auto md:mx-0">
               We provide top-notch analytics and campaign management services.  
               Quality and customer satisfaction is our main priority.
             </p>
           </div>
 
-          {/* Services Column */}
-          <div>
+          {/* Services Column - Centered on mobile */}
+          <div className="flex flex-col items-center md:items-start">
             <h3 className="text-lg font-semibold mb-3">Services</h3>
             <ul className="space-y-2 text-sm">
               <li>
@@ -49,8 +49,8 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Support Column */}
-          <div>
+          {/* Support Column - Centered on mobile */}
+          <div className="flex flex-col items-center md:items-start">
             <h3 className="text-lg font-semibold mb-3">Support</h3>
             <ul className="space-y-2 text-sm">
               <li>
@@ -76,8 +76,8 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Legal Terms Column */}
-          <div>
+          {/* Legal Terms Column - Centered on mobile */}
+          <div className="flex flex-col items-center md:items-start">
             <h3 className="text-lg font-semibold mb-3">Legal</h3>
             <ul className="space-y-2 text-sm">
               <li>
@@ -103,10 +103,10 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Social Media */}
-          <div>
+          {/* Social Media - Centered on mobile */}
+          <div className="flex flex-col items-center md:items-start">
             <h3 className="text-lg font-semibold mb-3">Follow Us</h3>
-            <div className="flex space-x-4 text-2xl">
+            <div className="flex space-x-4 text-2xl justify-center md:justify-start">
               <a href="#" className="hover:text-blue-500 transition-colors duration-300 cursor-pointer">
                 <FaFacebook />
               </a>
@@ -124,7 +124,7 @@ const Footer = () => {
 
         </div>
 
-        {/* Bottom Section */}
+        {/* Bottom Section - Always centered */}
         <div className="border-t border-base-300 mt-10 pt-5 text-center text-sm opacity-80">
           © {new Date().getFullYear()} InsightBoard — All rights reserved.
         </div>
