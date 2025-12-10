@@ -37,7 +37,7 @@ const ProductDetails = () => {
             ${product.price}
           </p>
 
-          <p className="text-gray-600 mt-4 leading-relaxed">
+          <p className="text-gray-600 dark:text-gray-300 mt-4 leading-relaxed">
             {product.description}
           </p>
 

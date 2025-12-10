@@ -2,31 +2,39 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Hero from "../components/Hero";
 import ProductCard from "../components/ProductCard";
+import HowItWorks from "../components/HowItWorks";
+import CustomerFeedback from "../components/CustomerFeedback";
 import { mockProducts } from "../data/mockProducts";
-// import API from "../api"; // Uncomment when backend is ready
+import API from "../api";
 
 export default function Home() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Simulate API call with mock data
     const fetchProducts = async () => {
       try {
         setLoading(true);
+        setError(null);
         
-        // TODO: Replace with real API call when backend is ready
-        // const res = await API.get("/products/home");
-        // setProducts(res.data);
-        
-        // Using mock data for now
-        setTimeout(() => {
-          setProducts(mockProducts);
+        // Try to fetch from MongoDB backend
+        try {
+          const res = await API.get("/products?limit=6");
+          setProducts(res.data.products || res.data);
           setLoading(false);
-        }, 500);
+        } catch (apiError) {
+          // Fallback to mock data if API fails
+          console.warn("API call failed, using mock data:", apiError.message);
+          setTimeout(() => {
+            setProducts(mockProducts.slice(0, 6));
+            setLoading(false);
+          }, 500);
+        }
         
       } catch (err) {
         console.error("Error fetching home products:", err);
+        setError("Failed to load products");
         setLoading(false);
       }
     };
@@ -36,10 +44,11 @@ export default function Home() {
 
   return (
     <div>
+      {/* Hero Section */}
       <Hero />
 
-      {/* Featured Products Section */}
-      <section className="py-16 px-6 bg-base-200">
+      {/* Our Products Section */}
+      <section id="products-section" className="py-16 px-6 bg-base-200">
         <div className="container mx-auto max-w-6xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -47,9 +56,9 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-4xl font-bold mb-2 text-center">Featured Products</h2>
+            <h2 className="text-4xl font-bold mb-2 text-center">Our Products</h2>
             <p className="text-center text-lg opacity-70 mb-12">
-              Discover our top campaigns and analytics tools
+              Explore our latest production orders and manufacturing capabilities
             </p>
 
             {/* Loading State */}
@@ -59,8 +68,16 @@ export default function Home() {
               </div>
             )}
 
+            {/* Error State */}
+            {error && (
+              <div className="text-center py-20">
+                <p className="text-xl text-error mb-4">{error}</p>
+                <p className="opacity-70">Please try again later</p>
+              </div>
+            )}
+
             {/* Products Grid */}
-            {!loading && (
+            {!loading && !error && (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {products.map((product, index) => (
                   <motion.div
@@ -77,7 +94,7 @@ export default function Home() {
             )}
 
             {/* Empty State */}
-            {!loading && products.length === 0 && (
+            {!loading && !error && products.length === 0 && (
               <div className="text-center py-20">
                 <p className="text-xl opacity-70">No products available at the moment</p>
               </div>
@@ -85,6 +102,14 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
+
+      {/* How It Works Section */}
+      <div id="how-it-works-section">
+        <HowItWorks />
+      </div>
+
+      {/* Customer Feedback Section */}
+      <CustomerFeedback />
     </div>
   );
 }

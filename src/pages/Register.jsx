@@ -9,7 +9,7 @@ export default function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [photoURL, setPhotoURL] = useState("");
-  const [role, setRole] = useState("user");
+  const [role, setRole] = useState("buyer");
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const { register, googleLogin, githubLogin } = useAuth();
@@ -82,7 +82,8 @@ export default function RegisterPage() {
         email, 
         password,
         photoURL: photoURL || undefined,
-        role
+        role,
+        status: "pending" // Default status as per requirements
       });
       toast.success("Account created successfully! Welcome aboard!");
       navigate("/"); // Redirect to home after successful registration
@@ -233,16 +234,15 @@ export default function RegisterPage() {
             {/* Role Dropdown */}
             <div className="form-control">
               <label className="label">
-                <span className="label-text font-medium">Account Type</span>
+                <span className="label-text font-medium">Role</span>
               </label>
               <select
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
                 className="select select-bordered w-full focus:select-primary"
               >
-                <option value="user">User</option>
-                <option value="admin">Admin</option>
-                <option value="moderator">Moderator</option>
+                <option value="buyer">Buyer</option>
+                <option value="manager">Manager</option>
               </select>
             </div>
 

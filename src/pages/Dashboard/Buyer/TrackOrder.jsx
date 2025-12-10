@@ -75,7 +75,7 @@ const TrackOrder = () => {
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1825.447!2d90.4125!3d23.8151"
           ></iframe>
         </div>
-        <p className="text-sm text-gray-500 mt-2">
+        <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
           * Map placeholder - will be updated with actual delivery tracking
         </p>
       </div>

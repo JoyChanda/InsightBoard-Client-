@@ -46,7 +46,7 @@ const MyOrders = () => {
         <div className="text-center py-10">
           <div className="text-6xl mb-4">📦</div>
           <h2 className="text-xl font-semibold mb-2">No Orders Yet</h2>
-          <p className="text-gray-600">You haven't placed any orders yet.</p>
+          <p className="text-gray-600 dark:text-gray-400">You haven't placed any orders yet.</p>
         </div>
       ) : (
         <div className="overflow-x-auto">
@@ -71,7 +71,7 @@ const MyOrders = () => {
                       order.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
                       order.status === 'completed' ? 'bg-green-100 text-green-800' :
                       order.status === 'cancelled' ? 'bg-red-100 text-red-800' :
-                      'bg-gray-100 text-gray-800'
+                      'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
                     }`}>
                       {order.status}
                     </span>
@@ -86,7 +86,7 @@ const MyOrders = () => {
                         Cancel
                       </button>
                     ) : (
-                      <span className="text-gray-400">-</span>
+                      <span className="text-gray-400 dark:text-gray-500">-</span>
                     )}
                   </td>
                 </tr>
@@ -103,7 +103,7 @@ const MyOrders = () => {
             <h2 className="text-xl font-semibold mb-2">
               Confirm Cancel Order?
             </h2>
-            <p className="text-sm text-gray-600 mb-6">
+            <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">
               Are you sure you want to cancel this order? This action cannot be undone.
             </p>
 

@@ -72,8 +72,15 @@ export const AuthProvider = ({ children }) => {
   const googleLogin = async () => {
     try {
       const result = await loginWithGoogle();
-      // Add default role. In production, fetch role from backend based on user ID
-      setUser({ ...result.user, role: result.user.role || 'user' });
+      const firebaseUser = result.user;
+      // Properly extract photoURL from Firebase user object
+      setUser({
+        uid: firebaseUser.uid,
+        email: firebaseUser.email,
+        displayName: firebaseUser.displayName,
+        photoURL: firebaseUser.photoURL,
+        role: 'user'
+      });
       toast.success('Logged in with Google!');
       return result;
     } catch (err) {
@@ -87,8 +94,15 @@ export const AuthProvider = ({ children }) => {
   const githubLogin = async () => {
     try {
       const result = await loginWithGithub();
-      // Add default role. In production, fetch role from backend based on user ID
-      setUser({ ...result.user, role: result.user.role || 'user' });
+      const firebaseUser = result.user;
+      // Properly extract photoURL from Firebase user object
+      setUser({
+        uid: firebaseUser.uid,
+        email: firebaseUser.email,
+        displayName: firebaseUser.displayName,
+        photoURL: firebaseUser.photoURL,
+        role: 'user'
+      });
       toast.success('Logged in with GitHub!');
       return result;
     } catch (err) {

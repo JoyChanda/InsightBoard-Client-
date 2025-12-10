@@ -1,22 +1,25 @@
-# 🚀 InsightBoard — Full-Stack MERN Application
+# 🚀 GarmentTrack — Garments Order & Production Tracker System
 
-A role-based dashboard and product management application built with **React, Node.js, Express, Firebase Auth, MongoDB**, and **Tailwind CSS**.  
-This project includes authentication, product details, bookings, a protected dashboard, and dynamic menus based on user roles (admin, manager, buyer).
+A role-based garment factory management application built with **React, Node.js, Express, Firebase Auth, MongoDB**, and **Tailwind CSS**.  
+This project helps small and medium-sized garment factories manage production workflows, track orders from buyers, manage production stages (cutting, sewing, finishing), monitor inventory, and ensure timely delivery.
 
 ---
 
 ## 🌍 Live Demo
 
-🔗 **Client Live URL:** https://insight-board-client.vercel.app/
+🔗 **Client Live URL:** https://insight-board-client.vercel.app/  
 🔗 **Server Live URL:** https://your-server-live-url.com
+
+⚠️ **Important**: After deployment, add your domain to Firebase authorized domains:  
+Firebase Console → Authentication → Settings → Authorized domains
 
 ---
 
 ## 🎯 Project Purpose
 
-InsightBoard is designed to manage products, orders, users, and bookings through a structured dashboard.  
+GarmentTrack is designed to streamline garment factory operations by managing production orders, tracking manufacturing stages, monitoring inventory, and coordinating delivery schedules.  
 Users have different permissions depending on their roles (Admin, Manager, Buyer).  
-This project demonstrates authentication, private routes, CRUD operations, and dashboard UI logic.
+This project demonstrates authentication, private routes, production workflow management, and role-based dashboard UI.
 
 ---
 
@@ -58,8 +61,13 @@ This project demonstrates authentication, private routes, CRUD operations, and d
 - Custom 404 page with gradient design
 - Reusable components (Spinner, Timeline, Table, Pagination)
 
-### 🔧 Backend Features
+### 🔧 Production & Deployment
 
+- ✅ SPA routing configured (Vercel & Netlify)
+- ✅ Firebase auth persistence on page reload
+- ✅ No 404 errors on route refresh
+- ✅ Private routes protected with loading states
+- ✅ Environment variables secured  
 - Node.js + Express REST API
 - JWT verification middleware
 - MongoDB with Mongoose

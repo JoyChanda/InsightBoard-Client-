@@ -1,0 +1,6 @@
+/* 
+  Netlify SPA Configuration
+  This redirects all routes to index.html for client-side routing
+  Prevents 404 errors on page reload
+*/
+/*    /index.html   200

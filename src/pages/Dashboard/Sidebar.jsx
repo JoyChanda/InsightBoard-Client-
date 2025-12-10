@@ -29,26 +29,47 @@ const Sidebar = () => {
   const links = menu[role] || [];
 
   return (
-    <aside className="w-64 bg-white dark:bg-gray-800 shadow-lg min-h-screen p-5">
-      <h2 className="text-xl font-bold mb-6 text-gray-900 dark:text-white">
-        Dashboard
-      </h2>
+    <aside className="w-64 bg-white dark:bg-gray-800 shadow-lg border-r border-gray-200 dark:border-gray-700 overflow-y-auto">
+      <div className="p-5">
+        <h2 className="text-lg font-bold mb-6 text-gray-800 dark:text-white flex items-center gap-2">
+          <span className="text-xl">📊</span>
+          <span>Navigation</span>
+        </h2>
 
-      <ul className="space-y-4">
-        {links.map((item) => (
-          <li key={item.to}>
-            <Link
-              to={item.to}
-              className="block px-3 py-2 rounded-md hover:bg-blue-500 hover:text-white
-                         text-gray-800 dark:text-gray-200 transition"
-            >
-              {item.label}
-            </Link>
-          </li>
-        ))}
-      </ul>
+        <nav>
+          <ul className="space-y-1">
+            {links.map((item) => (
+              <li key={item.to}>
+                <Link
+                  to={item.to}
+                  className="block px-4 py-2.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700
+                             text-gray-700 dark:text-gray-200 transition-all duration-200
+                             font-medium hover:text-gray-900 dark:hover:text-white"
+                >
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        {/* Back to Home Link */}
+        <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
+          <Link
+            to="/"
+            className="block px-4 py-2.5 rounded-lg bg-gray-100 dark:bg-gray-700
+                       text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600
+                       transition-all duration-200 font-medium text-center
+                       flex items-center justify-center gap-2"
+          >
+            <span className="text-lg">🏠</span>
+            <span>Back to Home</span>
+          </Link>
+        </div>
+      </div>
     </aside>
   );
+
 };
 
 export default Sidebar;
