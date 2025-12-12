@@ -16,6 +16,8 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  
+  @apply bg-base-100 text-base-content;
 }
 
 /* Custom button styles for rounded appearance and hover effects */

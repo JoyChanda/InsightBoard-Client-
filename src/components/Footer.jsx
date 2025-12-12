@@ -1,45 +1,62 @@
-import { FaFacebook, FaInstagram, FaLinkedin, FaEnvelope, FaPhone, FaMapMarkerAlt } from "react-icons/fa";
+import {
+  FaFacebook,
+  FaInstagram,
+  FaLinkedin,
+  FaEnvelope,
+  FaPhone,
+  FaMapMarkerAlt,
+} from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import { useTheme } from "../context/ThemeContext";
 
 const Footer = () => {
-  const { theme } = useTheme();
-  const isDark = theme === "dark";
-  
-  // Inline styles to override DaisyUI theme conflicts
-  const headingStyle = { color: '#ffffff' }; // White for both modes
-  const textStyle = { color: '#d1d5db' }; // Light gray for both modes
 
   return (
-    <footer className="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
+    <footer className="bg-base-100 border-t border-base-200 text-base-content transition-colors">
       <div className="container mx-auto px-4 py-10">
-        
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          
           {/* Company Info - Brand & Description */}
           <div className="space-y-4 text-center md:text-left">
             <div className="flex items-center gap-2 justify-center md:justify-start">
               <span className="text-3xl">🚢</span>
-              <h2 className="text-xl font-bold" style={headingStyle}>InsightBoard</h2>
+              <h2 className="text-xl font-bold text-base-content">
+                InsightBoard
+              </h2>
             </div>
-            <p className="text-sm leading-relaxed" style={textStyle}>
-              Your trusted garment production management platform for streamlined order tracking and efficient manufacturing workflows.
+            <p className="text-sm leading-relaxed text-base-content/70">
+              Your trusted garment production management platform for
+              streamlined order tracking and efficient manufacturing workflows.
             </p>
-            
+
             {/* Social Media */}
             <div className="flex gap-3 pt-2 justify-center md:justify-start">
-              <a href="#" className="text-lg hover:text-blue-500 transition-colors" style={textStyle} aria-label="Facebook">
+              <a
+                href="#"
+                className="text-lg text-base-content/70 hover:text-blue-500 transition-colors"
+                aria-label="Facebook"
+              >
                 <FaFacebook />
               </a>
-              <a href="#" className="text-lg hover:text-pink-500 transition-colors" style={textStyle} aria-label="Instagram">
+              <a
+                href="#"
+                className="text-lg text-base-content/70 hover:text-pink-500 transition-colors"
+                aria-label="Instagram"
+              >
                 <FaInstagram />
               </a>
-              <a href="#" className="text-lg hover:text-gray-400 transition-colors" style={textStyle} aria-label="Twitter">
+              <a
+                href="#"
+                className="text-lg text-base-content/70 hover:text-gray-400 transition-colors"
+                aria-label="Twitter"
+              >
                 <FaXTwitter />
               </a>
-              <a href="#" className="text-lg hover:text-blue-600 transition-colors" style={textStyle} aria-label="LinkedIn">
+              <a
+                href="#"
+                className="text-lg text-base-content/70 hover:text-blue-600 transition-colors"
+                aria-label="LinkedIn"
+              >
                 <FaLinkedin />
               </a>
             </div>
@@ -47,88 +64,153 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div className="space-y-4 text-center md:text-left">
-            <h3 className="text-sm font-semibold uppercase tracking-wide" style={headingStyle}>Quick Links</h3>
+            <h3 className="text-sm font-semibold uppercase tracking-wide text-base-content">
+              Quick Links
+            </h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/" className="text-sm hover:text-blue-600 transition-all" style={textStyle}>Home</Link>
+                <Link
+                  to="/"
+                  className="text-sm text-base-content/70 hover:text-primary transition-all"
+                >
+                  Home
+                </Link>
               </li>
               <li>
-                <Link to="/about" className="text-sm hover:text-blue-600 transition-all" style={textStyle}>About Us</Link>
+                <Link
+                  to="/about"
+                  className="text-sm text-base-content/70 hover:text-primary transition-all"
+                >
+                  About Us
+                </Link>
               </li>
               <li>
-                <Link to="/products" className="text-sm hover:text-blue-600 transition-all" style={textStyle}>Products</Link>
+                <Link
+                  to="/products"
+                  className="text-sm text-base-content/70 hover:text-primary transition-all"
+                >
+                  Products
+                </Link>
               </li>
               <li>
-                <Link to="/dashboard" className="text-sm hover:text-blue-600 transition-all" style={textStyle}>Dashboard</Link>
+                <Link
+                  to="/dashboard"
+                  className="text-sm text-base-content/70 hover:text-primary transition-all"
+                >
+                  Dashboard
+                </Link>
               </li>
             </ul>
           </div>
 
           {/* Services */}
           <div className="space-y-4 text-center md:text-left">
-            <h3 className="text-sm font-semibold uppercase tracking-wide" style={headingStyle}>Services</h3>
+            <h3 className="text-sm font-semibold uppercase tracking-wide text-base-content">
+              Services
+            </h3>
             <ul className="space-y-2">
               <li>
-                <Link to="#" className="text-sm hover:text-blue-600 transition-all" style={textStyle}>Order Management</Link>
+                <Link
+                  to="#"
+                  className="text-sm text-base-content/70 hover:text-primary transition-all"
+                >
+                  Order Management
+                </Link>
               </li>
               <li>
-                <Link to="#" className="text-sm hover:text-blue-600 transition-all" style={textStyle}>Production Tracking</Link>
+                <Link
+                  to="#"
+                  className="text-sm text-base-content/70 hover:text-primary transition-all"
+                >
+                  Production Tracking
+                </Link>
               </li>
               <li>
-                <Link to="#" className="text-sm hover:text-blue-600 transition-all" style={textStyle}>Inventory Monitor</Link>
+                <Link
+                  to="#"
+                  className="text-sm text-base-content/70 hover:text-primary transition-all"
+                >
+                  Inventory Monitor
+                </Link>
               </li>
               <li>
-                <Link to="#" className="text-sm hover:text-blue-600 transition-all" style={textStyle}>Quality Control</Link>
+                <Link
+                  to="#"
+                  className="text-sm text-base-content/70 hover:text-primary transition-all"
+                >
+                  Quality Control
+                </Link>
               </li>
             </ul>
           </div>
 
           {/* Contact Info */}
           <div className="space-y-4 text-center md:text-left">
-            <h3 className="text-sm font-semibold uppercase tracking-wide" style={headingStyle}>Contact Us</h3>
+            <h3 className="text-sm font-semibold uppercase tracking-wide text-base-content">
+              Contact Us
+            </h3>
             <ul className="space-y-3">
               <li className="flex items-start gap-2 justify-center md:justify-start">
-                <FaMapMarkerAlt className="text-sm mt-1" style={textStyle} />
-                <span className="text-sm" style={textStyle}>
-                  456 Garment District<br />
+                <FaMapMarkerAlt className="text-sm mt-1 text-base-content/70" />
+                <span className="text-sm text-base-content/70">
+                  456 Garment District
+                  <br />
                   Dhaka, Bangladesh
                 </span>
               </li>
               <li className="flex items-center gap-2 justify-center md:justify-start">
-                <FaEnvelope className="text-sm" style={textStyle} />
-                <a href="mailto:contact@insightboard.com" className="text-sm hover:text-blue-600 transition-all" style={textStyle}>
+                <FaEnvelope className="text-sm text-base-content/70" />
+                <a
+                  href="mailto:contact@insightboard.com"
+                  className="text-sm text-base-content/70 hover:text-primary transition-all"
+                >
                   contact@insightboard.com
                 </a>
               </li>
               <li className="flex items-center gap-2 justify-center md:justify-start">
-                <FaPhone className="text-sm" style={textStyle} />
-                <a href="tel:+8801234567890" className="text-sm hover:text-blue-600 transition-all" style={textStyle}>
+                <FaPhone className="text-sm text-base-content/70" />
+                <a
+                  href="tel:+8801234567890"
+                  className="text-sm text-base-content/70 hover:text-primary transition-all"
+                >
                   +880 123 456 7890
                 </a>
               </li>
             </ul>
           </div>
-
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-gray-200 dark:border-gray-700 mt-8 pt-6">
+        <div className="border-t border-base-200 mt-8 pt-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            
             {/* Copyright */}
-            <p className="text-sm text-center" style={textStyle}>
+            <p className="text-sm text-center text-base-content/70">
               © {new Date().getFullYear()} InsightBoard. All rights reserved.
             </p>
 
             {/* Legal Links */}
             <div className="flex flex-wrap justify-center gap-4">
-              <Link to="#" className="text-sm hover:text-blue-600 transition-all" style={textStyle}>Privacy Policy</Link>
-              <Link to="#" className="text-sm hover:text-blue-600 transition-all" style={textStyle}>Terms of Service</Link>
-              <Link to="#" className="text-sm hover:text-blue-600 transition-all" style={textStyle}>Cookie Policy</Link>
+              <Link
+                to="#"
+                className="text-sm text-base-content/70 hover:text-primary transition-all"
+              >
+                Privacy Policy
+              </Link>
+              <Link
+                to="#"
+                className="text-sm text-base-content/70 hover:text-primary transition-all"
+              >
+                Terms of Service
+              </Link>
+              <Link
+                to="#"
+                className="text-sm text-base-content/70 hover:text-primary transition-all"
+              >
+                Cookie Policy
+              </Link>
             </div>
           </div>
         </div>
-
       </div>
     </footer>
   );

@@ -113,5 +113,26 @@ export const getCurrentUser = () => {
   return auth.currentUser;
 };
 
+// Update profile (name / photo)
+export const updateUserProfile = async ({ displayName, photoURL }) => {
+  if (!auth.currentUser) {
+    throw new Error("No authenticated user");
+  }
+
+  await updateProfile(auth.currentUser, {
+    displayName: displayName || auth.currentUser.displayName,
+    photoURL: photoURL || auth.currentUser.photoURL || null,
+  });
+
+  // Return refreshed user fields
+  const { uid, email } = auth.currentUser;
+  return {
+    uid,
+    email,
+    displayName: auth.currentUser.displayName,
+    photoURL: auth.currentUser.photoURL,
+  };
+};
+
 // Auth state observer
 export { auth };

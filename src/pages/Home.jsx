@@ -20,16 +20,23 @@ export default function Home() {
         
         // Try to fetch from MongoDB backend
         try {
-          const res = await API.get("/products?limit=6");
-          setProducts(res.data.products || res.data);
-          setLoading(false);
+          const res = await API.get("/products/home");
+          const fetchedProducts = res.data.products || res.data;
+          
+          if (Array.isArray(fetchedProducts) && fetchedProducts.length > 0) {
+            setProducts(fetchedProducts);
+            setLoading(false);
+          } else {
+            console.warn("API returned empty list, using mock data");
+             // Simulate network delay for effect
+             setProducts(mockProducts.slice(0, 6));
+             setLoading(false);
+          }
         } catch (apiError) {
           // Fallback to mock data if API fails
           console.warn("API call failed, using mock data:", apiError.message);
-          setTimeout(() => {
-            setProducts(mockProducts.slice(0, 6));
-            setLoading(false);
-          }, 500);
+          setProducts(mockProducts.slice(0, 6));
+          setLoading(false);
         }
         
       } catch (err) {

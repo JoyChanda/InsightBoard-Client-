@@ -6,30 +6,34 @@ const steps = [
     id: 1,
     icon: FaSearch,
     title: "Browse & Select",
-    description: "Explore our wide range of production orders and manufacturing capabilities",
-    color: "text-blue-500"
+    description:
+      "Explore our wide range of production orders and manufacturing capabilities",
+    color: "text-blue-500",
   },
   {
     id: 2,
     icon: FaClipboardCheck,
     title: "Place Order",
-    description: "Submit your requirements with detailed specifications and customization options",
-    color: "text-green-500"
+    description:
+      "Submit your requirements with detailed specifications and customization options",
+    color: "text-green-500",
   },
   {
     id: 3,
     icon: FaCogs,
     title: "Production Tracking",
-    description: "Monitor real-time status updates through Cutting → Sewing → Finishing stages",
-    color: "text-purple-500"
+    description:
+      "Monitor real-time status updates through Cutting → Sewing → Finishing stages",
+    color: "text-purple-500",
   },
   {
     id: 4,
     icon: FaTruck,
     title: "Quality & Delivery",
-    description: "Final quality inspection and expedited shipment to your destination",
-    color: "text-orange-500"
-  }
+    description:
+      "Final quality inspection and expedited shipment to your destination",
+    color: "text-orange-500",
+  },
 ];
 
 export default function HowItWorks() {

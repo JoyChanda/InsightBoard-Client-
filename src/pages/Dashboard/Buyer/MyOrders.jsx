@@ -1,127 +1,116 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const MyOrders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [cancelId, setCancelId] = useState(null); // store order id for cancel dialog
+  const [filter, setFilter] = useState("all");
 
-  // Fetch user orders
   useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/orders/my`);
-        setOrders(res.data || []);
-      } catch (error) {
-        console.error("Failed to load orders:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchOrders();
   }, []);
 
-  const handleCancelOrder = () => {
-    // TODO: Add API call to cancel order
-    // axios.put(`${import.meta.env.VITE_API_URL}/orders/${cancelId}/cancel`)
-    alert("Cancel API not added yet");
-    setCancelId(null);
+  const fetchOrders = async () => {
+    try {
+      // Reverting to /bookings/my-orders as confirmed by backend routes.
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/bookings/my-orders`, { withCredentials: true });
+      setOrders(Array.isArray(res.data) ? res.data : res.data.orders || res.data.data || []);
+    } catch (err) {
+      console.error(err);
+      toast.error(err.response?.data?.message || "Failed to fetch orders");
+    } finally {
+      setLoading(false);
+    }
   };
 
-  if (loading) {
-    return (
-      <div className="p-6 text-center">
-        <div className="loading loading-spinner loading-lg"></div>
-        <p className="mt-4">Loading orders...</p>
-      </div>
-    );
-  }
+  const filteredOrders = orders.filter(order => {
+    if (filter === "all") return true;
+    if (filter === "active") return ["pending", "processing", "shipped"].includes(order.status);
+    if (filter === "completed") return order.status === "delivered";
+    if (filter === "cancelled") return order.status === "cancelled" || order.status === "rejected";
+    return true;
+  });
+
+  const getStatusColor = (status) => {
+    switch (status) {
+        case "pending": return "badge-warning";
+        case "processing": return "badge-info";
+        case "shipped": return "badge-primary";
+        case "delivered": return "badge-success";
+        case "cancelled": return "badge-error";
+        case "rejected": return "badge-error";
+        default: return "badge-ghost";
+    }
+  };
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-semibold mb-4">My Orders</h1>
+      <h1 className="text-3xl font-bold mb-6 text-base-content">My Orders</h1>
 
-      {orders.length === 0 ? (
-        <div className="text-center py-10">
-          <div className="text-6xl mb-4">📦</div>
-          <h2 className="text-xl font-semibold mb-2">No Orders Yet</h2>
-          <p className="text-gray-600 dark:text-gray-400">You haven't placed any orders yet.</p>
+      {/* Tabs */}
+      <div className="tabs tabs-boxed mb-6 bg-base-200 text-base-content">
+        <a className={`tab ${filter === 'all' ? 'tab-active' : ''}`} onClick={() => setFilter('all')}>All Orders</a>
+        <a className={`tab ${filter === 'active' ? 'tab-active' : ''}`} onClick={() => setFilter('active')}>Active</a>
+        <a className={`tab ${filter === 'completed' ? 'tab-active' : ''}`} onClick={() => setFilter('completed')}>Completed</a>
+        <a className={`tab ${filter === 'cancelled' ? 'tab-active' : ''}`} onClick={() => setFilter('cancelled')}>Cancelled</a>
+      </div>
+
+      {/* Orders List */}
+      {loading ? (
+        <div className="flex justify-center"><span className="loading loading-spinner loading-lg"></span></div>
+      ) : filteredOrders.length > 0 ? (
+        <div className="space-y-4">
+            {filteredOrders.map(order => (
+                <div key={order._id} className="card bg-base-100 shadow-xl border border-base-200 dark:border-base-300">
+                    <div className="card-body p-6">
+                        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
+                            <div>
+                                <h3 className="font-bold text-lg mb-1">
+                                    {order.product?.title || "Product Unavailable"} 
+                                    <span className="text-sm font-normal text-base-content/70 ml-2">(Qty: {order.qty})</span>
+                                </h3>
+                                <p className="text-sm text-base-content/70">Order ID: {order._id}</p>
+                            </div>
+                            <div className="flex items-center gap-3 mt-2 md:mt-0">
+                                <span className={`badge ${getStatusColor(order.status)} badge-lg capitalize`}>{order.status}</span>
+                                <span className="font-bold text-xl text-primary">${order.total}</span>
+                            </div>
+                        </div>
+
+                        <div className="divider my-0"></div>
+
+                        <div className="flex flex-col md:flex-row justify-between items-center mt-4">
+                            <div className="text-sm text-base-content/70">
+                                <p>Ordered on: {new Date(order.createdAt).toLocaleDateString()}</p> 
+                                {order.tracking && order.tracking.length > 0 && (
+                                    <p className="mt-1 text-info">
+                                        Last Update: {order.tracking[order.tracking.length - 1].status} 
+                                        ({new Date(order.tracking[order.tracking.length - 1].date).toLocaleDateString()})
+                                    </p>
+                                )}
+                            </div>
+                            
+                            <div className="mt-4 md:mt-0 flex gap-2">
+                                <Link to={`/dashboard/track-order/${order._id}`} className="btn btn-sm btn-outline btn-info">
+                                    Track Order
+                                </Link>
+                                {order.status === 'pending' && (
+                                    <button className="btn btn-sm btn-outline btn-error" onClick={() => toast.info("Cancellation logic to be implemented")}>
+                                        Cancel Order
+                                    </button>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            ))}
         </div>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="min-w-full bg-white border rounded-lg">
-            <thead className="bg-gray-100">
-              <tr>
-                <th className="p-3 border text-left font-semibold">Product</th>
-                <th className="p-3 border text-left font-semibold">Price</th>
-                <th className="p-3 border text-left font-semibold">Qty</th>
-                <th className="p-3 border text-left font-semibold">Status</th>
-                <th className="p-3 border text-center font-semibold">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {orders.map((order) => (
-                <tr key={order._id} className="hover:bg-gray-50">
-                  <td className="p-3 border">{order.product?.title || order.product?.name}</td>
-                  <td className="p-3 border">${order.price}</td>
-                  <td className="p-3 border">{order.qty}</td>
-                  <td className="p-3 border">
-                    <span className={`capitalize px-2 py-1 rounded text-sm ${
-                      order.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-                      order.status === 'completed' ? 'bg-green-100 text-green-800' :
-                      order.status === 'cancelled' ? 'bg-red-100 text-red-800' :
-                      'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
-                    }`}>
-                      {order.status}
-                    </span>
-                  </td>
-
-                  <td className="p-3 border text-center">
-                    {order.status === "pending" ? (
-                      <button
-                        onClick={() => setCancelId(order._id)}
-                        className="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 transition"
-                      >
-                        Cancel
-                      </button>
-                    ) : (
-                      <span className="text-gray-400 dark:text-gray-500">-</span>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
-
-      {/* Cancel Confirmation Modal */}
-      {cancelId && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-xl w-96">
-            <h2 className="text-xl font-semibold mb-2">
-              Confirm Cancel Order?
-            </h2>
-            <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">
-              Are you sure you want to cancel this order? This action cannot be undone.
-            </p>
-
-            <div className="flex justify-end gap-3">
-              <button
-                className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 transition"
-                onClick={() => setCancelId(null)}
-              >
-                Close
-              </button>
-              <button
-                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition"
-                onClick={handleCancelOrder}
-              >
-                Confirm Cancel
-              </button>
-            </div>
-          </div>
+        <div className="text-center py-10 bg-base-200 rounded-lg">
+            <p className="text-base-content/70">No orders found in this category.</p>
+            <Link to="/products" className="btn btn-primary mt-4">Browse Products</Link>
         </div>
       )}
     </div>

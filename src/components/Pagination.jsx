@@ -9,27 +9,25 @@ const Pagination = ({ page, setPage, totalPages }) => {
 
   return (
     <div className="flex items-center justify-center gap-4 mt-10">
-
       <button
         onClick={handlePrev}
         disabled={page === 1}
-        className="px-4 py-2 bg-gray-300 dark:bg-gray-700 rounded disabled:opacity-50"
+        className="px-4 py-2 bg-base-200 hover:bg-base-300 rounded disabled:opacity-50 text-base-content"
       >
         Prev
       </button>
 
-      <span className="text-lg font-semibold text-gray-800 dark:text-gray-200">
+      <span className="text-lg font-semibold text-base-content">
         Page {page} of {totalPages}
       </span>
 
       <button
         onClick={handleNext}
         disabled={page === totalPages}
-        className="px-4 py-2 bg-gray-300 dark:bg-gray-700 rounded disabled:opacity-50"
+        className="px-4 py-2 bg-base-200 hover:bg-base-300 rounded disabled:opacity-50 text-base-content"
       >
         Next
       </button>
-
     </div>
   );
 };

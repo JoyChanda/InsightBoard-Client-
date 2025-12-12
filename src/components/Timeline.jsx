@@ -18,7 +18,9 @@ const Timeline = ({ steps, currentStep }) => {
           <div>
             <p
               className={`font-medium ${
-                idx <= currentStep ? "text-green-700 dark:text-green-400" : "text-gray-500 dark:text-gray-400"
+                idx <= currentStep
+                  ? "text-green-700 dark:text-green-400"
+                  : "text-gray-500 dark:text-gray-400"
               }`}
             >
               {step}

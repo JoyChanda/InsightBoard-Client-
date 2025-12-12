@@ -13,7 +13,10 @@ export default function About() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <Link to="/" className="inline-flex items-center gap-2 mb-6 hover:underline">
+            <Link
+              to="/"
+              className="inline-flex items-center gap-2 mb-6 hover:underline"
+            >
               <FaArrowLeft /> Back to Home
             </Link>
             <h1 className="text-5xl md:text-6xl font-bold mb-4">About Us</h1>
@@ -42,9 +45,9 @@ export default function About() {
                   <h2 className="card-title text-3xl">Our Mission</h2>
                 </div>
                 <p className="text-lg">
-                  To empower businesses with actionable insights through powerful analytics 
-                  and intuitive campaign management tools, making data-driven decisions 
-                  accessible to everyone.
+                  To empower businesses with actionable insights through
+                  powerful analytics and intuitive campaign management tools,
+                  making data-driven decisions accessible to everyone.
                 </p>
               </div>
             </motion.div>
@@ -63,9 +66,9 @@ export default function About() {
                   <h2 className="card-title text-3xl">Our Vision</h2>
                 </div>
                 <p className="text-lg">
-                  To become the world's leading analytics platform, transforming how 
-                  organizations understand and engage with their data, driving innovation 
-                  and growth across industries.
+                  To become the world's leading analytics platform, transforming
+                  how organizations understand and engage with their data,
+                  driving innovation and growth across industries.
                 </p>
               </div>
             </motion.div>
@@ -83,27 +86,29 @@ export default function About() {
             viewport={{ once: true }}
           >
             <h2 className="text-4xl font-bold mb-8 text-center">Our Story</h2>
-            
+
             <div className="space-y-6 text-lg">
               <p>
-                Founded in 2024, InsightBoard emerged from a simple observation: businesses 
-                were drowning in data but starving for insights. Our founders, a team of 
-                data scientists and UX designers, recognized the need for a platform that 
-                could bridge the gap between complex analytics and actionable business intelligence.
+                Founded in 2024, InsightBoard emerged from a simple observation:
+                businesses were drowning in data but starving for insights. Our
+                founders, a team of data scientists and UX designers, recognized
+                the need for a platform that could bridge the gap between
+                complex analytics and actionable business intelligence.
               </p>
 
               <p>
-                What started as a small project has grown into a comprehensive analytics 
-                platform serving thousands of users worldwide. We've remained committed to 
-                our core principle: making powerful analytics accessible, intuitive, and 
-                beautiful.
+                What started as a small project has grown into a comprehensive
+                analytics platform serving thousands of users worldwide. We've
+                remained committed to our core principle: making powerful
+                analytics accessible, intuitive, and beautiful.
               </p>
 
               <p>
-                Today, InsightBoard helps businesses of all sizes track campaigns, analyze 
-                performance, and make data-driven decisions with confidence. Our platform 
-                combines cutting-edge technology with thoughtful design, ensuring that every 
-                user has the tools they need to succeed.
+                Today, InsightBoard helps businesses of all sizes track
+                campaigns, analyze performance, and make data-driven decisions
+                with confidence. Our platform combines cutting-edge technology
+                with thoughtful design, ensuring that every user has the tools
+                they need to succeed.
               </p>
             </div>
           </motion.div>
@@ -119,8 +124,10 @@ export default function About() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-4xl font-bold mb-8 text-center">Our Core Values</h2>
-            
+            <h2 className="text-4xl font-bold mb-8 text-center">
+              Our Core Values
+            </h2>
+
             <div className="grid md:grid-cols-3 gap-6">
               {/* Value 1 */}
               <div className="card bg-base-100 shadow-lg">
@@ -128,8 +135,8 @@ export default function About() {
                   <FaHeart className="text-4xl text-error mb-4" />
                   <h3 className="card-title">User-Centric</h3>
                   <p>
-                    Every feature we build starts with understanding user needs and 
-                    solving real problems.
+                    Every feature we build starts with understanding user needs
+                    and solving real problems.
                   </p>
                 </div>
               </div>
@@ -140,8 +147,8 @@ export default function About() {
                   <FaRocket className="text-4xl text-primary mb-4" />
                   <h3 className="card-title">Innovation</h3>
                   <p>
-                    We constantly push boundaries, exploring new technologies and 
-                    approaches to analytics.
+                    We constantly push boundaries, exploring new technologies
+                    and approaches to analytics.
                   </p>
                 </div>
               </div>
@@ -152,8 +159,8 @@ export default function About() {
                   <FaEye className="text-4xl text-secondary mb-4" />
                   <h3 className="card-title">Transparency</h3>
                   <p>
-                    We believe in clear communication, honest practices, and building 
-                    trust with our users.
+                    We believe in clear communication, honest practices, and
+                    building trust with our users.
                   </p>
                 </div>
               </div>
@@ -173,7 +180,8 @@ export default function About() {
           >
             <h2 className="text-4xl font-bold mb-4">Ready to Get Started?</h2>
             <p className="text-xl mb-8 opacity-90">
-              Join thousands of businesses using InsightBoard to unlock their data potential
+              Join thousands of businesses using InsightBoard to unlock their
+              data potential
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/register">

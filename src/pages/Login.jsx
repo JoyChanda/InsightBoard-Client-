@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { FaGoogle, FaGithub } from "react-icons/fa";
 import { toast } from "react-toastify";
@@ -11,6 +11,9 @@ export default function LoginPage() {
   const [errors, setErrors] = useState({});
   const { login, googleLogin, githubLogin } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from || "/";
 
   // Client-side validation
   const validateForm = () => {
@@ -50,7 +53,7 @@ export default function LoginPage() {
       setIsLoading(true);
       await login(email, password);
       toast.success("Welcome back! Login successful");
-      navigate("/"); // Redirect to home after successful login
+      navigate(from, { replace: true });
     } catch (error) {
       // Error toast is already shown by AuthContext
       console.error("Login failed:", error);
@@ -63,7 +66,7 @@ export default function LoginPage() {
     try {
       setIsLoading(true);
       await googleLogin();
-      navigate("/");
+      navigate(from, { replace: true });
     } catch (error) {
       console.error("Google login failed:", error);
     } finally {
@@ -75,7 +78,7 @@ export default function LoginPage() {
     try {
       setIsLoading(true);
       await githubLogin();
-      navigate("/");
+      navigate(from, { replace: true });
     } catch (error) {
       console.error("GitHub login failed:", error);
     } finally {

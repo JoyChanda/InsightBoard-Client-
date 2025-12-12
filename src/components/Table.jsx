@@ -26,10 +26,7 @@ const Table = ({ columns, data }) => {
             </tr>
           ) : (
             data.map((row, index) => (
-              <tr
-                key={index}
-                className="border-t hover:bg-gray-50 transition"
-              >
+              <tr key={index} className="border-t hover:bg-gray-50 transition">
                 <td className="py-2 px-4">{row.name}</td>
                 <td className="py-2 px-4">{row.email}</td>
                 <td className="py-2 px-4">{row.role}</td>
