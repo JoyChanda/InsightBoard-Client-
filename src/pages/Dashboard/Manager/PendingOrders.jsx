@@ -23,7 +23,10 @@ const PendingOrders = () => {
     };
 
     const handleStatus = async (id, status) => {
-        if(!confirm(`Are you sure you want to ${status} this order?`)) return;
+        console.log(`[UI] Clicking ${status} for order ${id}`);
+        // Removed confirm() to prevent blocking issues
+        // if(!confirm(`Are you sure you want to ${status} this order?`)) return; 
+        
         try {
             if (status === "approved") {
                 await axios.patch(`${import.meta.env.VITE_API_URL}/orders/${id}/approve`, {}, { withCredentials: true });

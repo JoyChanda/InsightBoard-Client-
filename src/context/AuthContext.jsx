@@ -62,7 +62,21 @@ export const AuthProvider = ({ children }) => {
         // For now, let's just set what we have.
         setUser(userData);
       } else {
-        setUser(null);
+        // No Firebase user? Check if we have a valid Backend Cookie (e.g. Superadmin)
+        try {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/auth/me`, {
+                headers: { "Content-Type": "application/json" },
+                credentials: "include" 
+            });
+            if (res.ok) {
+                const userBackend = await res.json();
+                setUser(userBackend);
+            } else {
+                setUser(null);
+            }
+        } catch (e) {
+            setUser(null);
+        }
       }
       setLoading(false);
     });
@@ -132,6 +146,14 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = async () => {
+    try {
+        await fetch(`${import.meta.env.VITE_API_URL}/auth/logout`, {
+            method: "POST",
+            credentials: "include"
+        });
+    } catch (e) {
+        console.error("Backend logout failed", e);
+    }
     await signOut(auth);
     setUser(null);
     toast.info("Logged out");
@@ -139,6 +161,7 @@ export const AuthProvider = ({ children }) => {
 
   const value = {
     user,
+    setUser,
     loading,
     login,
     googleLogin,

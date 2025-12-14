@@ -16,14 +16,12 @@ const Sidebar = ({ isMobileMenuOpen, setIsMobileMenuOpen }) => {
   // Menu items based on role
   const menu = {
     admin: [
-      { label: "Admin Access", to: "/admin-access" },
       { label: "Dashboard Home", to: "/dashboard" },
       { label: "Manage Users", to: "/dashboard/manage-users" },
       { label: "All Products", to: "/dashboard/all-products" },
       { label: "All Orders", to: "/dashboard/all-orders" },
     ],
     superadmin: [
-      { label: "Admin Access", to: "/admin-access" },
       { label: "Dashboard Home", to: "/dashboard" },
       { label: "Manage Users", to: "/dashboard/manage-users" },
       { label: "All Products", to: "/dashboard/all-products" },

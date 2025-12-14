@@ -83,7 +83,7 @@ function App() {
                 <Route
                   element={
                     <PrivateRoute
-                      allowedRoles={["manager"]}
+                      allowedRoles={["manager", "superadmin"]}
                     />
                   }
                 >
