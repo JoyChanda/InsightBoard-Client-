@@ -51,7 +51,7 @@ const ApprovedOrders = () => {
         <div className="p-6">
              <h1 className="text-3xl font-bold mb-6 text-base-content">Active Orders</h1>
              
-             <div className="overflow-x-auto bg-white dark:bg-gray-800 rounded-lg shadow border border-gray-200 dark:border-gray-700">
+             <div className="overflow-x-auto bg-base-100 rounded-lg shadow border border-base-200">
                 <table className="table w-full">
                     <thead>
                         <tr className="bg-base-200 text-base-content">
@@ -92,7 +92,7 @@ const ApprovedOrders = () => {
              {/* Tracking Modal */}
              {selectedOrder && (
                 <div className="modal modal-open">
-                    <div className="modal-box bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100">
+                    <div className="modal-box bg-base-100 text-base-content">
                         <h3 className="font-bold text-lg mb-4">Update Tracking for #{selectedOrder._id.slice(-6)}</h3>
                         <form onSubmit={handleUpdateTracking} className="space-y-4">
                             

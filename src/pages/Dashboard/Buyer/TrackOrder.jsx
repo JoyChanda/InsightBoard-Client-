@@ -29,7 +29,7 @@ const TrackOrder = () => {
         <div className="p-6 max-w-3xl mx-auto">
             <h1 className="text-3xl font-bold mb-6 text-base-content">Track Order #{id.slice(-6)}</h1>
             
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 border border-gray-200 dark:border-gray-700">
+            <div className="card bg-base-100 rounded-xl shadow-lg p-8 border border-base-300">
                 <h2 className="text-xl font-semibold mb-6">Order Timeline</h2>
                 
                 <ul className="timeline timeline-vertical timeline-compact">

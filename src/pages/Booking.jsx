@@ -97,20 +97,20 @@ const Booking = () => {
 
     return (
         <div className="container mx-auto px-4 py-10 max-w-3xl">
-            <h1 className="text-3xl font-bold mb-8 text-center text-gray-900 dark:text-gray-100">Complete Your Booking</h1>
+            <h1 className="text-3xl font-bold mb-8 text-center text-base-content">Complete Your Booking</h1>
             
-            <div className="bg-white dark:bg-gray-800 shadow-2xl rounded-2xl overflow-hidden flex flex-col md:flex-row">
+            <div className="card bg-base-100 shadow-2xl overflow-hidden flex flex-col md:flex-row border border-base-200">
                 
                 {/* Product Summary Sidebar (or Top) */}
-                <div className="w-full md:w-1/3 bg-gray-50 dark:bg-gray-700 p-6 flex flex-col gap-4">
-                    <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100 border-b pb-2">Order Summary</h3>
+                <div className="w-full md:w-1/3 bg-base-200 p-6 flex flex-col gap-4">
+                    <h3 className="text-xl font-bold text-base-content border-b border-base-300 pb-2">Order Summary</h3>
                     <img src={getImageUrl(product.images?.[0])} alt={product.title} className="w-full h-32 object-cover rounded-lg" />
                     <div>
-                        <p className="font-semibold text-gray-700 dark:text-gray-300">{product.title}</p>
-                        <p className="text-sm text-gray-500">{product.category}</p>
+                        <p className="font-semibold text-base-content">{product.title}</p>
+                        <p className="text-sm text-base-content/70">{product.category}</p>
                     </div>
-                    <div className="mt-auto pt-4 border-t dark:border-gray-600">
-                        <div className="flex justify-between text-sm mb-1">
+                    <div className="mt-auto pt-4 border-t border-base-300">
+                        <div className="flex justify-between text-sm mb-1 text-base-content/70">
                             <span>Price per unit:</span>
                             <span>${product.price}</span>
                         </div>
@@ -122,13 +122,13 @@ const Booking = () => {
                 </div>
 
                 {/* Booking Form */}
-                <div className="w-full md:w-2/3 p-8">
+                <div className="w-full md:w-2/3 p-8 bg-base-100">
                      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                         
                         {/* Read Only User Info */}
                         <div className="form-control">
                             <label className="label"><span className="label-text">Email</span></label>
-                            <input type="email" value={user?.email || ""} readOnly className="input input-bordered w-full bg-gray-100 dark:bg-gray-600 dark:text-white" />
+                            <input type="email" value={user?.email || ""} readOnly className="input input-bordered w-full bg-base-200 text-base-content/70 cursor-not-allowed" />
                         </div>
 
                         {/* Name Fields */}
@@ -138,7 +138,7 @@ const Booking = () => {
                                 <input 
                                     type="text" 
                                     {...register("firstName", { required: "First Name is required" })} 
-                                    className="input input-bordered w-full dark:bg-gray-700 dark:text-white" 
+                                    className="input input-bordered w-full focus:input-primary" 
                                 />
                                 {errors.firstName && <span className="text-error text-xs mt-1">{errors.firstName.message}</span>}
                             </div>
@@ -147,7 +147,7 @@ const Booking = () => {
                                 <input 
                                     type="text" 
                                     {...register("lastName", { required: "Last Name is required" })} 
-                                    className="input input-bordered w-full dark:bg-gray-700 dark:text-white" 
+                                    className="input input-bordered w-full focus:input-primary" 
                                 />
                                 {errors.lastName && <span className="text-error text-xs mt-1">{errors.lastName.message}</span>}
                             </div>
@@ -159,7 +159,7 @@ const Booking = () => {
                             <input 
                                 type="tel" 
                                 {...register("contact", { required: "Contact Number is required" })} 
-                                className="input input-bordered w-full dark:bg-gray-700 dark:text-white" 
+                                className="input input-bordered w-full focus:input-primary" 
                             />
                             {errors.contact && <span className="text-error text-xs mt-1">{errors.contact.message}</span>}
                         </div>
@@ -168,7 +168,7 @@ const Booking = () => {
                             <label className="label"><span className="label-text">Delivery Address</span></label>
                             <textarea 
                                 {...register("address", { required: "Address is required" })} 
-                                className="textarea textarea-bordered h-24 dark:bg-gray-700 dark:text-white"
+                                className="textarea textarea-bordered h-24 focus:textarea-primary"
                             ></textarea>
                              {errors.address && <span className="text-error text-xs mt-1">{errors.address.message}</span>}
                         </div>
@@ -183,7 +183,7 @@ const Booking = () => {
                                     min: { value: product.minQty, message: `Minimum quantity is ${product.minQty}` },
                                     max: { value: product.qty, message: `Maximum available is ${product.qty}` }
                                 })} 
-                                className="input input-bordered w-full dark:bg-gray-700 dark:text-white" 
+                                className="input input-bordered w-full focus:input-primary" 
                             />
                              {errors.qty && <span className="text-error text-xs mt-1">{errors.qty.message}</span>}
                         </div>
@@ -191,7 +191,7 @@ const Booking = () => {
                         {/* Payment Method */}
                         <div className="form-control">
                              <label className="label"><span className="label-text">Payment Method</span></label>
-                             <select className="select select-bordered w-full dark:bg-gray-700 dark:text-white" {...register("paymentMethod", { required: "Please select a payment method" })}>
+                             <select className="select select-bordered w-full focus:select-primary" {...register("paymentMethod", { required: "Please select a payment method" })}>
                                 <option value="">Select Option</option>
                                 {product.paymentOptions?.map(opt => (
                                     <option key={opt} value={opt}>{opt}</option>
@@ -203,7 +203,7 @@ const Booking = () => {
                         {/* Notes */}
                         <div className="form-control">
                             <label className="label"><span className="label-text">Additional Notes (Optional)</span></label>
-                            <textarea {...register("notes")} className="textarea textarea-bordered dark:bg-gray-700 dark:text-white"></textarea>
+                            <textarea {...register("notes")} className="textarea textarea-bordered focus:textarea-primary"></textarea>
                         </div>
 
                         <div className="mt-6">
