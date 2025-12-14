@@ -2,6 +2,31 @@
 
 @import "tailwindcss";
 
+@layer base {
+    :root {
+        --color-base-100: 255 255 255;
+        /* white */
+        --color-base-200: 249 250 251;
+        /* gray-50 */
+        --color-base-300: 243 244 246;
+        /* gray-100 */
+        --color-base-content: 17 24 39;
+        /* gray-900 */
+    }
+
+    .dark {
+        --color-base-100: 17 24 39;
+        /* gray-900 */
+        --color-base-200: 31 41 55;
+        /* gray-800 */
+        --color-base-300: 55 65 81;
+        /* gray-700 */
+        --color-base-content: 243 244 246;
+        /* gray-100 */
+    }
+}
+
+
 /* === Custom Button Styles === */
 .btn {
     padding: 1rem 1.5rem;

@@ -44,44 +44,107 @@ const AdminAllProducts = () => {
         setDeleteModalOpen(true);
     };
 
-    const confirmDelete = async () => {
-        if (!productToDelete) return;
+    const handleToggleHome = async (product) => {
         try {
-            console.log("🗑️ Attempting to delete product:", productToDelete._id);
-            const response = await axios.delete(`${import.meta.env.VITE_API_URL}/products/${productToDelete._id}`, { withCredentials: true });
-            console.log("✅ Delete response:", response.data);
-            toast.success("Product deleted successfully");
-            setProducts(products.filter(p => p._id !== productToDelete._id));
-            setDeleteModalOpen(false);
-            setProductToDelete(null);
+            setUpdating(true);
+            const newValue = !product.showOnHome;
+            const res = await axios.patch(
+                `${import.meta.env.VITE_API_URL}/products/${product._id}`, 
+                { showOnHome: newValue }, 
+                { withCredentials: true }
+            );
+            
+            if (res.data.success) {
+                 setProducts(products.map(p => 
+                    p._id === product._id ? { ...p, showOnHome: newValue } : p
+                ));
+                toast.success(`Product ${newValue ? "added to" : "removed from"} Home`);
+            }
         } catch (error) {
-            console.error("❌ Delete failed:", error.response?.data || error.message);
-            toast.error(error.response?.data?.message || "Failed to delete product");
+            console.error("Failed to toggle home status", error);
+            toast.error("Failed to update status");
+        } finally {
+            setUpdating(false);
         }
     };
+
+    const openUpdateModal = (product) => {
+        setSelectedProduct(product);
+        setFormData({
+            title: product.title || "",
+            description: product.desc || "",
+            price: product.price || "",
+            category: product.category || "",
+            images: product.images?.join(", ") || "",
+            demoVideo: product.demoVideo || "",
+            paymentOptions: product.paymentOptions?.join(", ") || ""
+        });
+        setIsUpdateModalOpen(true);
+    };
+
+    const handleUpdateProduct = async () => {
+        if (!selectedProduct) return;
+        try {
+            setUpdating(true);
+            const payload = {
+                title: formData.title,
+                desc: formData.description,
+                price: Number(formData.price),
+                category: formData.category,
+                images: formData.images.split(",").map(s => s.trim()).filter(Boolean),
+                demoVideo: formData.demoVideo,
+                paymentOptions: formData.paymentOptions.split(",").map(s => s.trim()).filter(Boolean)
+            };
+
+            const res = await axios.patch(
+                `${import.meta.env.VITE_API_URL}/products/${selectedProduct._id}`,
+                payload,
+                { withCredentials: true }
+            );
+
+            if (res.data.success) {
+                setProducts(products.map(p => 
+                    p._id === selectedProduct._id ? res.data.product : p
+                ));
+                toast.success("Product updated successfully");
+                setIsUpdateModalOpen(false);
+                setSelectedProduct(null);
+            }
+        } catch (error) {
+           console.error("Update failed", error);
+           toast.error(error.response?.data?.message || "Failed to update product");
+        } finally {
+            setUpdating(false);
+        }
+    };
+
+
+
+
+
 
     if (loading) return <Spinner message="Loading all products..." />;
 
     return (
-        <div className="p-6">
+        <div className="p-6 min-h-full">
             <h1 className="text-3xl font-bold mb-6 text-base-content">All Products (Superadmin)</h1>
 
-            <div className="overflow-x-auto bg-base-100 rounded-lg shadow">
+            <div className="overflow-x-auto bg-base-100 dark:bg-base-200 rounded-lg shadow border border-base-200 dark:border-base-300">
                 <table className="table w-full">
                     <thead>
-                        <tr className="bg-base-200">
-                            <th className="text-base-content font-bold">Image</th>
-                            <th className="text-base-content font-bold">Product</th>
-                            <th className="text-base-content font-bold">Category</th>
-                            <th className="text-base-content font-bold">Price</th>
-                            <th className="text-base-content font-bold">Created By</th>
-                            <th className="text-base-content font-bold">Show on Home</th>
-                            <th className="text-base-content font-bold">Actions</th>
+                        <tr className="bg-base-200 text-base-content dark:bg-base-300">
+                            <th className="font-bold">Image</th>
+                            <th className="font-bold">Product</th>
+                            <th className="font-bold">Category</th>
+                            <th className="font-bold">Price</th>
+                            <th className="font-bold">Created By</th>
+                            <th className="font-bold">Show on Home</th>
+                            <th className="font-bold">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         {products.map(product => (
-                            <tr key={product._id} className="hover:bg-base-200">
+                            <tr key={product._id} className="hover:bg-base-200 dark:hover:bg-base-300">
                                 <td>
                                     <div className="avatar">
                                         <div className="mask mask-squircle w-12 h-12">
@@ -90,14 +153,14 @@ const AdminAllProducts = () => {
                                     </div>
                                 </td>
                                 <td>
-                                    <div className="font-bold">{product.title}</div>
-                                    <div className="text-xs opacity-60 truncate max-w-[180px]">
+                                    <div className="font-bold text-base-content">{product.title}</div>
+                                    <div className="text-xs opacity-60 truncate max-w-[180px] text-base-content/70">
                                         {product._id}
                                     </div>
                                 </td>
-                                <td>{product.category}</td>
-                                <td>${product.price}</td>
-                                <td>{product.createdBy || "—"}</td>
+                                <td className="text-base-content">{product.category}</td>
+                                <td className="text-base-content">${product.price}</td>
+                                <td className="text-base-content">{product.createdBy || "—"}</td>
                                 <td>
                                     <input
                                         type="checkbox"
@@ -125,18 +188,18 @@ const AdminAllProducts = () => {
             {/* Update Product Modal */}
             {isUpdateModalOpen && selectedProduct && (
                 <div className="modal modal-open">
-                    <div className="modal-box max-w-2xl bg-base-100 text-base-content border border-base-200">
+                    <div className="modal-box max-w-2xl bg-base-100 dark:bg-base-200 text-base-content border border-base-200 dark:border-base-300">
                         <h3 className="font-bold text-lg mb-4">Update Product</h3>
                         
                         <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-2">
                             {/* Title */}
                             <div className="form-control">
                                 <label className="label">
-                                    <span className="label-text">Product Title *</span>
+                                    <span className="label-text text-base-content">Product Title *</span>
                                 </label>
                                 <input
                                     type="text"
-                                    className="input input-bordered w-full"
+                                    className="input input-bordered w-full bg-base-100 dark:bg-base-200 text-base-content border-gray-300 dark:border-gray-600"
                                     value={formData.title}
                                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                                     placeholder="Enter product title"
@@ -146,10 +209,10 @@ const AdminAllProducts = () => {
                             {/* Description */}
                             <div className="form-control">
                                 <label className="label">
-                                    <span className="label-text">Description</span>
+                                    <span className="label-text text-base-content">Description</span>
                                 </label>
                                 <textarea
-                                    className="textarea textarea-bordered h-24"
+                                    className="textarea textarea-bordered h-24 bg-base-100 dark:bg-base-200 text-base-content border-gray-300 dark:border-gray-600"
                                     value={formData.description}
                                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                                     placeholder="Enter product description"
@@ -160,12 +223,12 @@ const AdminAllProducts = () => {
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="form-control">
                                     <label className="label">
-                                        <span className="label-text">Price *</span>
+                                        <span className="label-text text-base-content">Price *</span>
                                     </label>
                                     <input
                                         type="number"
                                         step="0.01"
-                                        className="input input-bordered w-full"
+                                        className="input input-bordered w-full bg-base-100 dark:bg-base-200 text-base-content border-gray-300 dark:border-gray-600"
                                         value={formData.price}
                                         onChange={(e) => setFormData({ ...formData, price: e.target.value })}
                                         placeholder="0.00"
@@ -174,11 +237,11 @@ const AdminAllProducts = () => {
 
                                 <div className="form-control">
                                     <label className="label">
-                                        <span className="label-text">Category *</span>
+                                        <span className="label-text text-base-content">Category *</span>
                                     </label>
                                     <input
                                         type="text"
-                                        className="input input-bordered w-full"
+                                        className="input input-bordered w-full bg-base-100 dark:bg-base-200 text-base-content border-gray-300 dark:border-gray-600"
                                         value={formData.category}
                                         onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                                         placeholder="e.g., T-Shirts"
@@ -189,10 +252,10 @@ const AdminAllProducts = () => {
                             {/* Images */}
                             <div className="form-control">
                                 <label className="label">
-                                    <span className="label-text">Image URLs (comma-separated)</span>
+                                    <span className="label-text text-base-content">Image URLs (comma-separated)</span>
                                 </label>
                                 <textarea
-                                    className="textarea textarea-bordered h-20"
+                                    className="textarea textarea-bordered h-20 bg-base-100 dark:bg-base-200 text-base-content border-gray-300 dark:border-gray-600"
                                     value={formData.images}
                                     onChange={(e) => setFormData({ ...formData, images: e.target.value })}
                                     placeholder="https://image1.jpg, https://image2.jpg"
@@ -202,11 +265,11 @@ const AdminAllProducts = () => {
                             {/* Demo Video */}
                             <div className="form-control">
                                 <label className="label">
-                                    <span className="label-text">Demo Video URL</span>
+                                    <span className="label-text text-base-content">Demo Video URL</span>
                                 </label>
                                 <input
                                     type="url"
-                                    className="input input-bordered w-full"
+                                    className="input input-bordered w-full bg-base-100 dark:bg-base-200 text-base-content border-gray-300 dark:border-gray-600"
                                     value={formData.demoVideo}
                                     onChange={(e) => setFormData({ ...formData, demoVideo: e.target.value })}
                                     placeholder="https://youtube.com/..."
@@ -216,11 +279,11 @@ const AdminAllProducts = () => {
                             {/* Payment Options */}
                             <div className="form-control">
                                 <label className="label">
-                                    <span className="label-text">Payment Options (comma-separated)</span>
+                                    <span className="label-text text-base-content">Payment Options (comma-separated)</span>
                                 </label>
                                 <input
                                     type="text"
-                                    className="input input-bordered w-full bg-base-100 text-base-content"
+                                    className="input input-bordered w-full bg-base-100 dark:bg-base-200 text-base-content border-gray-300 dark:border-gray-600"
                                     value={formData.paymentOptions}
                                     onChange={(e) => setFormData({ ...formData, paymentOptions: e.target.value })}
                                     placeholder="Credit Card, PayPal, Cash"
@@ -239,7 +302,7 @@ const AdminAllProducts = () => {
             {/* Delete Confirmation Modal */}
             {deleteModalOpen && productToDelete && (
                 <div className="modal modal-open">
-                    <div className="modal-box bg-base-100 text-base-content">
+                    <div className="modal-box bg-base-100 dark:bg-base-200 text-base-content">
                         <h3 className="font-bold text-lg mb-4 text-error">Confirm Deletion</h3>
                         <p className="py-2">
                             Are you sure you want to delete the product <strong>{productToDelete.title}</strong>?

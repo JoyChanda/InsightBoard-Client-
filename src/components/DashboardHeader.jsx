@@ -10,18 +10,24 @@ const DashboardHeader = ({ toggleMobileMenu }) => {
 
   const displayName = user?.displayName || user?.email?.split("@")[0] || "User";
   const initials = displayName?.[0]?.toUpperCase() || "U";
-  const showImage = user?.photoURL && !avatarError;
+  
+  // Filter out invalid image URLs (e.g., Unsplash webpages instead of direct image links)
+  const isValidPhoto = (url) => {
+      if (!url) return false;
+      if (url.includes("unsplash.com/photos/")) return false; // This is a webpage, not an image
+      return true;
+  };
+
+  const showImage = isValidPhoto(user?.photoURL) && !avatarError;
 
   return (
     <header
       className="
-        bg-base-100 
-        dark:bg-base-100/95
+        bg-base-200 
         backdrop-blur-md
         shadow-md 
         border-b 
-        border-base-200 
-        dark:border-base-300
+        border-base-300 
         transition-colors duration-300
       "
     >
@@ -94,16 +100,16 @@ const DashboardHeader = ({ toggleMobileMenu }) => {
             className="
               hidden md:flex items-center space-x-2
               px-3 py-1.5 rounded-lg
-              bg-white/80 dark:bg-gray-700
-              border border-purple-200 dark:border-gray-600
-              hover:bg-purple-50 dark:hover:bg-gray-600
+              bg-base-100
+              border border-base-300
+              hover:bg-base-200
               transition-colors
-              text-gray-800 dark:text-gray-50
+              text-base-content
             "
           >
             <div className="text-right">
               <p className="text-sm font-semibold">{displayName}</p>
-              <p className="text-xs text-gray-600 dark:text-gray-300 capitalize">
+              <p className="text-xs text-base-content/70 capitalize text-right">
                 {user?.role || "user"}
               </p>
             </div>

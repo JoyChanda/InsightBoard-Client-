@@ -15,7 +15,7 @@ const DashboardLayout = () => {
     <div
       className="
         min-h-screen flex flex-col
-        bg-base-100 dark:bg-base-100
+        bg-base-200
         text-base-content
         transition-colors duration-300
       "
@@ -44,8 +44,7 @@ const DashboardLayout = () => {
           className="
             flex-1 overflow-y-auto 
             p-4 sm:p-6 pb-12
-            bg-gray-50 dark:bg-base-200
-            md:border-l border-gray-200 dark:border-base-300
+            bg-base-100
             transition-all duration-300
             w-full
           "

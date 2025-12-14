@@ -59,27 +59,27 @@ const AddProduct = () => {
   };
 
   return (
-    <div className="p-6">
-      <div className="max-w-2xl mx-auto bg-base-100 rounded-lg shadow-xl p-6">
+    <div className="p-6 transition-colors duration-300">
+      <div className="max-w-2xl mx-auto bg-base-100 rounded-lg shadow-xl p-6 border border-base-200">
         <h1 className="text-3xl font-bold mb-6 text-base-content text-center">Add New Product</h1>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         
         {/* Title */}
         <div className="form-control">
-            <label className="label font-bold">Product Title</label>
+            <label className="label"><span className="label-text font-bold text-base-content">Product Title</span></label>
             <input
               type="text"
               {...register("title", { required: "Title is required" })}
               className="input input-bordered w-full"
-              placeholder="e.g. Premium Wireless Headphones"
+              placeholder="e.g. Premium Shirts"
             />
             {errors.title && <span className="text-red-500 text-sm">{errors.title.message}</span>}
         </div>
 
         {/* Description */}
         <div className="form-control">
-            <label className="label font-bold">Description</label>
+            <label className="label"><span className="label-text font-bold text-base-content">Description</span></label>
             <textarea
               {...register("desc", { required: "Description is required" })}
               className="textarea textarea-bordered h-24"
@@ -91,7 +91,7 @@ const AddProduct = () => {
         {/* Price & Qty Row */}
         <div className="flex flex-col md:flex-row gap-4">
             <div className="form-control w-full">
-                <label className="label font-bold">Price ($)</label>
+                <label className="label"><span className="label-text font-bold text-base-content">Price ($)</span></label>
                 <input
                   type="number"
                   {...register("price", { required: "Price is required", min: 1 })}
@@ -101,7 +101,7 @@ const AddProduct = () => {
             </div>
 
             <div className="form-control w-full">
-                <label className="label font-bold">Quantity</label>
+                <label className="label"><span className="label-text font-bold text-base-content">Quantity</span></label>
                 <input
                   type="number"
                   {...register("qty", { required: "Quantity is required", min: 0 })}
@@ -114,7 +114,7 @@ const AddProduct = () => {
         {/* Min Qty & Category Row */}
         <div className="flex flex-col md:flex-row gap-4">
             <div className="form-control w-full">
-                <label className="label font-bold">Min Order Qty</label>
+                <label className="label"><span className="label-text font-bold text-base-content">Min Order Qty</span></label>
                 <input
                   type="number"
                   {...register("minQty", { required: "Min Qty is required", min: 1 })}
@@ -125,7 +125,7 @@ const AddProduct = () => {
             </div>
 
              <div className="form-control w-full">
-                <label className="label font-bold">Category</label>
+                <label className="label"><span className="label-text font-bold text-base-content">Category</span></label>
                 <select
                   {...register("category", { required: "Category is required" })}
                   className="select select-bordered w-full"
@@ -145,7 +145,7 @@ const AddProduct = () => {
         {/* Payment Options & Show On Home */}
         <div className="flex flex-col md:flex-row gap-4">
             <div className="form-control w-full">
-                <label className="label font-bold">Payment Options</label>
+                <label className="label"><span className="label-text font-bold text-base-content">Payment Options</span></label>
                 <select
                   {...register("payment", { required: "Payment option is required" })}
                   className="select select-bordered w-full"
@@ -158,14 +158,14 @@ const AddProduct = () => {
              <div className="form-control w-full items-start pt-8">
                  <label className="label cursor-pointer gap-2">
                     <input type="checkbox" {...register("showOnHome")} className="checkbox checkbox-primary" />
-                    <span className="label-text font-bold">Show on Home Page?</span>
+                    <span className="label-text font-bold text-base-content">Show on Home Page?</span>
                 </label>
             </div>
         </div>
         
         {/* Demo Video */}
          <div className="form-control">
-            <label className="label font-bold">Demo Video URL (Optional)</label>
+            <label className="label"><span className="label-text font-bold text-base-content">Demo Video URL (Optional)</span></label>
             <input
               type="text"
               {...register("demoVideo")}
@@ -175,8 +175,8 @@ const AddProduct = () => {
         </div>
 
         {/* Image Management */}
-        <div className="form-control p-4 border rounded-lg bg-base-200">
-          <label className="label font-bold">Product Images</label>
+        <div className="form-control p-4 border rounded-lg bg-base-200 border-base-300">
+          <label className="label"><span className="label-text font-bold text-base-content">Product Images</span></label>
           <div className="flex gap-2 mb-2">
             <input
               type="text"
@@ -208,7 +208,7 @@ const AddProduct = () => {
         <button
           type="submit"
           disabled={loading}
-          className={`btn btn-primary w-full text-lg mt-6 ${loading ? 'loading' : ''}`}
+          className={`btn btn-primary w-full text-lg mt-6 text-white ${loading ? 'loading' : ''}`}
         >
           {loading ? 'Adding Product...' : 'Create Product'}
         </button>

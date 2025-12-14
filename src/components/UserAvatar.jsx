@@ -10,8 +10,15 @@ const UserAvatar = () => {
   const displayName = user?.displayName || user?.email?.split("@")[0] || "User";
   const initials = displayName.charAt(0).toUpperCase();
 
+  // Filter out invalid image URLs (e.g., Unsplash webpages instead of direct image links)
+  const isValidPhoto = (url) => {
+      if (!url) return false;
+      if (url.includes("unsplash.com/photos/")) return false; // This is a webpage, not an image
+      return true;
+  };
+
   // Check if we should show the image
-  const showImage = user?.photoURL && !imageError;
+  const showImage = isValidPhoto(user?.photoURL) && !imageError;
   const avatarEl = showImage ? (
     <img
       alt={displayName}

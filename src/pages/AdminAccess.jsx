@@ -8,7 +8,7 @@ const AdminAccess = () => {
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
-  const { setUser, user} = useAuth();
+  const { setUser, user } = useAuth();
 
   // If already logged in as superadmin, redirect to dashboard
   useEffect(() => {
@@ -20,7 +20,7 @@ const AdminAccess = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (submitting) return;
-    
+
     setSubmitting(true);
 
     try {
@@ -49,72 +49,61 @@ const AdminAccess = () => {
 
       // Set user in context
       setUser(data.user);
-      
+
       toast.success("Superadmin login successful!");
       navigate("/dashboard", { replace: true });
     } catch (error) {
-      toast.error(error.message || "Login failed. Please check your credentials.");
+      toast.error(
+        error.message || "Login failed. Please check your credentials."
+      );
     } finally {
       setSubmitting(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 via-blue-50 to-pink-50 dark:from-base-300 dark:via-base-200 dark:to-base-300 px-4">
-      <div className="w-full max-w-md">
-        {/* Admin Badge */}
-        <div className="text-center mb-6">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 border border-purple-400 rounded-full shadow-lg">
-            <span className="text-2xl">👑</span>
-            <span className="text-white font-bold text-lg">
-              Superadmin Portal
-            </span>
-          </div>
-        </div>
-
-        {/* Login Card */}
-        <div className="bg-base-100 rounded-2xl shadow-2xl p-8 border border-purple-100 dark:border-base-300">
-          <div className="flex items-center gap-3 mb-6">
+    <div className="min-h-screen flex items-center justify-center bg-base-200 dark:bg-gray-900 p-6">
+      <div className="card bg-base-100 dark:bg-gray-800 shadow-2xl w-full max-w-md border border-base-200 dark:border-gray-700">
+        <div className="card-body">
+          {/* Admin Header */}
+          <div className="text-center mb-4">
             <span className="text-4xl">🛡️</span>
-            <div>
-              <h1 className="text-2xl font-bold text-base-content">
-                Superadmin Access
-              </h1>
-              <p className="text-sm text-base-content/70">
-                Highest level access only
-              </p>
-            </div>
+            <h2 className="card-title text-2xl font-bold justify-center mt-2 text-base-content dark:text-white">
+              Superadmin Access
+            </h2>
+            <p className="text-sm text-base-content/70 dark:text-gray-400">
+              Highest level access only
+            </p>
           </div>
 
           {/* Info Box */}
-          <div className="mb-6 p-4 bg-gradient-to-r from-purple-50 to-indigo-50 dark:from-purple-900/20 dark:to-indigo-900/20 border border-purple-200 dark:border-purple-800 rounded-lg">
-            <p className="text-sm text-purple-800 dark:text-purple-300 font-medium mb-2">
-              👑 Superadmin Credentials
-            </p>
-            
-            <div className="p-3 bg-white dark:bg-gray-700/50 rounded border border-purple-300 dark:border-purple-700">
-              <p className="text-xs text-purple-700 dark:text-purple-400">
-                <strong>Email:</strong> super@insideboard.com
-              </p>
-              <p className="text-xs text-purple-700 dark:text-purple-400">
-                <strong>Password:</strong> superadmin123
-              </p>
+          <div className="alert alert-info shadow-sm mb-4">
+            <div>
+              <h3 className="font-bold text-xs uppercase tracking-wide opacity-70">
+                Credentials
+              </h3>
+              <div className="text-sm space-y-1 mt-1">
+                <p>
+                  <strong>Email:</strong> super@insideboard.com
+                </p>
+                <p>
+                  <strong>Password:</strong> superadmin123
+                </p>
+              </div>
             </div>
-
-            <p className="text-xs text-purple-600 dark:text-purple-400 mt-3 italic">
-              💡 Full access to all admin features
-            </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Email Field */}
-            <div>
-              <label className="block text-sm font-medium text-base-content mb-1">
-                Admin Email
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text font-medium text-base-content dark:text-gray-300">
+                  Admin Email
+                </span>
               </label>
               <input
                 type="email"
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 dark:bg-base-200 dark:text-white"
+                className="input input-bordered w-full focus:input-primary dark:bg-gray-700 dark:text-white dark:border-gray-600"
                 placeholder="admin@insightboard.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -123,13 +112,15 @@ const AdminAccess = () => {
             </div>
 
             {/* Password Field */}
-            <div>
-              <label className="block text-sm font-medium text-base-content mb-1">
-                Admin Password
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text font-medium text-base-content dark:text-gray-300">
+                  Admin Password
+                </span>
               </label>
               <input
                 type="password"
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 dark:bg-base-200 dark:text-white"
+                className="input input-bordered w-full focus:input-primary dark:bg-gray-700 dark:text-white dark:border-gray-600"
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -140,35 +131,32 @@ const AdminAccess = () => {
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold py-3 rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+              className="btn btn-primary w-full"
               disabled={submitting}
             >
               {submitting ? (
-                <span className="flex items-center justify-center gap-2">
-                  <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                  </svg>
+                <>
+                  <span className="loading loading-spinner"></span>
                   Logging in...
-                </span>
+                </>
               ) : (
-                "🔓 Login as Admin"
+                "Login as Admin"
               )}
             </button>
           </form>
 
           {/* Warning */}
-          <div className="mt-6 p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
-            <p className="text-xs text-yellow-800 dark:text-yellow-300">
+          <div className="mt-4 p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg text-center">
+            <p className="text-xs text-yellow-800 dark:text-yellow-200 font-medium">
               ⚠️ Change default password after first login
             </p>
           </div>
 
           {/* Back to Home */}
-          <div className="mt-6 text-center">
+          <div className="mt-4 text-center">
             <button
               onClick={() => navigate("/")}
-              className="text-sm text-purple-600 dark:text-purple-400 hover:underline"
+              className="link link-hover text-sm text-base-content/70 dark:text-gray-400"
             >
               ← Back to Home
             </button>

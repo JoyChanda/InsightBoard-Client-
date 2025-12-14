@@ -42,7 +42,7 @@ const Profile = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* ================= LEFT COLUMN ================= */}
-        <div className="bg-base-100 shadow-lg border border-base-200 dark:border-base-300 rounded-2xl p-6 text-center">
+        <div className="bg-base-100 dark:bg-gray-800 shadow-lg border border-base-200 dark:border-gray-700 rounded-2xl p-6 text-center">
           {/* Profile Avatar */}
           <div className="relative inline-block">
             <div className="w-32 h-32 rounded-full overflow-hidden mx-auto border-4 border-purple-100 dark:border-gray-600 shadow bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center text-4xl text-white font-bold">
@@ -97,7 +97,7 @@ const Profile = () => {
         </div>
 
         {/* ================= RIGHT COLUMN ================= */}
-        <div className="md:col-span-2 bg-base-100 shadow-lg border border-base-200 dark:border-base-300 rounded-2xl p-8">
+        <div className="md:col-span-2 bg-base-100 dark:bg-gray-800 shadow-lg border border-base-200 dark:border-gray-700 rounded-2xl p-8">
           {/* Heading */}
           <h3 className="text-xl font-semibold mb-6 text-base-content flex items-center gap-2">
             <span>⚙️</span> Edit Profile

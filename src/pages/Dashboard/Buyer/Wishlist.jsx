@@ -28,20 +28,20 @@ const Wishlist = () => {
             <h1 className="text-3xl font-bold mb-6 text-base-content">My Wishlist</h1>
             
             {wishlistItems.length === 0 ? (
-                <div className="text-center py-20 bg-base-100 rounded-lg border border-base-200">
+                <div className="text-center py-20 bg-base-100 dark:bg-base-200 rounded-lg shadow-sm border border-base-300">
                     <div className="text-6xl mb-4">💖</div>
                     <h2 className="text-2xl font-bold text-base-content">Your wishlist is empty</h2>
                     <p className="text-base-content/70 mt-2 mb-6">Save items you love to revisit them later.</p>
-                    <Link to="/products" className="btn btn-primary">Start Shopping</Link>
+                    <Link to="/products" className="btn btn-primary text-white">Start Shopping</Link>
                 </div>
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {wishlistItems.map(item => (
-                        <div key={item._id} className="relative">
+                        <div key={item._id} className="relative group">
                             <ProductCard product={item} />
                             <button 
                                 onClick={() => removeFromWishlist(item._id)}
-                                className="absolute top-2 left-2 btn btn-circle btn-sm btn-error text-white opacity-90 hover:opacity-100"
+                                className="absolute top-2 left-2 btn btn-circle btn-sm btn-error text-white opacity-90 hover:opacity-100 shadow-md transform hover:scale-105 transition-transform"
                                 title="Remove from Wishlist"
                             >
                                 ✕

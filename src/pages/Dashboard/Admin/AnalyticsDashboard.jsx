@@ -34,11 +34,11 @@ const AnalyticsDashboard = () => {
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884d8"];
 
   return (
-    <div className="p-6">
+    <div className="p-6 min-h-full">
       <div className="flex flex-col md:flex-row justify-between items-center mb-8">
           <h1 className="text-3xl font-bold text-base-content">Admin Analytics</h1>
           <select
-            className="select select-bordered w-full md:w-auto"
+            className="select select-bordered w-full md:w-auto bg-base-100 dark:bg-base-200 text-base-content border-gray-300 dark:border-gray-600"
             value={timeRange}
             onChange={(e) => setTimeRange(e.target.value)}
           >
@@ -80,15 +80,17 @@ const AnalyticsDashboard = () => {
 
       {/* Charts Row 1 */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-        <div className="bg-base-100 p-6 rounded-lg shadow">
-          <h3 className="text-xl font-bold mb-4 text-center">Orders by Status</h3>
+        <div className="bg-base-100 dark:bg-base-200 p-6 rounded-lg shadow border border-base-200 dark:border-base-300">
+          <h3 className="text-xl font-bold mb-4 text-center text-base-content">Orders by Status</h3>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={data.ordersByStatus}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="_id" />
-                <YAxis />
-                <Tooltip />
+                <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
+                <XAxis dataKey="_id" stroke="#888888" />
+                <YAxis stroke="#888888" />
+                <Tooltip 
+                    contentStyle={{ backgroundColor: 'rgba(0,0,0,0.8)', border: 'none', borderRadius: '8px', color: '#fff' }}
+                />
                 <Legend />
                 <Bar dataKey="count" fill="#8884d8" name="Orders" />
               </BarChart>
@@ -96,8 +98,8 @@ const AnalyticsDashboard = () => {
           </div>
         </div>
 
-        <div className="bg-base-100 p-6 rounded-lg shadow">
-          <h3 className="text-xl font-bold mb-4 text-center">Products by Category</h3>
+        <div className="bg-base-100 dark:bg-base-200 p-6 rounded-lg shadow border border-base-200 dark:border-base-300">
+          <h3 className="text-xl font-bold mb-4 text-center text-base-content">Products by Category</h3>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
@@ -115,7 +117,9 @@ const AnalyticsDashboard = () => {
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>
-                <Tooltip />
+                <Tooltip 
+                    contentStyle={{ backgroundColor: 'rgba(0,0,0,0.8)', border: 'none', borderRadius: '8px', color: '#fff' }}
+                />
               </PieChart>
             </ResponsiveContainer>
           </div>
@@ -123,16 +127,18 @@ const AnalyticsDashboard = () => {
       </div>
 
       {/* Charts Row 2: Trend */}
-      <div className="bg-base-100 p-6 rounded-lg shadow mb-8">
-          <h3 className="text-xl font-bold mb-4 text-center">Order Trend (Daily)</h3>
+      <div className="bg-base-100 dark:bg-base-200 p-6 rounded-lg shadow mb-8 border border-base-200 dark:border-base-300">
+          <h3 className="text-xl font-bold mb-4 text-center text-base-content">Order Trend (Daily)</h3>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={data.ordersTrend}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="_id" />
-                <YAxis yAxisId="left" />
-                <YAxis yAxisId="right" orientation="right" />
-                <Tooltip />
+                <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
+                <XAxis dataKey="_id" stroke="#888888" />
+                <YAxis yAxisId="left" stroke="#888888" />
+                <YAxis yAxisId="right" orientation="right" stroke="#888888" />
+                <Tooltip 
+                    contentStyle={{ backgroundColor: 'rgba(0,0,0,0.8)', border: 'none', borderRadius: '8px', color: '#fff' }}
+                />
                 <Legend />
                 <Line yAxisId="left" type="monotone" dataKey="orders" stroke="#8884d8" activeDot={{ r: 8 }} name="Orders" />
                 <Line yAxisId="right" type="monotone" dataKey="sales" stroke="#82ca9d" name="Sales ($)" />

@@ -74,6 +74,29 @@ const ProductDetails = () => {
     isDisabled = true;
   }
 
+  // Helper to get image URL
+  const getImageUrl = (img) => {
+    if (!img) return "https://placehold.co/600x400?text=No+Image";
+    return img.startsWith("http") ? img : `${import.meta.env.VITE_API_URL}/${img}`;
+  };
+
+  const handleAddToWishlist = () => {
+     if (!user) {
+      toast.error("Please login to add to wishlist");
+      navigate("/login", { state: { from: `/products/${id}` } });
+      return;
+    }
+    const wishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
+    const exists = wishlist.find((p) => p._id === product._id);
+    if (exists) {
+      toast.info("Item already in wishlist");
+      return;
+    }
+    wishlist.push(product);
+    localStorage.setItem("wishlist", JSON.stringify(wishlist));
+    toast.success("Added to wishlist!");
+  };
+
   return (
     <div className="container mx-auto px-4 py-10">
       <div className="flex flex-col md:flex-row gap-8 bg-base-100 shadow-xl rounded-2xl p-6 md:p-10">
@@ -88,7 +111,7 @@ const ProductDetails = () => {
                   className="carousel-item relative w-full h-96"
                 >
                   <img
-                    src={img}
+                    src={getImageUrl(img)}
                     className="w-full h-full object-cover"
                     alt={product.title}
                   />
@@ -195,16 +218,25 @@ const ProductDetails = () => {
             </div>
           </div>
 
-          <div className="mt-auto pt-6">
-            <button
-              onClick={handleBookNow}
-              disabled={isDisabled}
-              className={`btn btn-lg w-full ${
-                isDisabled ? "btn-disabled" : "btn-primary"
-              } shadow-lg hover:shadow-xl transition-all`}
-            >
-              {buttonText}
-            </button>
+          <div className="mt-auto pt-6 flex flex-col gap-3">
+             <div className="flex gap-3">
+                <button
+                    onClick={handleBookNow}
+                    disabled={isDisabled}
+                    className={`btn btn-lg flex-1 ${
+                        isDisabled ? "btn-disabled" : "btn-primary"
+                    } shadow-lg hover:shadow-xl transition-all`}
+                >
+                    {buttonText}
+                </button>
+                <button 
+                    onClick={handleAddToWishlist}
+                    className="btn btn-lg btn-outline btn-secondary"
+                    title="Add to Wishlist"
+                >
+                    ❤
+                </button>
+             </div>
             {/* Warning for suspended logic */}
             {isSuspended && (
               <p className="text-error text-sm text-center mt-2">

@@ -13,8 +13,8 @@ const PendingOrders = () => {
 
     const fetchOrders = async () => {
         try {
-            const res = await axios.get(`${import.meta.env.VITE_API_URL}/bookings/pending`, { withCredentials: true });
-            setOrders(res.data);
+            const res = await axios.get(`${import.meta.env.VITE_API_URL}/orders/pending`, { withCredentials: true });
+            setOrders(res.data.orders || []);
         } catch {
             toast.error("Failed to load pending orders");
         } finally {
@@ -25,11 +25,17 @@ const PendingOrders = () => {
     const handleStatus = async (id, status) => {
         if(!confirm(`Are you sure you want to ${status} this order?`)) return;
         try {
-            await axios.put(`${import.meta.env.VITE_API_URL}/bookings/${id}/status`, { status }, { withCredentials: true });
-            toast.success(`Order ${status} successfully`);
-            setOrders(orders.filter(o => o._id !== id));
-        } catch {
-            toast.error("Failed to update status");
+            if (status === "approved") {
+                await axios.patch(`${import.meta.env.VITE_API_URL}/orders/${id}/approve`, {}, { withCredentials: true });
+                toast.success(`Order approved successfully`);
+                fetchOrders(); // Force re-fetch from server
+            } else {
+                await axios.patch(`${import.meta.env.VITE_API_URL}/orders/${id}/reject`, {}, { withCredentials: true });
+                toast.error("Order rejected");
+                fetchOrders(); // Force re-fetch from server
+            }
+        } catch (err) {
+            toast.error(err.response?.data?.message || "Failed to update status");
         }
     };
 
@@ -41,7 +47,7 @@ const PendingOrders = () => {
              
              <div className="grid gap-4">
                 {orders.map(order => (
-                    <div key={order._id} className="card bg-base-100 shadow-lg border border-l-4 border-l-warning p-4">
+                    <div key={order._id} className="card bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700 border-l-4 border-l-warning p-4">
                         <div className="flex flex-col md:flex-row justify-between">
                             <div className="flex-1">
                                 <h3 className="font-bold text-lg">{order.product?.title} (x{order.qty})</h3>
@@ -54,7 +60,7 @@ const PendingOrders = () => {
                                 </div>
                             </div>
                             <div className="flex flex-col gap-2 justify-center mt-4 md:mt-0">
-                                <button onClick={() => handleStatus(order._id, "processing")} className="btn btn-success btn-sm text-white">Approve</button>
+                                <button onClick={() => handleStatus(order._id, "approved")} className="btn btn-success btn-sm text-white">Approve</button>
                                 <button onClick={() => handleStatus(order._id, "rejected")} className="btn btn-error btn-sm text-white">Reject</button>
                             </div>
                         </div>

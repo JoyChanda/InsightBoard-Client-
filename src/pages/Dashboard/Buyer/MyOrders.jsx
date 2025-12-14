@@ -14,9 +14,10 @@ const MyOrders = () => {
 
   const fetchOrders = async () => {
     try {
-      // Reverting to /bookings/my-orders as confirmed by backend routes.
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/bookings/my-orders`, { withCredentials: true });
-      setOrders(Array.isArray(res.data) ? res.data : res.data.orders || res.data.data || []);
+      // Using new standard /orders routes
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/orders/my`, { withCredentials: true });
+      // Controller returns { success: true, orders: [...] }
+      setOrders(res.data.orders || []);
     } catch (err) {
       console.error(err);
       toast.error(err.response?.data?.message || "Failed to fetch orders");
@@ -63,7 +64,7 @@ const MyOrders = () => {
       ) : filteredOrders.length > 0 ? (
         <div className="space-y-4">
             {filteredOrders.map(order => (
-                <div key={order._id} className="card bg-base-100 shadow-xl border border-base-200 dark:border-base-300">
+                <div key={order._id} className="card bg-white dark:bg-gray-800 shadow-xl border border-gray-200 dark:border-gray-700">
                     <div className="card-body p-6">
                         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
                             <div>

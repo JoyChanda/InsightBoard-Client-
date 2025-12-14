@@ -6,7 +6,7 @@ import { useAuth } from "../context/AuthContext";
  * - Protects authenticated routes
  * - Supports multiple allowed roles
  */
-const PrivateRoute = ({ allowedRoles }) => {
+const PrivateRoute = ({ allowedRoles, children }) => {
   const { user, loading } = useAuth();
 
   if (loading) return <p>Loading...</p>;
@@ -19,7 +19,7 @@ const PrivateRoute = ({ allowedRoles }) => {
     return <Navigate to="/unauthorized" replace />;
   }
 
-  return <Outlet />;
+  return children ? children : <Outlet />;
 };
 
 export default PrivateRoute;

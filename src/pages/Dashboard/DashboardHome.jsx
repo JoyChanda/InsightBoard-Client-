@@ -4,9 +4,9 @@ const DashboardHome = () => {
   const { user } = useAuth();
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 min-h-full">
       {/* Welcome Card */}
-      <div className="bg-base-100 rounded-xl shadow-md p-6 border border-base-200">
+      <div className="bg-base-100 dark:bg-base-200 rounded-xl shadow-md p-6 border border-base-200 dark:border-base-300">
         <div className="flex items-center gap-3 mb-3">
           <span className="text-3xl">👋</span>
           <h1 className="text-2xl font-bold text-base-content">
@@ -14,7 +14,7 @@ const DashboardHome = () => {
           </h1>
         </div>
 
-        <div className="bg-base-200 p-4 rounded-lg border border-base-300">
+        <div className="bg-base-200 dark:bg-base-300 p-4 rounded-lg border border-base-200 dark:border-gray-600">
           <p className="text-lg text-base-content mb-2">
             Hello,{" "}
             <span className="font-bold text-primary">

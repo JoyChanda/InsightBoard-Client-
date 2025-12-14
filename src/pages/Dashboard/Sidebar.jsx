@@ -50,8 +50,8 @@ const Sidebar = ({ isMobileMenuOpen, setIsMobileMenuOpen }) => {
     <aside 
       className={`
         fixed md:static inset-y-0 left-0 z-40
-        w-64 bg-base-100 dark:bg-base-100/95 backdrop-blur shadow-lg 
-        border-r border-base-200 dark:border-base-300 
+        w-64 bg-base-200 backdrop-blur shadow-lg 
+        border-r border-base-300 
         overflow-y-auto transition-all duration-300
         transform ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
       `}
@@ -71,7 +71,7 @@ const Sidebar = ({ isMobileMenuOpen, setIsMobileMenuOpen }) => {
                   onClick={handleLinkClick}
                   className="
                     block px-4 py-2.5 rounded-lg 
-                    hover:bg-purple-100/60 dark:hover:bg-base-200
+                    hover:bg-base-200 dark:hover:bg-base-300
                     text-base-content/80 dark:text-base-content/80
                     transition-all duration-200
                     font-medium hover:text-primary dark:hover:text-primary

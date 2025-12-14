@@ -7,6 +7,8 @@ This project helps small and medium-sized garment factories manage production wo
 
 ## 🌍 Live Demo
 
+## admin-panel_URL: https://insight-board-client.vercel.app/admin-access
+
 🔗 **Client Live URL:** https://insight-board-client.vercel.app/  
 🔗 **Server Live URL:** https://your-server-live-url.com
 
@@ -67,7 +69,7 @@ This project demonstrates authentication, private routes, production workflow ma
 - ✅ Firebase auth persistence on page reload
 - ✅ No 404 errors on route refresh
 - ✅ Private routes protected with loading states
-- ✅ Environment variables secured  
+- ✅ Environment variables secured
 - Node.js + Express REST API
 - JWT verification middleware
 - MongoDB with Mongoose
