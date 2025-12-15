@@ -62,16 +62,16 @@ const AdminAccess = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-base-200 dark:bg-gray-900 p-6">
-      <div className="card bg-base-100 dark:bg-gray-800 shadow-2xl w-full max-w-md border border-base-200 dark:border-gray-700">
+    <div className="min-h-screen flex items-center justify-center bg-base-200 p-6">
+      <div className="card bg-base-100 shadow-2xl w-full max-w-md border border-base-200">
         <div className="card-body">
           {/* Admin Header */}
           <div className="text-center mb-4">
             <span className="text-4xl">🛡️</span>
-            <h2 className="card-title text-2xl font-bold justify-center mt-2 text-base-content dark:text-white">
+            <h2 className="card-title text-2xl font-bold justify-center mt-2 text-base-content">
               Superadmin Access
             </h2>
-            <p className="text-sm text-base-content/70 dark:text-gray-400">
+            <p className="text-sm text-base-content/70">
               Highest level access only
             </p>
           </div>
@@ -97,13 +97,13 @@ const AdminAccess = () => {
             {/* Email Field */}
             <div className="form-control">
               <label className="label">
-                <span className="label-text font-medium text-base-content dark:text-gray-300">
+                <span className="label-text font-medium text-base-content">
                   Admin Email
                 </span>
               </label>
               <input
                 type="email"
-                className="input input-bordered w-full focus:input-primary dark:bg-gray-700 dark:text-white dark:border-gray-600"
+                className="input input-bordered w-full focus:input-primary"
                 placeholder="admin@insightboard.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -114,13 +114,13 @@ const AdminAccess = () => {
             {/* Password Field */}
             <div className="form-control">
               <label className="label">
-                <span className="label-text font-medium text-base-content dark:text-gray-300">
+                <span className="label-text font-medium text-base-content">
                   Admin Password
                 </span>
               </label>
               <input
                 type="password"
-                className="input input-bordered w-full focus:input-primary dark:bg-gray-700 dark:text-white dark:border-gray-600"
+                className="input input-bordered w-full focus:input-primary"
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -146,17 +146,17 @@ const AdminAccess = () => {
           </form>
 
           {/* Warning */}
-          <div className="mt-4 p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg text-center">
-            <p className="text-xs text-yellow-800 dark:text-yellow-200 font-medium">
-              ⚠️ Change default password after first login
-            </p>
+          <div className="mt-4 p-3 alert alert-warning shadow-sm rounded-lg text-center flex flex-col items-center">
+             <p className="text-xs font-medium">
+               ⚠️ Change default password after first login
+             </p>
           </div>
 
           {/* Back to Home */}
           <div className="mt-4 text-center">
             <button
               onClick={() => navigate("/")}
-              className="link link-hover text-sm text-base-content/70 dark:text-gray-400"
+              className="link link-hover text-sm text-base-content/70"
             >
               ← Back to Home
             </button>
