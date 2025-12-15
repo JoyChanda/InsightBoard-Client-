@@ -11,6 +11,7 @@ import {
 } from "firebase/auth";
 import { toast } from "react-toastify";
 import { auth } from "../services/firebaseAuth";
+import API from "../api/index";
 
 const AuthContext = createContext();
 
@@ -40,12 +41,9 @@ export const AuthProvider = ({ children }) => {
         
         // Try to get role from backend if cookie exists
         try {
-            const res = await fetch(`${import.meta.env.VITE_API_URL}/auth/me`, {
-                headers: { "Content-Type": "application/json" },
-                credentials: "include" 
-            });
-            if (res.ok) {
-                const userBackend = await res.json();
+            const res = await API.get('/auth/me');
+            if (res.status === 200) {
+                const userBackend = res.data;
                 if (userBackend) {
                    // Merge backend data (role, id) with firebase data
                    userData.role = userBackend.role;
@@ -64,12 +62,9 @@ export const AuthProvider = ({ children }) => {
       } else {
         // No Firebase user? Check if we have a valid Backend Cookie (e.g. Superadmin)
         try {
-            const res = await fetch(`${import.meta.env.VITE_API_URL}/auth/me`, {
-                headers: { "Content-Type": "application/json" },
-                credentials: "include" 
-            });
-            if (res.ok) {
-                const userBackend = await res.json();
+            const res = await API.get('/auth/me');
+            if (res.status === 200) {
+                const userBackend = res.data;
                 setUser(userBackend);
             } else {
                 setUser(null);
@@ -126,14 +121,9 @@ export const AuthProvider = ({ children }) => {
         photoURL: firebaseUser.photoURL,
       };
 
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/social-login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(userData),
-        credentials: "include", // Valid for cookie-based auth
-      });
+      const response = await API.post('/auth/social-login', userData);
       
-      const data = await response.json();
+      const data = response.data;
       
       if (data.user) {
           // Update local state with role from backend
@@ -147,10 +137,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-        await fetch(`${import.meta.env.VITE_API_URL}/auth/logout`, {
-            method: "POST",
-            credentials: "include"
-        });
+        await API.post('/auth/logout');
     } catch (e) {
         console.error("Backend logout failed", e);
     }
