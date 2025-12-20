@@ -7,7 +7,20 @@ import UserAvatar from "./UserAvatar";
 const Navbar = () => {
   const { user, logout } = useAuth();
   const { theme, toggleTheme } = useTheme();
+  const [isProfileSidebarOpen, setIsProfileSidebarOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const displayName = user?.displayName || user?.email?.split("@")[0] || "User";
+  const initials = displayName?.[0]?.toUpperCase() || "U";
+  
+  // Filter out invalid image URLs
+  const isValidPhoto = (url) => {
+      if (!url) return false;
+      if (url.includes("unsplash.com/photos/")) return false; 
+      return true;
+  };
+  const showImage = isValidPhoto(user?.photoURL);
+
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -146,13 +159,13 @@ const Navbar = () => {
             {/* Hamburger / Close Icon */}
             <button
               onClick={toggleMobileMenu}
-              className="p-2 rounded-lg bg-white dark:bg-gray-800 border border-gray-300 dark:border-transparent hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+              className="p-2 rounded-full hover:bg-base-200 transition-colors text-base-content"
               aria-label="Toggle menu"
             >
               {isMobileMenuOpen ? (
                 // Close Icon
                 <svg
-                  className="w-6 h-6 text-black dark:text-gray-200"
+                  className="w-6 h-6"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -165,28 +178,24 @@ const Navbar = () => {
                   />
                 </svg>
               ) : (
-                // Hamburger Icon
+                // Hamburger Icon (Circle Dots)
                 <svg
-                  className="w-6 h-6 text-black dark:text-gray-200"
+                  className="w-8 h-8"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
+                  <circle cx="12" cy="12" r="10" strokeWidth="2" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01" />
                 </svg>
               )}
             </button>
           </div>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Menu (Standard Navigation) */}
         {isMobileMenuOpen && (
-          <div className="md:hidden border-t border-base-300 py-4">
+          <div className="md:hidden border-t border-base-300 py-4 h-[calc(100vh-4rem)] flex flex-col justify-between">
             <ul className="flex flex-col gap-4">
               <li>
                 <NavLink
@@ -261,13 +270,7 @@ const Navbar = () => {
               )}
 
               {/* Auth Buttons in Mobile Menu */}
-              {user ? (
-                <li className="pt-4 border-t border-base-300">
-                  <div className="flex items-center gap-3 mb-3">
-                    <UserAvatar user={user} logout={logout} />
-                  </div>
-                </li>
-              ) : (
+              {!user && (
                 <>
                   <li className="pt-4 border-t border-base-300">
                     <Link
@@ -290,9 +293,101 @@ const Navbar = () => {
                 </>
               )}
             </ul>
+
+            {/* Bottom Left Profile Icon in Mobile Menu */}
+            {user && (
+                <div className="pt-4 border-t border-base-300">
+                     <button
+                        onClick={() => {
+                            closeMobileMenu(); // Close menu
+                            setIsProfileSidebarOpen(true); // Open Sidebar which will be on left
+                        }}
+                        className="flex items-center gap-3 w-full p-2 rounded-lg hover:bg-base-200 transition-colors"
+                     >
+                        <div className="
+                            w-10 h-10 rounded-full
+                            bg-gradient-to-br from-purple-500 to-blue-500
+                            border border-white/60 dark:border-gray-600
+                            flex items-center justify-center overflow-hidden
+                            text-white font-semibold
+                        ">
+                            {showImage ? (
+                                <img
+                                src={user.photoURL}
+                                alt="Profile"
+                                className="w-full h-full object-cover"
+                                referrerPolicy="no-referrer"
+                                crossOrigin="anonymous"
+                                />
+                            ) : (
+                                <span className="text-sm">{initials}</span>
+                            )}
+                        </div>
+                        <div className="flex flex-col items-start">
+                            <span className="font-semibold text-base-content">{displayName}</span>
+                            <span className="text-xs text-base-content/70">View Profile</span>
+                        </div>
+                     </button>
+                </div>
+            )}
           </div>
         )}
       </div>
+
+       {/* Mobile Profile Sidebar (Left Side) */}
+       {isProfileSidebarOpen && user && (
+        <div className="fixed inset-0 z-[60] flex justify-start md:hidden">
+            {/* Backdrop */}
+            <div 
+                className="fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity" 
+                onClick={() => setIsProfileSidebarOpen(false)}
+            ></div>
+            
+            {/* Drawer (Left Side) */}
+            <div className="relative w-72 bg-base-100 h-full shadow-2xl transform transition-transform duration-300 flex flex-col p-6 border-r border-base-200">
+                {/* Close Button */}
+                <button 
+                    onClick={() => setIsProfileSidebarOpen(false)}
+                    className="absolute top-4 right-4 p-2 rounded-full hover:bg-base-200 text-base-content"
+                >
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+
+                {/* Content */}
+                <div className="flex flex-col items-center mt-6 mb-8 text-center">
+                    <div className="w-20 h-20 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center text-white text-3xl font-bold mb-4 border-4 border-base-100 shadow-lg overflow-hidden">
+                        {showImage ? (
+                            <img src={user.photoURL} alt="Profile" className="w-full h-full object-cover" />
+                        ) : (
+                            <span>{initials}</span>
+                        )}
+                    </div>
+                    <h3 className="font-bold text-lg text-base-content">{displayName}</h3>
+                    <p className="text-sm text-base-content/70 capitalize">{user?.role}</p>
+                    <p className="text-xs text-base-content/50 mt-1">{user?.email}</p>
+                </div>
+
+                <div className="flex flex-col gap-3 w-full">
+                     <Link 
+                        to="/dashboard/profile" 
+                        onClick={() => setIsProfileSidebarOpen(false)}
+                        className="btn btn-primary w-full text-white"
+                    >
+                        View Profile
+                    </Link>
+                    <button 
+                        onClick={() => {
+                            logout();
+                            setIsProfileSidebarOpen(false);
+                        }}
+                        className="btn btn-outline btn-error w-full"
+                    >
+                        Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+      )}
     </nav>
   );
 };

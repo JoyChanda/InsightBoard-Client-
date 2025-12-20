@@ -58,9 +58,8 @@ export default function LoginPage() {
 
     try {
       setIsLoading(true);
-      await login(email, password);
-      toast.success("Welcome back! Login successful");
-      navigate(from, { replace: true });
+      const loggedInUser = await login(email, password);
+      handleRedirect(loggedInUser);
     } catch (error) {
       // Error toast is already shown by AuthContext
       console.error("Login failed:", error);
@@ -69,11 +68,36 @@ export default function LoginPage() {
     }
   };
 
+  const handleRedirect = (loggedInUser) => {
+    // If there's a specific origin, go there (unless it's root)
+    if (from && from !== "/") {
+      navigate(from, { replace: true });
+      return;
+    }
+
+    // Role-based redirection
+    const role = loggedInUser?.role || "user";
+    switch (role) {
+      case "superadmin":
+      case "admin":
+        navigate("/dashboard/analytics", { replace: true });
+        break;
+      case "manager":
+        navigate("/dashboard/manage-products", { replace: true });
+        break;
+      case "buyer":
+        navigate("/dashboard/my-orders", { replace: true });
+        break;
+      default:
+        navigate("/dashboard", { replace: true });
+    }
+  };
+
   const handleGoogleLogin = async () => {
     try {
       setIsLoading(true);
-      await googleLogin();
-      navigate(from, { replace: true });
+      const loggedInUser = await googleLogin();
+      handleRedirect(loggedInUser);
     } catch (error) {
       console.error("Google login failed:", error);
     } finally {
@@ -84,8 +108,8 @@ export default function LoginPage() {
   const handleGithubLogin = async () => {
     try {
       setIsLoading(true);
-      await githubLogin();
-      navigate(from, { replace: true });
+      const loggedInUser = await githubLogin();
+      handleRedirect(loggedInUser);
     } catch (error) {
       console.error("GitHub login failed:", error);
     } finally {

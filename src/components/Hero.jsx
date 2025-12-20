@@ -16,13 +16,14 @@ export default function Hero() {
         <img
           src="/src/assets/hero-banner.jpg"
           alt="Garment Production"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover object-bottom md:object-center scale-[1.7] md:scale-100 origin-bottom"
           onError={(e) => {
             // Fallback gradient if image fails to load
             e.target.style.display = 'none';
             e.target.parentElement.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
           }}
         />
+        
         <div className="absolute inset-0 bg-gradient-to-br from-primary/90 to-secondary/90"></div>
       </div>
 

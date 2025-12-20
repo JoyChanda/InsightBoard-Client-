@@ -9,7 +9,6 @@ import LoginPage from "./pages/Login";
 import RegisterPage from "./pages/Register";
 import AllProducts from "./pages/AllProducts";
 import ProductDetails from "./pages/ProductDetails";
-import AdminAccess from "./pages/AdminAccess";
 import Booking from "./pages/Booking";
 import Unauthorized from "./pages/Unauthorized";
 import PrivateRoute from "./components/PrivateRoute";
@@ -44,7 +43,6 @@ function App() {
               <Route path="register" element={<RegisterPage />} />
               <Route path="products" element={<AllProducts />} />
               <Route path="products/:id" element={<ProductDetails />} />
-              <Route path="admin-access" element={<AdminAccess />} />
               <Route path="unauthorized" element={<Unauthorized />} />
               
               {/* Protected Booking Route */}

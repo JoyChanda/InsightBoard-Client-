@@ -37,21 +37,17 @@ const DashboardHeader = ({ toggleMobileMenu }) => {
           {/* Hamburger Menu Button (Mobile Only) */}
           <button
             onClick={toggleMobileMenu}
-            className="md:hidden p-2 rounded-lg hover:bg-purple-100/60 dark:hover:bg-gray-700 transition-colors"
+            className="md:hidden p-2 rounded-full hover:bg-base-200 transition-colors text-base-content"
             aria-label="Toggle menu"
           >
             <svg
-              className="w-6 h-6 text-gray-700 dark:text-gray-200"
+              className="w-8 h-8"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16M4 18h16"
-              />
+              <circle cx="12" cy="12" r="10" strokeWidth="2" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01" />
             </svg>
           </button>
 

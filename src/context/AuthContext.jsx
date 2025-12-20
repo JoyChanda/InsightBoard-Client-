@@ -7,7 +7,8 @@ import {
   GoogleAuthProvider, 
   GithubAuthProvider,
   onAuthStateChanged,
-  signOut
+  signOut,
+  updateProfile
 } from "firebase/auth";
 import { toast } from "react-toastify";
 import { auth } from "../services/firebaseAuth";
@@ -82,12 +83,44 @@ export const AuthProvider = ({ children }) => {
   // Email/Password Login
   const login = async (email, password) => {
     try {
-        const res = await signInWithEmailAndPassword(auth, email, password);
-        await syncWithBackend(res.user);
-        toast.success("Logged in successfully");
+        // 1. Try Firebase Login
+        let firebaseUser;
+        try {
+            const res = await signInWithEmailAndPassword(auth, email, password);
+            firebaseUser = res.user;
+        } catch (firebaseError) {
+            // If Firebase fails (e.g. user not found), we will try backend directly
+            // only if the error code suggests the user might exist in our DB but not Firebase
+            // OR we just try backend as a fallback for everything except maybe network errors
+            console.log("Firebase login failed, trying backend...", firebaseError.code);
+        }
+
+        if (firebaseUser) {
+            // Firebase login successful
+            const mergedUser = await syncWithBackend(firebaseUser);
+            toast.success("Logged in successfully");
+            return mergedUser || {
+                uid: firebaseUser.uid, 
+                email: firebaseUser.email, 
+                role: 'user' // default
+            }; 
+        } else {
+            // 2. Try Backend Login Directly (Legacy/Admin workaround)
+            const res = await API.post('/auth/login', { email, password });
+            
+            if (res.data && res.data.user) {
+                setUser(res.data.user);
+                toast.success("Logged in successfully");
+                return res.data.user;
+            } else {
+                 throw new Error("Login failed");
+            }
+        }
     } catch (err) {
         console.error(err);
-        toast.error(err.message);
+        // Extract meaningful error message
+        const message = err.response?.data?.message || err.message || "Invalid credentials";
+        toast.error(message);
         throw err;
     }
   };
@@ -100,8 +133,9 @@ export const AuthProvider = ({ children }) => {
         if (providerName === "github") provider = new GithubAuthProvider();
 
         const res = await signInWithPopup(auth, provider);
-        await syncWithBackend(res.user);
+        const user = await syncWithBackend(res.user);
         toast.success(`Logged in with ${providerName}`);
+        return user;
     } catch (err) {
         console.error(err);
         toast.error(err.message);
@@ -128,6 +162,7 @@ export const AuthProvider = ({ children }) => {
       if (data.user) {
           // Update local state with role from backend
           setUser(prev => ({ ...prev, ...data.user }));
+          return data.user;
       }
       
     } catch (err) {
@@ -146,20 +181,85 @@ export const AuthProvider = ({ children }) => {
     toast.info("Logged out");
   };
 
+  // Register with Backend (Supports Role)
+  const register = async (userData) => {
+    try {
+        const res = await API.post('/auth/register', userData);
+        if (res.data && res.data.user) {
+            setUser(res.data.user);
+            toast.success("Registration successful");
+            return res.data.user;
+        }
+    } catch (err) {
+        console.error("Registration failed", err);
+        const message = err.response?.data?.message || err.message || "Registration failed";
+        toast.error(message);
+        throw err;
+    }
+  };
+
+  // Update Profile Info
+  const updateProfileInfo = async (profileData) => {
+    try {
+        // 1. Update Firebase (if linked)
+        if (auth.currentUser) {
+            await updateProfile(auth.currentUser, {
+                displayName: profileData.displayName,
+                photoURL: profileData.photoURL
+            });
+        }
+
+        // 2. Update Backend
+        const res = await API.patch('/auth/profile', profileData);
+
+        // 3. Update Local State
+        if (res.data && res.data.user) {
+             setUser(prev => ({ ...prev, ...res.data.user }));
+             toast.success("Profile updated!");
+        }
+        return res.data;
+    } catch (err) {
+        console.error("Update profile failed", err);
+        toast.error("Failed to update profile");
+        throw err;
+    }
+  };
+
+  // Safety timeout to prevent infinite loading
+  useEffect(() => {
+    const timer = setTimeout(() => {
+        if (loading) {
+            console.warn("Auth initialization timed out, forcing render.");
+            setLoading(false);
+        }
+    }, 2500); // 2.5s timeout
+    return () => clearTimeout(timer);
+  }, [loading]);
+
   const value = {
     user,
     setUser,
     loading,
     login,
+    register,
     googleLogin,
     githubLogin,
     loginWithProvider,
-    logout
+    logout,
+    updateProfileInfo
   };
+
+  if (loading) {
+      return (
+          <div className="flex items-center justify-center min-h-screen bg-base-100">
+              <span className="loading loading-spinner loading-lg text-primary"></span>
+          </div>
+      );
+  }
 
   return (
     <AuthContext.Provider value={value}>
-      {!loading && children}
+      {children}
     </AuthContext.Provider>
   );
 };

@@ -27,7 +27,8 @@
 }
 
 
-/* === Custom Button Styles === */
+/* === Custom Button Styles (Commented out to use DaisyUI) === */
+/*
 .btn {
     padding: 1rem 1.5rem;
     border-radius: 0.5rem;
@@ -111,8 +112,10 @@
     padding: 0.75rem 1.5rem;
     font-size: 1.125rem;
 }
+*/
 
-/* === Card Styles === */
+/* === Card Styles (Commented out to use DaisyUI) === */
+/*
 .card {
     background-color: white;
     border-radius: 0.5rem;
@@ -147,8 +150,10 @@
 .dark .card-body {
     color: rgb(209 213 219);
 }
+*/
 
-/* === Form Input Styles === */
+/* === Form Input Styles (Commented out to use DaisyUI) === */
+/*
 .input {
     width: 100%;
     padding: 0.5rem 1rem;
@@ -190,6 +195,7 @@
 .dark .label {
     color: rgb(209 213 219);
 }
+*/
 
 .error-message {
     color: rgb(220 38 38);
@@ -237,6 +243,7 @@
     }
 }
 
+/*
 .section-title {
     font-size: 1.875rem;
     font-weight: 700;
@@ -263,6 +270,7 @@
 .dark .section-subtitle {
     color: rgb(156 163 175);
 }
+*/
 
 /* === Grid Layouts === */
 .grid-responsive {
@@ -301,7 +309,8 @@
     }
 }
 
-/* === Table Styles === */
+/* === Table Styles (Commented out to use DaisyUI) === */
+/*
 .table {
     min-width: 100%;
     background-color: white;
@@ -358,8 +367,10 @@
 .dark .table-row-hover:hover {
     background-color: rgb(55 65 81);
 }
+*/
 
-/* === Badge Styles === */
+/* === Badge Styles (Commented out to use DaisyUI) === */
+/*
 .badge {
     display: inline-flex;
     align-items: center;
@@ -408,8 +419,10 @@
     background-color: rgb(127 29 29);
     color: rgb(254 202 202);
 }
+*/
 
-/* === Alert Styles === */
+/* === Alert Styles (Commented out to use DaisyUI) === */
+/*
 .alert {
     padding: 1rem;
     border-radius: 0.5rem;
@@ -463,6 +476,7 @@
     color: rgb(254 202 202);
     border-color: rgb(153 27 27);
 }
+*/
 
 /* === Loading Spinner === */
 .spinner {
