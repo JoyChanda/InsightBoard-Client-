@@ -14,9 +14,9 @@ export default function ProductCard({ product }) {
     <motion.div
       whileHover={{ y: -8 }}
       transition={{ duration: 0.3 }}
-      className="card bg-base-100 shadow-xl hover:shadow-2xl transition-all overflow-hidden group border border-base-300"
+      className="card bg-base-100 shadow-xl hover:shadow-2xl transition-all overflow-hidden group border border-base-300 h-full flex flex-col"
     >
-      <figure className="h-48 overflow-hidden relative">
+      <figure className="h-48 overflow-hidden relative shrink-0">
         <Link to={`/products/${_id}`} className="w-full h-full block">
           <motion.img
             whileHover={{ scale: 1.1 }}
@@ -32,30 +32,32 @@ export default function ProductCard({ product }) {
         </div>
       </figure>
 
-      <div className="card-body p-5">
+      <div className="card-body p-5 flex flex-col flex-grow">
         <div className="text-xs uppercase font-medium text-base-content/50 tracking-wider">
           {product.category || "General"}
         </div>
         
         <Link to={`/products/${_id}`} className="hover:underline">
-          <h2 className="card-title text-lg text-base-content line-clamp-1" title={title}>
+          <h3 className="text-lg font-bold text-base-content line-clamp-1 mb-2" title={title}>
             {title}
-          </h2>
+          </h3>
         </Link>
         
         {/* Description */}
         {truncatedDesc && (
-          <p className="text-sm text-base-content/70 mb-3 min-h-[40px]">{truncatedDesc}</p>
+          <p className="text-sm text-base-content/70 mb-4 line-clamp-2 flex-grow">
+            {truncatedDesc}
+          </p>
         )}
 
-        <div className="flex justify-between items-center mt-auto">
+        <div className="flex justify-between items-center mt-auto border-t border-base-300 pt-4">
           <p className="text-primary font-bold text-xl">${price}</p>
 
           <Link to={`/products/${_id}`}>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="btn btn-primary btn-sm"
+              className="btn btn-outline btn-primary btn-sm"
             >
               View Details
             </motion.button>

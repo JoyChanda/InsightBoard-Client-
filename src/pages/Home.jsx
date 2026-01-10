@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Hero from "../components/Hero";
 import Section from "../components/Section";
 import ProductCard from "../components/ProductCard";
+import ProductSkeleton from "../components/ProductSkeleton";
 import HowItWorks from "../components/HowItWorks";
 import CustomerFeedback from "../components/CustomerFeedback";
 import Features from "../components/sections/Features";
@@ -30,14 +31,14 @@ export default function Home() {
           const fetchedProducts = res.data.products || res.data;
           
           if (Array.isArray(fetchedProducts) && fetchedProducts.length > 0) {
-            setProducts(fetchedProducts);
+            setProducts(fetchedProducts.slice(0, 4)); // Show 4 for 4-col grid
             setLoading(false);
           } else {
-             setProducts(mockProducts.slice(0, 3)); // Only 3 for landing page
+             setProducts(mockProducts.slice(0, 4));
              setLoading(false);
           }
         } catch (apiError) {
-          setProducts(mockProducts.slice(0, 3));
+          setProducts(mockProducts.slice(0, 4));
           setLoading(false);
         }
       } catch (err) {
@@ -78,9 +79,14 @@ export default function Home() {
         subtitle="Explore our latest production batches available for bulk ordering."
         className="bg-base-100"
       >
-        {loading && <div className="text-center py-10"><span className="loading loading-spinner text-primary"></span></div>}
-        {!loading && !error && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {loading ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[...Array(4)].map((_, i) => <ProductSkeleton key={i} />)}
+          </div>
+        ) : error ? (
+          <div className="text-center py-10 text-error">{error}</div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {products.map((p) => <ProductCard key={p._id} product={p} />)}
           </div>
         )}

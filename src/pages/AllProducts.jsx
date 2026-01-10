@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import Pagination from "../components/Pagination";
 import axios from "axios";
-
 import ProductCard from "../components/ProductCard";
+import ProductSkeleton from "../components/ProductSkeleton";
 
 const AllProducts = () => {
   const [products, setProducts] = useState([]);
@@ -41,19 +41,9 @@ const AllProducts = () => {
         All Products
       </h1>
 
-      {/* Loading State */}
-      {loading && (
-        <div className="text-center py-10">
-          <div className="loading loading-spinner loading-lg text-primary"></div>
-          <p className="mt-4 text-base-content/70">
-            Loading products...
-          </p>
-        </div>
-      )}
-
       {/* Error State */}
       {error && !loading && (
-        <div className="alert alert-error">
+        <div className="alert alert-error mb-8">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="stroke-current shrink-0 h-6 w-6"
@@ -71,33 +61,35 @@ const AllProducts = () => {
         </div>
       )}
 
-      {/* Products Grid */}
-      {!loading && !error && products.length > 0 && (
-        <>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {products.map((product) => (
-              <ProductCard key={product._id} product={product} />
-            ))}
+      {/* Grid Content */}
+      <div className="min-h-[400px]">
+        {loading ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[...Array(limit)].map((_, i) => <ProductSkeleton key={i} />)}
           </div>
+        ) : products.length > 0 ? (
+          <>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {products.map((product) => (
+                <ProductCard key={product._id} product={product} />
+              ))}
+            </div>
 
-          {/* Pagination */}
-          <Pagination page={page} setPage={setPage} totalPages={totalPages} />
-        </>
-      )}
-
-      {/* Empty State */}
-      {!loading && !error && products.length === 0 && (
-        <div className="text-center py-10">
-          <div className="text-6xl mb-4">📦</div>
-          <h2 className="text-2xl font-semibold text-base-content mb-2">
-            No Products Found
-          </h2>
-          <p className="text-base-content/70">
-            There are no products available at the moment. Please check back
-            later.
-          </p>
-        </div>
-      )}
+            {/* Pagination */}
+            <Pagination page={page} setPage={setPage} totalPages={totalPages} />
+          </>
+        ) : !error && (
+          <div className="text-center py-10">
+            <div className="text-6xl mb-4">📦</div>
+            <h2 className="text-2xl font-semibold text-base-content mb-2">
+              No Products Found
+            </h2>
+            <p className="text-base-content/70">
+              There are no products available at the moment. Please check back later.
+            </p>
+          </div>
+        )}
+      </div>
       </div>
     </div>
   );
