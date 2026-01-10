@@ -117,6 +117,42 @@ export default function LoginPage() {
     }
   };
 
+  const handleDemoLogin = async (role) => {
+    let demoEmail = "";
+    let demoPass = "";
+
+    switch (role) {
+      case "admin":
+        demoEmail = "super@insideboard.com";
+        demoPass = "superadmin123";
+        break;
+      case "manager":
+        demoEmail = "testmanager@gmail.com";
+        demoPass = "Abc123456";
+        break;
+      case "buyer":
+        demoEmail = "abc2@gmail.com";
+        demoPass = "Abc123456";
+        break;
+      default:
+        return;
+    }
+
+    setEmail(demoEmail);
+    setPassword(demoPass);
+    setErrors({});
+    
+    try {
+      setIsLoading(true);
+      const loggedInUser = await login(demoEmail, demoPass);
+      handleRedirect(loggedInUser);
+    } catch (error) {
+      console.error("Demo login failed:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-base-200 p-6">
       <div className="card bg-base-100 shadow-2xl w-full max-w-md">
@@ -210,6 +246,33 @@ export default function LoginPage() {
               <FaGithub className="text-xl" />
               Continue with GitHub
             </button>
+          </div>
+
+          <div className="divider text-xs opacity-50 uppercase tracking-widest font-bold">Demo Access</div>
+          
+          {/* Demo Login Buttons */}
+          <div className="grid grid-cols-1 gap-3">
+             <button 
+                onClick={() => handleDemoLogin("buyer")}
+                className="btn btn-outline btn-sm h-12 border-base-300 hover:border-primary hover:bg-primary/5"
+                disabled={isLoading}
+             >
+                Login as User
+             </button>
+             <button 
+                onClick={() => handleDemoLogin("manager")}
+                className="btn btn-outline btn-sm h-12 border-base-300 hover:border-secondary hover:bg-secondary/5"
+                disabled={isLoading}
+             >
+                Login as Manager
+             </button>
+             <button 
+                onClick={() => handleDemoLogin("admin")}
+                className="btn btn-outline btn-sm h-12 border-base-300 hover:border-warning hover:bg-warning/5"
+                disabled={isLoading}
+             >
+                Login as Admin
+             </button>
           </div>
           
           <div className="divider"></div>
