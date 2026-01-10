@@ -1,36 +1,43 @@
-/* eslint-disable react-refresh/only-export-components */
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useState, useEffect, useContext } from "react";
 
-const ThemeContext = createContext();
+export const ThemeContext = createContext();
 
-export const ThemeProvider = ({ children, storageKey = "theme", defaultTheme = "light" }) => {
+export const useTheme = () => {
+  const context = useContext(ThemeContext);
+  if (!context) {
+    throw new Error("useTheme must be used within a ThemeProvider");
+  }
+  return context;
+};
+
+export const ThemeProvider = ({ children }) => {
+  // Initialize theme from localStorage or default to "light"
   const [theme, setTheme] = useState(() => {
-     return localStorage.getItem(storageKey) || defaultTheme;
+    const savedTheme = localStorage.getItem("theme");
+    return savedTheme || "light";
   });
 
+  // Apply theme to document and save to localStorage
   useEffect(() => {
-    localStorage.setItem(storageKey, theme);
-
-    // Set data-theme attribute for DaisyUI
-    document.documentElement.setAttribute("data-theme", theme);
-
-    // Also set dark class for custom dark mode styles
+    const root = document.documentElement;
+    
     if (theme === "dark") {
-      document.documentElement.classList.add("dark");
+      root.classList.add("dark");
     } else {
-      document.documentElement.classList.remove("dark");
+      root.classList.remove("dark");
     }
-  }, [theme, storageKey]);
+    
+    localStorage.setItem("theme", theme);
+  }, [theme]);
 
+  // Toggle theme function
   const toggleTheme = () => {
-    setTheme((prev) => (prev === "light" ? "dark" : "light"));
+    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
   };
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <ThemeContext.Provider value={{ theme, setTheme, toggleTheme }}>
       {children}
     </ThemeContext.Provider>
   );
 };
-
-export const useTheme = () => useContext(ThemeContext);

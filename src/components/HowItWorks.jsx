@@ -8,7 +8,7 @@ const steps = [
     title: "Browse & Select",
     description:
       "Explore our wide range of production orders and manufacturing capabilities",
-    color: "text-blue-500",
+    color: "text-primary",
   },
   {
     id: 2,
@@ -16,7 +16,7 @@ const steps = [
     title: "Place Order",
     description:
       "Submit your requirements with detailed specifications and customization options",
-    color: "text-green-500",
+    color: "text-secondary",
   },
   {
     id: 3,
@@ -24,7 +24,7 @@ const steps = [
     title: "Production Tracking",
     description:
       "Monitor real-time status updates through Cutting → Sewing → Finishing stages",
-    color: "text-purple-500",
+    color: "text-accent",
   },
   {
     id: 4,
@@ -32,7 +32,7 @@ const steps = [
     title: "Quality & Delivery",
     description:
       "Final quality inspection and expedited shipment to your destination",
-    color: "text-orange-500",
+    color: "text-primary",
   },
 ];
 
@@ -67,7 +67,7 @@ export default function HowItWorks() {
                 whileHover={{ y: -10 }}
                 className="relative"
               >
-                <div className="bg-base-200 rounded-lg p-6 h-full shadow-lg hover:shadow-2xl transition-shadow">
+                <div className="card bg-base-100 border border-base-300 p-6 h-full shadow-lg hover:shadow-2xl transition-all">
                   {/* Step Number */}
                   <div className="absolute -top-4 -left-4 w-10 h-10 bg-primary text-primary-content rounded-full flex items-center justify-center font-bold text-lg shadow-lg">
                     {step.id}

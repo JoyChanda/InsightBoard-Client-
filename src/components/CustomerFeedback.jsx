@@ -73,7 +73,7 @@ export default function CustomerFeedback() {
           </button>
 
           {/* Testimonial Card */}
-          <div className="bg-base-100 rounded-2xl shadow-2xl p-8 md:p-12 min-h-[320px] flex items-center justify-center">
+          <div className="card bg-base-100 shadow-2xl p-8 md:p-12 min-h-[320px] flex items-center justify-center border border-base-300">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentIndex}

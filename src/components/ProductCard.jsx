@@ -14,7 +14,7 @@ export default function ProductCard({ product }) {
     <motion.div
       whileHover={{ y: -8 }}
       transition={{ duration: 0.3 }}
-      className="card bg-base-100 shadow-xl hover:shadow-2xl transition-all overflow-hidden group border border-base-200"
+      className="card bg-base-100 shadow-xl hover:shadow-2xl transition-all overflow-hidden group border border-base-300"
     >
       <figure className="h-48 overflow-hidden relative">
         <Link to={`/products/${_id}`} className="w-full h-full block">
@@ -27,7 +27,7 @@ export default function ProductCard({ product }) {
           />
         </Link>
         {/* Quantity Badge */}
-        <div className="absolute top-2 right-2 badge bg-base-100/90 text-base-content backdrop-blur-sm text-xs font-bold shadow-md border border-base-200">
+        <div className="absolute top-2 right-2 badge bg-base-100/90 text-base-content backdrop-blur-sm text-xs font-bold shadow-md border border-base-300">
           Qty: {qty}
         </div>
       </figure>

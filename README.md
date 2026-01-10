@@ -7,8 +7,6 @@ This project helps small and medium-sized garment factories manage production wo
 
 ## 🌍 Live Demo
 
-## admin-panel_URL: https://insight-board-client.vercel.app/admin-access
-
 🔗 **Client Live URL:** https://insight-board-client.vercel.app/  
 🔗 **Server Live URL:** https://your-server-live-url.com
 

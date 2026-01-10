@@ -99,7 +99,7 @@ const Booking = () => {
         <div className="container mx-auto px-4 py-10 max-w-3xl">
             <h1 className="text-3xl font-bold mb-8 text-center text-base-content">Complete Your Booking</h1>
             
-            <div className="card bg-base-100 shadow-2xl overflow-hidden flex flex-col md:flex-row border border-base-200">
+            <div className="card bg-base-100 shadow-2xl overflow-hidden flex flex-col md:flex-row border border-base-300">
                 
                 {/* Product Summary Sidebar (or Top) */}
                 <div className="w-full md:w-1/3 bg-base-200 p-6 flex flex-col gap-4">

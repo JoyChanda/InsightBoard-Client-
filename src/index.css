@@ -5,10 +5,15 @@
 @theme {
   --color-primary: oklch(0.7206 0.191 275.75);
   --color-secondary: oklch(0.6981 0.172 342.55);
+  --color-accent: oklch(0.6569 0.196 146.42);
+  /* Green-500 equivalent */
+
+  /* Global Border Radius */
+  --radius-global: 0.75rem;
 }
 
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -16,15 +21,64 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  
-  @apply bg-base-100 text-base-content;
+
+  /* DaisyUI Config Variables */
+  --rounded-box: var(--radius-global);
+  --rounded-btn: var(--radius-global);
+  --rounded-badge: 1.9rem;
+
+  /* Main Background - Use base-200 for page background to contrast with base-100 cards */
+  @apply bg-base-200 text-base-content;
+
+  /* Global Smooth Transition */
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
-/* Custom button styles for rounded appearance and hover effects */
+/* Enforce Global Consistency */
+body {
+  overflow-x: hidden;
+}
+
+/* Apply transitions to all major blocks */
+.card,
+.navbar,
+.footer,
+.drawer-side,
+.menu,
+.modal-box {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card {
+  border-radius: var(--radius-global);
+  /* Ensure cards always use base-100 (White/Surface) */
+  @apply bg-base-100 border border-base-300;
+}
+
 .btn {
-  border-radius: 0.75rem !important;
-  /* More rounded */
+  border-radius: var(--radius-global) !important;
   transition: all 0.3s ease !important;
+  font-weight: 600;
+
+  /* Ensure text on primary buttons is correct */
+  &.btn-primary {
+    @apply text-white dark:text-gray-900;
+  }
+}
+
+.input,
+.select,
+.textarea {
+  border-radius: var(--radius-global);
+  /* Distinct input borders */
+  @apply border-base-300 bg-base-100;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  @apply border-primary ring-2 ring-primary/20 outline-none;
 }
 
 .btn:hover {
@@ -34,4 +88,9 @@
 
 .btn:active {
   transform: translateY(0);
+}
+
+/* Footer Background - Slightly darker than main background */
+.bg-footer {
+  @apply bg-base-300 dark:bg-black;
 }
