@@ -100,6 +100,14 @@ const Footer = () => {
                   Dashboard
                 </Link>
               </li>
+              <li>
+                <Link
+                  to="/contact"
+                  className="text-sm text-base-content/70 hover:text-primary transition-all"
+                >
+                  Contact
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -191,7 +199,7 @@ const Footer = () => {
             {/* Legal Links */}
             <div className="flex flex-wrap justify-center gap-4">
               <Link
-                to="#"
+                to="/privacy-policy"
                 className="text-sm text-base-content/70 hover:text-primary transition-all"
               >
                 Privacy Policy
