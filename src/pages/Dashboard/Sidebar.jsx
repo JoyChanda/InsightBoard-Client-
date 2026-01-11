@@ -17,27 +17,27 @@ const Sidebar = ({ isMobileMenuOpen, setIsMobileMenuOpen }) => {
   const menu = {
     admin: [
       { label: "Dashboard Home", to: "/dashboard" },
-      { label: "Manage Users", to: "/dashboard/manage-users" },
-      { label: "All Products", to: "/dashboard/all-products" },
-      { label: "All Orders", to: "/dashboard/all-orders" },
+      { label: "Users", to: "/dashboard/manage-users" },
+      { label: "Manage Listings", to: "/dashboard/all-products" },
+      { label: "Analytics", to: "/dashboard/analytics" },
     ],
     superadmin: [
       { label: "Dashboard Home", to: "/dashboard" },
-      { label: "Manage Users", to: "/dashboard/manage-users" },
-      { label: "All Products", to: "/dashboard/all-products" },
-      { label: "All Orders", to: "/dashboard/all-orders" },
+      { label: "Users", to: "/dashboard/manage-users" },
+      { label: "Manage Listings", to: "/dashboard/all-products" },
       { label: "Analytics", to: "/dashboard/analytics" },
     ],
     manager: [
       { label: "Dashboard Home", to: "/dashboard" },
-      { label: "Pending Orders", to: "/dashboard/pending-orders" },
-      { label: "Approved Orders", to: "/dashboard/approved-orders" },
+      { label: "Reports", to: "/dashboard/reports" },
+      { label: "Team Performance", to: "/dashboard/team-performance" },
       { label: "Add Product", to: "/dashboard/add-product" },
       { label: "Manage Products", to: "/dashboard/manage-products" },
     ],
     buyer: [
       { label: "Dashboard Home", to: "/dashboard" },
       { label: "My Orders", to: "/dashboard/my-orders" },
+      { label: "My Profile", to: "/dashboard/profile" },
       { label: "Wishlist", to: "/dashboard/wishlist" },
     ],
   };

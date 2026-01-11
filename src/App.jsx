@@ -12,20 +12,22 @@ import ProductDetails from "./pages/ProductDetails";
 import Booking from "./pages/Booking";
 import Unauthorized from "./pages/Unauthorized";
 import PrivateRoute from "./components/PrivateRoute";
-import DashboardLayout from "./pages/Dashboard/Layout";
-import DashboardHome from "./pages/Dashboard/DashboardHome";
-import ManageUsers from "./pages/Dashboard/Admin/ManageUsers";
-import AdminAllProducts from "./pages/Dashboard/Admin/AdminAllProducts";
-import AdminAllOrders from "./pages/Dashboard/Admin/AdminAllOrders";
-import AnalyticsDashboard from "./pages/Dashboard/Admin/AnalyticsDashboard";
-import AddProduct from "./pages/Dashboard/Manager/AddProduct";
-import ManageProducts from "./pages/Dashboard/Manager/ManageProducts";
-import PendingOrders from "./pages/Dashboard/Manager/PendingOrders";
-import ApprovedOrders from "./pages/Dashboard/Manager/ApprovedOrders";
-import MyOrders from "./pages/Dashboard/Buyer/MyOrders";
-import Wishlist from "./pages/Dashboard/Buyer/Wishlist";
-import TrackOrder from "./pages/Dashboard/Buyer/TrackOrder";
-import Profile from "./pages/Dashboard/Profile";
+import DashboardLayout from "./pages/dashboard/Layout";
+import DashboardHome from "./pages/dashboard/DashboardHome";
+import ManageUsers from "./pages/dashboard/Admin/ManageUsers";
+import AdminAllProducts from "./pages/dashboard/Admin/AdminAllProducts";
+import AdminAllOrders from "./pages/dashboard/Admin/AdminAllOrders";
+import AnalyticsDashboard from "./pages/dashboard/Admin/AnalyticsDashboard";
+import AddProduct from "./pages/dashboard/Manager/AddProduct";
+import ManageProducts from "./pages/dashboard/Manager/ManageProducts";
+import ManagerReports from "./pages/dashboard/Manager/ManagerReports";
+import TeamPerformance from "./pages/dashboard/Manager/TeamPerformance";
+import PendingOrders from "./pages/dashboard/Manager/PendingOrders";
+import ApprovedOrders from "./pages/dashboard/Manager/ApprovedOrders";
+import MyOrders from "./pages/dashboard/Buyer/MyOrders";
+import Wishlist from "./pages/dashboard/Buyer/Wishlist";
+import TrackOrder from "./pages/dashboard/Buyer/TrackOrder";
+import Profile from "./pages/dashboard/Profile";
 import NotFound from "./pages/NotFound";
 import "react-toastify/dist/ReactToastify.css";
 import "./styles/global.css";
@@ -87,6 +89,8 @@ function App() {
                 >
                   <Route path="add-product" element={<AddProduct />} />
                   <Route path="manage-products" element={<ManageProducts />} />
+                  <Route path="reports" element={<ManagerReports />} />
+                  <Route path="team-performance" element={<TeamPerformance />} />
                   <Route path="pending-orders" element={<PendingOrders />} />
                   <Route path="approved-orders" element={<ApprovedOrders />} />
                 </Route>
