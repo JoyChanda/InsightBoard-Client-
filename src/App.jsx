@@ -14,7 +14,7 @@ import ProductDetails from "./pages/ProductDetails";
 import Booking from "./pages/Booking";
 import Unauthorized from "./pages/Unauthorized";
 import PrivateRoute from "./components/PrivateRoute";
-import DashboardLayout from "./pages/dashboard/DashboardLayout";
+import DashboardLayout from "./pages/dashboard/Layout";
 import DashboardHome from "./pages/dashboard/DashboardHome";
 import ManageUsers from "./pages/dashboard/Admin/ManageUsers";
 import AdminAllProducts from "./pages/dashboard/Admin/AdminAllProducts";
@@ -50,7 +50,8 @@ function App() {
               <Route path="products" element={<AllProducts />} />
               <Route path="products/:id" element={<ProductDetails />} />
               <Route path="unauthorized" element={<Unauthorized />} />
-
+              
+              {/* Protected Booking Route */}
               <Route
                 path="booking/:id"
                 element={
@@ -61,12 +62,13 @@ function App() {
               />
             </Route>
 
-            {/* Dashboard Protected */}
+
+            {/* Protected Dashboard Routes */}
             <Route element={<PrivateRoute />}>
               <Route path="/dashboard" element={<DashboardLayout />}>
                 <Route index element={<DashboardHome />} />
 
-                {/* Admin */}
+                {/* Admin-only routes */}
                 <Route
                   element={
                     <PrivateRoute
@@ -81,7 +83,7 @@ function App() {
                   <Route path="analytics" element={<AnalyticsDashboard />} />
                 </Route>
 
-                {/* Manager */}
+                {/* Manager routes */}
                 <Route
                   element={
                     <PrivateRoute
@@ -97,33 +99,38 @@ function App() {
                   <Route path="approved-orders" element={<ApprovedOrders />} />
                 </Route>
 
-                {/* Buyer */}
+                {/* Buyer (and potentially others if they buy) routes */}
                 <Route
                   element={
                     <PrivateRoute
-                      allowedRoles={[
-                        "buyer",
-                        "manager",
-                        "admin",
-                        "superadmin",
-                      ]}
+                      allowedRoles={["buyer", "manager", "admin", "superadmin"]}
                     />
                   }
                 >
                   <Route path="my-orders" element={<MyOrders />} />
                   <Route path="wishlist" element={<Wishlist />} />
                   <Route path="track-order/:id" element={<TrackOrder />} />
-                  <Route path="profile" element={<Profile />} />
+                  <Route
+                    path="profile"
+                    element={<Profile />}
+                  />
                 </Route>
               </Route>
             </Route>
 
+            {/* 404 Page - No Layout */}
             <Route path="*" element={<NotFound />} />
           </Routes>
-
           <ToastContainer
             position="top-right"
             autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
             theme="colored"
           />
         </AuthProvider>
