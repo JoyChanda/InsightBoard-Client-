@@ -109,6 +109,8 @@ export const AuthProvider = ({ children }) => {
             const res = await API.post('/auth/login', { email, password });
             
             if (res.data && res.data.user) {
+                // Save token for header use
+                if (res.data.token) localStorage.setItem('token', res.data.token);
                 setUser(res.data.user);
                 toast.success("Logged in successfully");
                 return res.data.user;
@@ -160,6 +162,8 @@ export const AuthProvider = ({ children }) => {
       const data = response.data;
       
       if (data.user) {
+          // Save token for header use
+          if (data.token) localStorage.setItem('token', data.token);
           // Update local state with role from backend
           setUser(prev => ({ ...prev, ...data.user }));
           return data.user;
@@ -177,6 +181,7 @@ export const AuthProvider = ({ children }) => {
         console.error("Backend logout failed", e);
     }
     await signOut(auth);
+    localStorage.removeItem('token'); // Clear token
     setUser(null);
     toast.info("Logged out");
   };
@@ -186,6 +191,8 @@ export const AuthProvider = ({ children }) => {
     try {
         const res = await API.post('/auth/register', userData);
         if (res.data && res.data.user) {
+            // Save token for header use
+            if (res.data.token) localStorage.setItem('token', res.data.token);
             setUser(res.data.user);
             toast.success("Registration successful");
             return res.data.user;
