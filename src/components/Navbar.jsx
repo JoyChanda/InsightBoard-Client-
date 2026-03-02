@@ -31,33 +31,35 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-base-100 shadow-md sticky top-0 z-50">
+    <nav className="glass sticky top-0 z-50 border-b border-base-300/30">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo - Enhanced Design */}
           <Link to="/" className="flex items-center gap-2 group">
-            <span className="text-3xl transition-transform duration-300 group-hover:scale-110">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center text-white text-2xl shadow-lg transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
               🚢
-            </span>
+            </div>
             <div className="flex flex-col">
-              <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">
+              <span className="text-xl sm:text-2xl font-black bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent tracking-tight">
                 InsightBoard
               </span>
-              <span className="text-xs text-gray-500 dark:text-gray-400 -mt-1 hidden sm:block">
-                Production Tracker
+              <span className="text-[10px] uppercase tracking-widest font-bold text-gray-500 dark:text-gray-400 -mt-1 hidden sm:block">
+                Precision Production
               </span>
             </div>
           </Link>
 
           {/* Desktop Navigation Links */}
-          <ul className="hidden md:flex items-center gap-6">
+          <ul className="hidden md:flex items-center gap-8">
             <li>
               <NavLink
                 to="/"
                 className={({ isActive }) =>
-                  isActive
-                    ? "text-primary font-semibold"
-                    : "text-base-content hover:text-primary"
+                  `nav-link-underline transition-colors duration-200 font-medium ${
+                    isActive
+                      ? "text-primary active"
+                      : "text-base-content/80 hover:text-primary"
+                  }`
                 }
               >
                 Home
@@ -67,9 +69,11 @@ const Navbar = () => {
               <NavLink
                 to="/about"
                 className={({ isActive }) =>
-                  isActive
-                    ? "text-primary font-semibold"
-                    : "text-base-content hover:text-primary"
+                  `nav-link-underline transition-colors duration-200 font-medium ${
+                    isActive
+                      ? "text-primary active"
+                      : "text-base-content/80 hover:text-primary"
+                  }`
                 }
               >
                 About
@@ -79,9 +83,11 @@ const Navbar = () => {
               <NavLink
                 to="/products"
                 className={({ isActive }) =>
-                  isActive
-                    ? "text-primary font-semibold"
-                    : "text-base-content hover:text-primary"
+                  `nav-link-underline transition-colors duration-200 font-medium ${
+                    isActive
+                      ? "text-primary active"
+                      : "text-base-content/80 hover:text-primary"
+                  }`
                 }
               >
                 Products
@@ -93,52 +99,45 @@ const Navbar = () => {
                   <NavLink
                     to="/dashboard"
                     className={({ isActive }) =>
-                      isActive
-                        ? "text-primary font-semibold"
-                        : "text-base-content hover:text-primary"
+                      `nav-link-underline transition-colors duration-200 font-medium ${
+                        isActive
+                          ? "text-primary active"
+                          : "text-base-content/80 hover:text-primary"
+                      }`
                     }
                   >
                     Dashboard
                   </NavLink>
                 </li>
-                {user.role === "admin" && (
-                  <li>
-                    <NavLink
-                      to="/dashboard/users"
-                      className={({ isActive }) =>
-                        isActive
-                          ? "text-yellow-500 font-semibold"
-                          : "text-yellow-600 hover:text-yellow-500"
-                      }
-                    >
-                      Admin Panel
-                    </NavLink>
-                  </li>
-                )}
               </>
             )}
           </ul>
 
           {/* Right Side - Desktop */}
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden md:flex items-center gap-5">
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
-              className="btn btn-ghost btn-circle text-xl"
+              className="p-2 rounded-xl bg-base-200/50 hover:bg-base-300/50 transition-all duration-300 text-xl overflow-hidden relative group"
               aria-label="Toggle theme"
             >
-              {theme === "dark" ? "🌞" : "🌙"}
+              <div className={`transition-transform duration-500 ${theme === "dark" ? "rotate-0 scale-100" : "rotate-90 scale-0 opacity-0"}`}>
+                🌞
+              </div>
+              <div className={`absolute inset-0 flex items-center justify-center transition-transform duration-500 ${theme === "light" ? "rotate-0 scale-100" : "-rotate-90 scale-0 opacity-0"}`}>
+                🌙
+              </div>
             </button>
 
             {/* Auth Buttons or User Avatar */}
             {user ? (
               <UserAvatar user={user} logout={logout} />
             ) : (
-              <div className="flex gap-2">
-                <Link to="/login" className="btn btn-primary btn-sm">
+              <div className="flex gap-3">
+                <Link to="/login" className="px-5 py-2 rounded-xl bg-primary text-white font-bold hover:shadow-lg hover:shadow-primary/30 transition-all active:scale-95">
                   Login
                 </Link>
-                <Link to="/register" className="btn btn-outline btn-sm">
+                <Link to="/register" className="px-5 py-2 rounded-xl border-2 border-primary/20 hover:border-primary text-primary font-bold transition-all active:scale-95">
                   Register
                 </Link>
               </div>

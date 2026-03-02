@@ -120,182 +120,174 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-base-200 p-6">
-      <div className="card bg-base-100 shadow-2xl w-full max-w-md">
-        <div className="card-body">
-          <h2 className="card-title text-3xl font-bold justify-center mb-4">Create Account</h2>
+    <div className="min-h-screen flex items-center justify-center relative overflow-hidden p-6 py-20">
+      {/* Background with Mesh Gradient Effect */}
+      <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-600/20 via-indigo-600/20 to-blue-700/20"></div>
+        <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-400/10 blur-[120px] rounded-full animate-pulse"></div>
+        <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-blue-400/10 blur-[120px] rounded-full"></div>
+      </div>
+
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="glass relative z-10 w-full max-w-xl rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/20"
+      >
+        <div className="p-8 md:p-12">
+          <div className="text-center mb-10">
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center text-white text-3xl shadow-xl mx-auto mb-6">
+              🚢
+            </div>
+            <h2 className="text-4xl font-black text-base-content tracking-tight">Create Account</h2>
+            <p className="text-base-content/50 text-sm mt-2 font-medium">Join the InsightBoard ecosystem</p>
+          </div>
           
-          <form onSubmit={handleRegister} className="space-y-4">
+          <form onSubmit={handleRegister} className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Name Input */}
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text font-medium">Full Name</span>
-              </label>
+            <div className="space-y-2">
+              <label className="text-xs font-black uppercase tracking-widest text-base-content/40 px-1">Full Name</label>
               <input
                 type="text"
-                placeholder="Enter your full name"
+                placeholder="John Doe"
                 value={name}
                 onChange={(e) => {
                   setName(e.target.value);
                   if (errors.name) setErrors({ ...errors, name: null });
                 }}
-                className={`input input-bordered w-full focus:input-primary ${
-                  errors.name ? "input-error" : ""
+                className={`w-full p-4 rounded-2xl bg-base-200/50 border-2 transition-all outline-none font-medium ${
+                  errors.name ? "border-error/50" : "border-transparent focus:border-primary/30"
                 }`}
               />
               {errors.name && (
-                <label className="label">
-                  <span className="label-text-alt text-error">{errors.name}</span>
-                </label>
+                <p className="text-[10px] font-bold text-error uppercase tracking-wide px-1">{errors.name}</p>
               )}
             </div>
 
             {/* Email Input */}
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text font-medium">Email</span>
-              </label>
+            <div className="space-y-2">
+              <label className="text-xs font-black uppercase tracking-widest text-base-content/40 px-1">Email Address</label>
               <input
                 type="email"
-                placeholder="Enter your email"
+                placeholder="name@company.com"
                 value={email}
                 onChange={(e) => {
                   setEmail(e.target.value);
                   if (errors.email) setErrors({ ...errors, email: null });
                 }}
-                className={`input input-bordered w-full focus:input-primary ${
-                  errors.email ? "input-error" : ""
+                className={`w-full p-4 rounded-2xl bg-base-200/50 border-2 transition-all outline-none font-medium ${
+                  errors.email ? "border-error/50" : "border-transparent focus:border-primary/30"
                 }`}
               />
               {errors.email && (
-                <label className="label">
-                  <span className="label-text-alt text-error">{errors.email}</span>
-                </label>
+                <p className="text-[10px] font-bold text-error uppercase tracking-wide px-1">{errors.email}</p>
               )}
             </div>
             
-            {/* Password Input with Rules */}
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text font-medium">Password</span>
-              </label>
+            {/* Password Input */}
+            <div className="space-y-2">
+              <label className="text-xs font-black uppercase tracking-widest text-base-content/40 px-1">Password</label>
               <input
                 type="password"
-                placeholder="Create a strong password"
+                placeholder="••••••••"
                 value={password}
                 onChange={(e) => {
                   setPassword(e.target.value);
                   if (errors.password) setErrors({ ...errors, password: null });
                 }}
-                className={`input input-bordered w-full focus:input-primary ${
-                  errors.password ? "input-error" : ""
+                className={`w-full p-4 rounded-2xl bg-base-200/50 border-2 transition-all outline-none font-medium ${
+                  errors.password ? "border-error/50" : "border-transparent focus:border-primary/30"
                 }`}
               />
-              {errors.password && (
-                <label className="label">
-                  <span className="label-text-alt text-error">{errors.password}</span>
-                </label>
-              )}
               {!errors.password && (
-                <label className="label">
-                  <span className="label-text-alt text-xs opacity-70">
-                    Must contain: 6+ characters, uppercase & lowercase letters
-                  </span>
-                </label>
+                <p className="text-[9px] font-bold text-base-content/30 uppercase tracking-tighter px-1">6+ chars, Mixed Case</p>
+              )}
+              {errors.password && (
+                <p className="text-[10px] font-bold text-error uppercase tracking-wide px-1">{errors.password}</p>
               )}
             </div>
 
+            {/* Role Select */}
+            <div className="space-y-2">
+              <label className="text-xs font-black uppercase tracking-widest text-base-content/40 px-1">Account Role</label>
+              <select
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+                className="w-full p-4 rounded-2xl bg-base-200/50 border-2 border-transparent focus:border-primary/30 transition-all outline-none font-bold text-base-content"
+              >
+                <option value="buyer">Buyer / Orderer</option>
+                <option value="manager">Production Manager</option>
+              </select>
+            </div>
+
             {/* Photo URL Input */}
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text font-medium">
-                  Photo URL <span className="text-xs opacity-60">(Optional)</span>
-                </span>
-              </label>
+            <div className="space-y-2 md:col-span-2">
+              <label className="text-xs font-black uppercase tracking-widest text-base-content/40 px-1">Avatar URL (Optional)</label>
               <input
                 type="url"
-                placeholder="https://example.com/photo.jpg"
+                placeholder="https://images.com/avatar.jpg"
                 value={photoURL}
                 onChange={(e) => {
                   setPhotoURL(e.target.value);
                   if (errors.photoURL) setErrors({ ...errors, photoURL: null });
                 }}
-                className={`input input-bordered w-full focus:input-primary ${
-                  errors.photoURL ? "input-error" : ""
+                className={`w-full p-4 rounded-2xl bg-base-200/50 border-2 transition-all outline-none font-medium ${
+                  errors.photoURL ? "border-error/50" : "border-transparent focus:border-primary/30"
                 }`}
               />
               {errors.photoURL && (
-                <label className="label">
-                  <span className="label-text-alt text-error">{errors.photoURL}</span>
-                </label>
+                <p className="text-[10px] font-bold text-error uppercase tracking-wide px-1">{errors.photoURL}</p>
               )}
-            </div>
-
-            {/* Role Dropdown */}
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text font-medium">Role</span>
-              </label>
-              <select
-                value={role}
-                onChange={(e) => setRole(e.target.value)}
-                className="select select-bordered w-full focus:select-primary"
-              >
-                <option value="buyer">Buyer</option>
-                <option value="manager">Manager</option>
-              </select>
             </div>
 
             {/* Submit Button */}
-            <button
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
               type="submit"
               disabled={isLoading}
-              className="btn btn-primary w-full"
+              className="md:col-span-2 w-full py-4 rounded-2xl bg-primary text-white font-black shadow-xl shadow-primary/20 hover:shadow-primary/40 transition-all flex items-center justify-center gap-3"
             >
               {isLoading ? (
-                <>
-                  <span className="loading loading-spinner"></span>
-                  Creating Account...
-                </>
-              ) : (
-                "Create Account"
-              )}
-            </button>
+                <span className="loading loading-spinner loading-sm"></span>
+              ) : "Create My Account"}
+            </motion.button>
           </form>
           
-          <div className="divider">OR</div>
+          <div className="relative my-10">
+            <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-base-300/30"></div></div>
+            <div className="relative flex justify-center text-xs uppercase"><span className="bg-transparent px-4 text-base-content/30 font-black tracking-widest">Or sign up with</span></div>
+          </div>
           
-          {/* Social Signup Buttons */}
-          <div className="space-y-3">
+          {/* Social Icons */}
+          <div className="grid grid-cols-2 gap-4">
             <button
               onClick={handleGoogleSignup}
-              className="btn btn-outline w-full flex items-center justify-center gap-2"
+              className="flex items-center justify-center gap-2 py-3 rounded-2xl bg-base-200/50 border border-base-300/30 hover:bg-base-200 transition-all font-bold text-sm"
               disabled={isLoading}
             >
-              <FaGoogle className="text-xl" />
-              Sign up with Google
+              <FaGoogle className="text-red-500" /> Google
             </button>
             
             <button
               onClick={handleGithubSignup}
-              className="btn btn-outline w-full flex items-center justify-center gap-2"
+              className="flex items-center justify-center gap-2 py-3 rounded-2xl bg-base-200/50 border border-base-300/30 hover:bg-base-200 transition-all font-bold text-sm"
               disabled={isLoading}
             >
-              <FaGithub className="text-xl" />
-              Sign up with GitHub
+              <FaGithub /> GitHub
             </button>
           </div>
-          
-          <div className="divider"></div>
-          
-          <p className="text-center text-sm">
-            Already have an account?{" "}
-            <Link to="/login" className="link link-primary font-semibold">
-              Sign In
-            </Link>
-          </p>
+
+          <div className="mt-10 pt-8 border-t border-base-300/30">
+            <p className="text-center text-sm font-medium text-base-content/60">
+              Already have an account?{" "}
+              <Link to="/login" className="text-primary font-black hover:underline ml-1">
+                Sign In
+              </Link>
+            </p>
+          </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }

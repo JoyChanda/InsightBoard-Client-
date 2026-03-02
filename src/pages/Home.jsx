@@ -67,7 +67,7 @@ export default function Home() {
       <Section 
         title="Core Services" 
         subtitle="End-to-end manufacturing orchestration for modern businesses."
-        className="bg-base-200"
+        className="bg-base-100 border-t border-base-200"
       >
         <Services />
       </Section>
@@ -96,7 +96,7 @@ export default function Home() {
       <Section 
         title="User Analytics Categories" 
         subtitle="Tailored experiences for every role in the manufacturing ecosystem."
-        className="bg-base-200"
+        className="bg-base-100 border-t border-base-200"
       >
         <Categories />
       </Section>
@@ -114,7 +114,7 @@ export default function Home() {
       <Section 
         title="Detailed Statistics" 
         subtitle="Real-time data visualization of factory output and accuracy."
-        className="bg-base-200"
+        className="bg-base-100 border-t border-base-200"
       >
         <Statistics />
       </Section>
@@ -128,7 +128,7 @@ export default function Home() {
       <Section 
         title="Industry Insights" 
         subtitle="Latest news and guide from our manufacturing experts."
-        className="bg-base-200"
+        className="bg-base-100 border-t border-base-200"
       >
         <Blogs />
       </Section>
@@ -142,7 +142,7 @@ export default function Home() {
       <Section 
         title="Frequently Asked Questions" 
         subtitle="Everything you need to know about the InsightBoard platform."
-        className="bg-base-200"
+        className="bg-base-100 border-t border-base-200"
       >
         <FAQ />
       </Section>

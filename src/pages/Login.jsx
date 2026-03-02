@@ -154,137 +154,121 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-base-200 p-6">
-      <div className="card bg-base-100 shadow-2xl w-full max-w-md">
-        <div className="card-body">
-          <h2 className="card-title text-3xl font-bold justify-center mb-4">Login</h2>
+    <div className="min-h-screen flex items-center justify-center relative overflow-hidden p-6">
+      {/* Background with Mesh Gradient Effect */}
+      <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 via-indigo-600/20 to-purple-700/20"></div>
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-400/10 blur-[120px] rounded-full animate-pulse"></div>
+        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-purple-400/10 blur-[120px] rounded-full"></div>
+      </div>
+
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5 }}
+        className="glass relative z-10 w-full max-w-md rounded-[2.5rem] overflow-hidden shadow-2xl border border-white/20"
+      >
+        <div className="p-8 md:p-12">
+          <div className="text-center mb-10">
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center text-white text-3xl shadow-xl mx-auto mb-6">
+              🚢
+            </div>
+            <h2 className="text-4xl font-black text-base-content tracking-tight">Login</h2>
+            <p className="text-base-content/50 text-sm mt-2 font-medium">Welcome back to InsightBoard</p>
+          </div>
           
-          <form onSubmit={handleLogin} className="space-y-4">
+          <form onSubmit={handleLogin} className="space-y-6">
             {/* Email Input */}
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text font-medium">Email</span>
-              </label>
+            <div className="space-y-2">
+              <label className="text-xs font-black uppercase tracking-widest text-base-content/40 px-1">Email Address</label>
               <input
                 type="email"
-                placeholder="Enter your email"
+                placeholder="name@company.com"
                 value={email}
                 onChange={(e) => {
                   setEmail(e.target.value);
                   if (errors.email) setErrors({ ...errors, email: null });
                 }}
-                className={`input input-bordered w-full focus:input-primary ${
-                  errors.email ? "input-error" : ""
+                className={`w-full p-4 rounded-2xl bg-base-200/50 border-2 transition-all outline-none font-medium ${
+                  errors.email ? "border-error/50" : "border-transparent focus:border-primary/30"
                 }`}
               />
               {errors.email && (
-                <label className="label">
-                  <span className="label-text-alt text-error">{errors.email}</span>
-                </label>
+                <p className="text-[10px] font-bold text-error uppercase tracking-wide px-1">{errors.email}</p>
               )}
             </div>
             
             {/* Password Input */}
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text font-medium">Password</span>
-              </label>
+            <div className="space-y-2">
+              <div className="flex justify-between items-center px-1">
+                <label className="text-xs font-black uppercase tracking-widest text-base-content/40">Password</label>
+                <Link to="#" className="text-[10px] font-black uppercase tracking-widest text-primary hover:underline">Forgot?</Link>
+              </div>
               <input
                 type="password"
-                placeholder="Enter your password"
+                placeholder="••••••••"
                 value={password}
                 onChange={(e) => {
                   setPassword(e.target.value);
                   if (errors.password) setErrors({ ...errors, password: null });
                 }}
-                className={`input input-bordered w-full focus:input-primary ${
-                  errors.password ? "input-error" : ""
+                className={`w-full p-4 rounded-2xl bg-base-200/50 border-2 transition-all outline-none font-medium ${
+                  errors.password ? "border-error/50" : "border-transparent focus:border-primary/30"
                 }`}
               />
               {errors.password && (
-                <label className="label">
-                  <span className="label-text-alt text-error">{errors.password}</span>
-                </label>
+                <p className="text-[10px] font-bold text-error uppercase tracking-wide px-1">{errors.password}</p>
               )}
             </div>
 
             {/* Submit Button */}
-            <button
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
               type="submit"
               disabled={isLoading}
-              className="btn btn-primary w-full"
+              className="w-full py-4 rounded-2xl bg-primary text-white font-black shadow-xl shadow-primary/20 hover:shadow-primary/40 transition-all flex items-center justify-center gap-3"
             >
               {isLoading ? (
-                <>
-                  <span className="loading loading-spinner"></span>
-                  Logging in...
-                </>
-              ) : (
-                "Login"
-              )}
-            </button>
+                <span className="loading loading-spinner loading-sm"></span>
+              ) : "Login to Board"}
+            </motion.button>
           </form>
           
-          <div className="divider">OR</div>
+          <div className="relative my-10">
+            <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-base-300/30"></div></div>
+            <div className="relative flex justify-center text-xs uppercase"><span className="bg-transparent px-4 text-base-content/30 font-black tracking-widest">Or continue with</span></div>
+          </div>
           
           {/* Social Login Buttons */}
-          <div className="space-y-3">
+          <div className="grid grid-cols-2 gap-4">
             <button
               onClick={handleGoogleLogin}
-              className="btn btn-outline w-full flex items-center justify-center gap-2"
+              className="flex items-center justify-center gap-2 py-3 rounded-2xl bg-base-200/50 border border-base-300/30 hover:bg-base-200 transition-all font-bold text-sm"
               disabled={isLoading}
             >
-              <FaGoogle className="text-xl" />
-              Continue with Google
+              <FaGoogle className="text-red-500" /> Google
             </button>
             
             <button
               onClick={handleGithubLogin}
-              className="btn btn-outline w-full flex items-center justify-center gap-2"
+              className="flex items-center justify-center gap-2 py-3 rounded-2xl bg-base-200/50 border border-base-300/30 hover:bg-base-200 transition-all font-bold text-sm"
               disabled={isLoading}
             >
-              <FaGithub className="text-xl" />
-              Continue with GitHub
+              <FaGithub /> GitHub
             </button>
           </div>
 
-          <div className="divider text-xs opacity-50 uppercase tracking-widest font-bold">Demo Access</div>
-          
-          {/* Demo Login Buttons */}
-          <div className="grid grid-cols-1 gap-3">
-             <button 
-                onClick={() => handleDemoLogin("buyer")}
-                className="btn btn-outline btn-sm h-12 border-base-300 hover:border-primary hover:bg-primary/5"
-                disabled={isLoading}
-             >
-                Login as User
-             </button>
-             <button 
-                onClick={() => handleDemoLogin("manager")}
-                className="btn btn-outline btn-sm h-12 border-base-300 hover:border-secondary hover:bg-secondary/5"
-                disabled={isLoading}
-             >
-                Login as Manager
-             </button>
-             <button 
-                onClick={() => handleDemoLogin("admin")}
-                className="btn btn-outline btn-sm h-12 border-base-300 hover:border-warning hover:bg-warning/5"
-                disabled={isLoading}
-             >
-                Login as Admin
-             </button>
+          <div className="mt-10 pt-8 border-t border-base-300/30">
+            <p className="text-center text-sm font-medium text-base-content/60">
+              New to InsightBoard?{" "}
+              <Link to="/register" className="text-primary font-black hover:underline ml-1">
+                Create Account
+              </Link>
+            </p>
           </div>
-          
-          <div className="divider"></div>
-          
-          <p className="text-center text-sm">
-            Don't have an account?{" "}
-            <Link to="/register" className="link link-primary font-semibold">
-              Create Account
-            </Link>
-          </p>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }

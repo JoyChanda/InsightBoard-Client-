@@ -526,12 +526,56 @@
 
 /* Glass morphism effect */
 .glass {
-    background-color: rgb(255 255 255 / 0.8);
-    backdrop-filter: blur(16px);
+    background-color: rgb(255 255 255 / 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .dark .glass {
-    background-color: rgb(31 41 55 / 0.8);
+    background-color: rgb(15 23 42 / 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Custom Animations */
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+.animate-float {
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+    0%, 100% { opacity: 1; box-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
+    50% { opacity: 0.8; box-shadow: 0 0 10px rgba(59, 130, 246, 0.2); }
+}
+
+.glow-primary {
+    animation: pulse-glow 2s infinite;
+}
+
+/* NavLink Underline Animation */
+.nav-link-underline {
+    position: relative;
+    padding-bottom: 2px;
+}
+
+.nav-link-underline::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: currentColor;
+    transition: width 0.3s ease;
+}
+
+.nav-link-underline:hover::after,
+.nav-link-underline.active::after {
+    width: 100%;
 }
 
 /* Gradient text */
@@ -561,6 +605,8 @@ body {
     background-color: rgb(255 255 255);
     color: rgb(17 24 39);
     -webkit-font-smoothing: antialiased;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    line-height: 1.5;
 }
 
 .dark body {

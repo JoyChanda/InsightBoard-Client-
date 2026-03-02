@@ -5,61 +5,100 @@ export default function ProductCard({ product }) {
   const { price, _id } = product;
   // Handle data structure differences between API (title, images, qty, desc) and Mock (name, image, availableQuantity, description)
   const title = product.title || product.name || "Untitled Product";
-  const image = product.images?.[0] || product.image || "https://via.placeholder.com/400x300?text=No+Image";
+  const getImageUrl = () => {
+    const rawImage = product.images?.[0] || product.image;
+    if (!rawImage) return "https://placehold.co/600x400/2563EB/FFFFFF?text=InsightBoard+Product";
+    
+    // Check if it's already a full URL
+    if (typeof rawImage === "string" && (rawImage.startsWith("http") || rawImage.startsWith("//"))) {
+       // If it's a known failing domain, replace it
+       if (rawImage.includes("i.ibb.co")) {
+          return `https://placehold.co/600x400/2563EB/FFFFFF?text=${encodeURIComponent(title)}`;
+       }
+       return rawImage;
+    }
+
+    // Handle relative paths
+    if (typeof rawImage === "string" && rawImage.startsWith("/")) {
+       // Get API host without /api suffix
+       let apiBase = import.meta.env.VITE_API_URL || "http://localhost:5000";
+       const apiRoot = apiBase.replace(/\/api\/?$/, ""); 
+       return `${apiRoot}${rawImage}`;
+    }
+
+    return rawImage;
+  };
+
+  const image = getImageUrl();
   const qty = product.qty ?? product.availableQuantity ?? 0;
   const description = product.desc || product.description || "";
   const truncatedDesc = description.length > 60 ? description.slice(0, 60) + "..." : description;
 
   return (
     <motion.div
-      whileHover={{ y: -8 }}
-      transition={{ duration: 0.3 }}
-      className="card bg-base-100 shadow-xl hover:shadow-2xl transition-all overflow-hidden group border border-base-300 h-full flex flex-col"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      whileHover={{ y: -5, scale: 1.01 }}
+      transition={{ duration: 0.5 }}
+      className="group relative bg-base-100 rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 border border-base-300/50 flex flex-col h-full"
     >
-      <figure className="h-48 overflow-hidden relative shrink-0">
-        <Link to={`/products/${_id}`} className="w-full h-full block">
+      {/* Image Container */}
+      <div className="relative h-64 overflow-hidden bg-base-200 flex items-center justify-center">
+        <Link to={`/products/${_id}`} className="block h-full w-full">
           <motion.img
-            whileHover={{ scale: 1.1 }}
-            transition={{ duration: 0.4 }}
             src={image}
             alt={title}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover transition-all duration-700"
+            onError={(e) => {
+              e.target.onerror = null; // Prevent infinite loop
+              e.target.src = `https://placehold.co/600x400/213547/FFFFFF?text=${encodeURIComponent(title)}`;
+            }}
           />
         </Link>
-        {/* Quantity Badge */}
-        <div className="absolute top-2 right-2 badge bg-base-100/90 text-base-content backdrop-blur-sm text-xs font-bold shadow-md border border-base-300">
-          Qty: {qty}
-        </div>
-      </figure>
-
-      <div className="card-body p-5 flex flex-col flex-grow">
-        <div className="text-xs uppercase font-medium text-base-content/50 tracking-wider">
-          {product.category || "General"}
-        </div>
         
-        <Link to={`/products/${_id}`} className="hover:underline">
-          <h3 className="text-lg font-bold text-base-content line-clamp-1 mb-2" title={title}>
+        {/* Overlays */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        
+        <div className="absolute top-4 left-4">
+          <span className="px-3 py-1 rounded-full bg-primary text-white text-[10px] font-black uppercase tracking-widest shadow-xl">
+            {product.category || "New Arrival"}
+          </span>
+        </div>
+
+        {/* Qty Badge */}
+        <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-primary text-white text-[10px] font-black uppercase tracking-widest shadow-xl">
+          STOCK: {qty}
+        </div>
+      </div>
+
+      {/* Content */}
+      <div className="p-6 flex flex-col flex-grow">
+        <Link to={`/products/${_id}`}>
+          <h3 className="text-xl font-black text-base-content mb-2 line-clamp-1 group-hover:text-primary transition-colors" title={title}>
             {title}
           </h3>
         </Link>
-        
-        {/* Description */}
-        {truncatedDesc && (
-          <p className="text-sm text-base-content/70 mb-4 line-clamp-2 flex-grow">
-            {truncatedDesc}
-          </p>
-        )}
+        <p className="text-sm text-base-content/90 leading-relaxed font-medium line-clamp-2 mb-6 flex-grow">
+          {truncatedDesc}
+        </p>
 
-        <div className="flex justify-between items-center mt-auto border-t border-base-300 pt-4">
-          <p className="text-primary font-bold text-xl">${price}</p>
-
+        {/* Footer with Glass Effect */}
+        <div className="flex items-center justify-between pt-4 border-t border-base-300/50">
+          <div>
+            <span className="text-xs font-bold text-base-content/60 uppercase tracking-tighter block">Unit Price</span>
+            <span className="text-2xl font-black text-primary">${price}</span>
+          </div>
+          
           <Link to={`/products/${_id}`}>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="btn btn-outline btn-primary btn-sm"
+              className="p-3 rounded-2xl bg-base-200 group-hover:bg-primary group-hover:text-white transition-all duration-300"
             >
-              View Details
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
             </motion.button>
           </Link>
         </div>

@@ -48,7 +48,7 @@ export default function HowItWorks() {
           className="text-center mb-12"
         >
           <h2 className="text-4xl font-bold mb-2">How It Works</h2>
-          <p className="text-lg opacity-70">
+          <p className="text-lg text-base-content/80 font-semibold mb-2">
             Simple steps to streamline your production workflow
           </p>
         </motion.div>
@@ -82,7 +82,7 @@ export default function HowItWorks() {
                   <h3 className="text-xl font-bold mb-3">{step.title}</h3>
 
                   {/* Description */}
-                  <p className="text-sm opacity-70 leading-relaxed">
+                  <p className="text-sm text-base-content/80 font-medium leading-relaxed">
                     {step.description}
                   </p>
                 </div>

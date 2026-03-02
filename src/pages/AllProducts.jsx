@@ -107,7 +107,7 @@ const AllProducts = () => {
                       value={search}
                       onChange={(e) => setSearch(e.target.value)}
                     />
-                    <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 opacity-30" />
+                    <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 opacity-50 text-primary" />
                  </div>
               </div>
 
@@ -169,7 +169,7 @@ const AllProducts = () => {
               </div>
 
               {/* Apply Button */}
-              <button type="submit" className="btn btn-primary w-full gap-2">
+              <button type="submit" className="btn btn-primary text-white w-full gap-2 shadow-lg font-black uppercase tracking-widest hover:scale-[1.02] active:scale-[0.98] transition-all">
                  <FaFilter /> Apply Filters
               </button>
            </form>

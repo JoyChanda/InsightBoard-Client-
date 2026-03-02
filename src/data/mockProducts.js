@@ -7,7 +7,7 @@ export const mockProducts = [
     category: "T-Shirt",
     minOrderQuantity: 100,
     availableQuantity: 5000,
-    image: "https://i.ibb.co/JQbF61N/tshirt1.jpg",
+    image: "https://placehold.co/400x500/2563EB/FFFFFF?text=T-Shirt",
     description: "100% combed cotton, breathable and durable.",
     sizes: ["S", "M", "L", "XL"],
     colors: ["Black", "White", "Navy"]
@@ -19,7 +19,7 @@ export const mockProducts = [
     category: "Polo",
     minOrderQuantity: 100,
     availableQuantity: 3000,
-    image: "https://i.ibb.co/6W7CJtJ/polo1.jpg",
+    image: "https://placehold.co/400x500/1E40AF/FFFFFF?text=Polo+Shirt",
     description: "Pique fabric polo with contrast collar.",
     sizes: ["M", "L", "XL", "XXL"],
     colors: ["Red", "Royal Blue"]
@@ -31,7 +31,7 @@ export const mockProducts = [
     category: "Hoodie",
     minOrderQuantity: 50,
     availableQuantity: 2000,
-    image: "https://i.ibb.co/s2wQzSy/hoodie1.jpg",
+    image: "https://placehold.co/400x500/4F46E5/FFFFFF?text=Hoodie",
     description: "Soft fleece-lined hoodie for comfort and style.",
     sizes: ["S", "M", "L"],
     colors: ["Pink", "Black"]
@@ -43,7 +43,7 @@ export const mockProducts = [
     category: "Jersey",
     minOrderQuantity: 100,
     availableQuantity: 4000,
-    image: "https://i.ibb.co/QN3kzD5/jersey1.jpg",
+    image: "https://placehold.co/400x500/0F172A/FFFFFF?text=Sports+Jersey",
     description: "Lightweight moisture-wicking fabric.",
     sizes: ["M", "L", "XL"],
     colors: ["Yellow", "Green", "Blue"]
@@ -55,7 +55,7 @@ export const mockProducts = [
     category: "Uniform",
     minOrderQuantity: 200,
     availableQuantity: 6000,
-    image: "https://i.ibb.co/wcFs25S/schoolshirt1.jpg",
+    image: "https://placehold.co/400x500/2563EB/FFFFFF?text=School+Shirt",
     description: "Poly-cotton blend, wrinkle resistant.",
     sizes: ["XS", "S", "M", "L"],
     colors: ["White"]
@@ -67,7 +67,7 @@ export const mockProducts = [
     category: "Jacket",
     minOrderQuantity: 50,
     availableQuantity: 1000,
-    image: "https://i.ibb.co/RvrMsFJ/denim1.jpg",
+    image: "https://placehold.co/400x500/1E40AF/FFFFFF?text=Denim+Jacket",
     description: "Classic denim with adjustable cuffs.",
     sizes: ["M", "L", "XL"],
     colors: ["Blue", "Dark Blue"]
@@ -79,7 +79,7 @@ export const mockProducts = [
     category: "Formal",
     minOrderQuantity: 150,
     availableQuantity: 4500,
-    image: "https://i.ibb.co/VtsVSbL/formalshirt1.jpg",
+    image: "https://placehold.co/400x500/2563EB/FFFFFF?text=Formal+Shirt",
     description: "Slim fit cotton shirt for office wear.",
     sizes: ["M", "L", "XL", "XXL"],
     colors: ["Sky Blue", "White", "Grey"]
@@ -91,7 +91,7 @@ export const mockProducts = [
     category: "Bottom",
     minOrderQuantity: 100,
     availableQuantity: 8000,
-    image: "https://i.ibb.co/3hZf8HX/leggings1.jpg",
+    image: "https://placehold.co/400x500/2563EB/FFFFFF?text=Leggings",
     description: "Soft stretchable fabric for all-day comfort.",
     sizes: ["S", "M", "L"],
     colors: ["Black", "Purple"]
@@ -103,7 +103,7 @@ export const mockProducts = [
     category: "Sweatshirt",
     minOrderQuantity: 80,
     availableQuantity: 2500,
-    image: "https://i.ibb.co/X83N0kt/sweatshirt1.jpg",
+    image: "https://placehold.co/400x500/2563EB/FFFFFF?text=Sweatshirt",
     description: "Heavy fleece for extra warmth.",
     sizes: ["M", "L", "XL"],
     colors: ["Maroon", "Olive", "Black"]
@@ -115,7 +115,7 @@ export const mockProducts = [
     category: "Bottom",
     minOrderQuantity: 100,
     availableQuantity: 3500,
-    image: "https://i.ibb.co/vhkXkSR/trackpants1.jpg",
+    image: "https://placehold.co/400x500/2563EB/FFFFFF?text=Track+Pants",
     description: "Moisture-wicking, breathable, athletic fit.",
     sizes: ["M", "L", "XL"],
     colors: ["Black", "Grey"]
