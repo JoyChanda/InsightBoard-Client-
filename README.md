@@ -184,7 +184,7 @@ Contributions are welcome! Please follow these steps:
 
 **Joy Chanda**
 
-- Portfolio: [https://your-portfolio.com](https://your-portfolio.com)
+- Portfolio: [joys-portfolio](https://joys-portfolio-gamma.vercel.app/)
 - GitHub: [@JoyChanda](https://github.com/JoyChanda)
 - LinkedIn: [Joy Chanda](https://linkedin.com/in/joychanda)
 
